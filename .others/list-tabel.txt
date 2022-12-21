@@ -1,0 +1,59 @@
+users
+- id
+- name
+- email
+- no_ktp
+- email_verified_at
+- password
+- status
+- role
+- created_at
+- updated_at
+
+events
+- id
+- name
+- description
+- image
+- contact_persons
+- created_at
+- updated_at
+
+event_schedules
+- id
+- event_id
+- name
+- date
+- description
+- created_at
+- updated_at
+
+event_batches
+- id
+- event_id
+- name
+- description
+- start_date
+- end_date
+- price
+- max_ticket
+- status
+- created_at
+- updated_at
+
+transactions
+- id
+- event_batch_id
+- user_id
+- quantity
+- total_price
+- payment_proof
+- status
+
+tickets
+- id
+- code
+- transaction_id
+- status
+- created_at
+- updated_at
