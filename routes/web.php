@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('frontEnd.index');
 })->middleware('auth')->name('homeTest');
 
+Route::get('/admin', function () {
+    return view('backEnd.admin.index');
+})->middleware('auth')->name('adminTest');
+
 Route::get('/registration', function(){
    return view('frontEnd.registration');
 })->name('regist');
