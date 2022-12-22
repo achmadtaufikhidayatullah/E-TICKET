@@ -5,6 +5,9 @@
 <div class="container">
     <div class="card shadow border-0">
         <div class="card-body">
+            <div class="card-title">
+                <h4 class="my-3">Data Admin</h4>
+            </div>
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>

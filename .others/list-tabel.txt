@@ -8,14 +8,36 @@ users
 - status
 - role
 - created_at
-- updated_at
+- updated_at 
+
+banks
+- id
+- code
+- name
+- description
+- status
+- created_at
+- updated_at 
+
+user_bank_accounts
+- id
+- user_id
+- bank_id
+- account_number
+- account_holder_name
+- status
+- created_at
+- updated_at 
 
 events
 - id
 - name
+- start_date
+- end_date
 - description
 - image
 - contact_persons
+- status
 - created_at
 - updated_at
 
@@ -23,8 +45,10 @@ event_schedules
 - id
 - event_id
 - name
-- date
+- start_date
+- end_date
 - description
+- status
 - created_at
 - updated_at
 
@@ -41,11 +65,22 @@ event_batches
 - created_at
 - updated_at
 
-transactions
+booked_tickets
 - id
 - event_batch_id
 - user_id
+- price
 - quantity
+- status
+- created_at
+- updated_at
+
+payments
+- id
+- booked_ticket_id
+- bank_name
+- account_number
+- account_holder_name
 - total_price
 - payment_proof
 - status
@@ -53,7 +88,7 @@ transactions
 tickets
 - id
 - code
-- transaction_id
+- booked_ticket_id
 - status
 - created_at
 - updated_at
