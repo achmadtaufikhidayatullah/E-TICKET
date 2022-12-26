@@ -1,8 +1,101 @@
 users
+<<<<<<< HEAD
+=======
+- id
+>>>>>>> 07a8adfe9a3cc51e835282c718a4720d66691c0b
 - name
 - email
 - no_ktp
 - email_verified_at
 - password
 - status
+<<<<<<< HEAD
 - role
+=======
+- role
+- created_at
+- updated_at 
+
+banks
+- id
+- code
+- name
+- description
+- status
+- created_at
+- updated_at 
+
+user_bank_accounts
+- id
+- user_id
+- bank_id
+- account_number
+- account_holder_name
+- status
+- created_at
+- updated_at 
+
+events
+- id
+- name
+- start_date
+- end_date
+- description
+- image
+- contact_persons
+- status
+- created_at
+- updated_at
+
+event_schedules
+- id
+- event_id
+- name
+- start_date
+- end_date
+- description
+- status
+- created_at
+- updated_at
+
+event_batches
+- id
+- event_id
+- name
+- description
+- start_date
+- end_date
+- price
+- max_ticket
+- status
+- created_at
+- updated_at
+
+booked_tickets
+- id
+- event_batch_id
+- user_id
+- price
+- quantity
+- status
+- created_at
+- updated_at
+
+payments
+- id
+- booked_ticket_id
+- bank_name
+- account_number
+- account_holder_name
+- total_price
+- payment_proof
+- status
+
+tickets
+- id
+- code
+- booked_ticket_id
+- status
+- created_at
+- updated_at
+>>>>>>> 07a8adfe9a3cc51e835282c718a4720d66691c0b
