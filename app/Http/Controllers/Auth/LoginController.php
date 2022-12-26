@@ -55,7 +55,7 @@ class LoginController extends Controller
          $this->validate($request,$roles,$customessage);
          
          if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'status'=>'Aktif'])) {
-               return redirect()->route('homeTest');
+               return redirect()->route('dashboard');
          } else {
                // Session::flash('error_message','You are not Active by Admin');
                return redirect()->back()->with('toast_error', 'Your account has not been verified!');
