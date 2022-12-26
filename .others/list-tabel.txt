@@ -1,17 +1,11 @@
 users
-<<<<<<< HEAD
-=======
 - id
->>>>>>> 07a8adfe9a3cc51e835282c718a4720d66691c0b
 - name
 - email
 - no_ktp
 - email_verified_at
 - password
 - status
-<<<<<<< HEAD
-- role
-=======
 - role
 - created_at
 - updated_at 
@@ -98,4 +92,3 @@ tickets
 - status
 - created_at
 - updated_at
->>>>>>> 07a8adfe9a3cc51e835282c718a4720d66691c0b
