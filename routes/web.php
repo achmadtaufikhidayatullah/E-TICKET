@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +19,16 @@ Route::get('/', function () {
     return view('frontEnd.index');
 })->middleware('auth')->name('homeTest');
 
+Route::get('/registration', function(){
+   return view('frontEnd.registration');
+})->name('regist');
+
+Route::post('/registration', [App\Http\Controllers\UserController::class, 'registrationStore'])->name('regist.store');
+Route::get('/test-mail', [App\Http\Controllers\UserController::class, 'email'])->name('email.send');
+Route::get('/verification/{id}', [App\Http\Controllers\UserController::class, 'verification'])->name('regist.verification');
+Route::get('/verification-success', [App\Http\Controllers\UserController::class, 'verificationSuccess'])->name('regist.verification.success');
+
+// Backend routes
 Route::get('/dashboard', function () {
     return view('backEnd.dashboard.index');
 })->middleware('auth')->name('dashboard');
@@ -25,14 +37,8 @@ Route::get('/admin', function () {
     return view('backEnd.admin.index');
 })->middleware('auth')->name('adminTest');
 
-Route::get('/registration', function(){
-   return view('frontEnd.registration');
-})->name('regist');
-Route::post('/registration', [App\Http\Controllers\UserController::class, 'registrationStore'])->name('regist.store');
-Route::get('/test-mail', [App\Http\Controllers\UserController::class, 'email'])->name('email.send');
-Route::get('/verification/{id}', [App\Http\Controllers\UserController::class, 'verification'])->name('regist.verification');
-Route::get('/verification-success', [App\Http\Controllers\UserController::class, 'verificationSuccess'])->name('regist.verification.success');
-
+Route::resource('events', EventController::class);
+Route::resource('users', UserController::class);
 
 Auth::routes();
 

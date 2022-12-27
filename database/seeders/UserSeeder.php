@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('123'),
             'role' => 'Super Admin',
             'no_ktp' => '111111111',
+            'phone_number' => '081234567890',
             'remember_token' => '',
             'status' => 'Aktif'
         ]);

@@ -13,48 +13,18 @@
 @section('main')
     <div class="main-content">
         <section class="section">
-            <div class="section-header">
+            <div class="section-header shadow-lg">
                 <h1>Dashboard</h1>
             </div>
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-primary">
-                            <i class="fas fa-helmet-safety"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Total Pekerja</h4>
-                            </div>
-                            <div class="card-body">
-                                0
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-danger">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Total Vendor</h4>
-                            </div>
-                            <div class="card-body">
-                                0
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
+                    <div class="card card-statistic-1 shadow-lg">
                         <div class="card-icon bg-warning">
-                            <i class="far fa-hourglass"></i>
+                            <i class="fas fa-user"></i>
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Project Berjalan</h4>
+                                <h4>Registered Users</h4>
                             </div>
                             <div class="card-body">
                                 0
@@ -63,13 +33,43 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-success">
-                            <i class="fas fa-check"></i>
+                    <div class="card card-statistic-1 shadow-lg">
+                        <div class="card-icon bg-warning">
+                            <i class="fas fa-star"></i>
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Project Selesai</h4>
+                                <h4>Total Events</h4>
+                            </div>
+                            <div class="card-body">
+                                0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1 shadow-lg">
+                        <div class="card-icon bg-warning">
+                            <i class="fas fa-ticket"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Total Ticket Sold</h4>
+                            </div>
+                            <div class="card-body">
+                                0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1 shadow-lg">
+                        <div class="card-icon bg-warning">
+                            <i class="fas fa-rupiah-sign"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Total Earnings</h4>
                             </div>
                             <div class="card-body">
                                 0

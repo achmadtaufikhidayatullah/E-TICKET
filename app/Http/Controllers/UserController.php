@@ -17,7 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('backEnd.users.index', ['users' => $users]);
     }
 
 
@@ -34,7 +35,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = ['Super Admin', 'Member'];
+        return view('backEnd.users.create', ['roles' => $roles]);
     }
 
     /**
@@ -45,7 +47,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User;
+        $user->name = $request->name;
+        $user->no_ktp = $request->no_ktp;
+        $user->phone_number = $request->phone_number;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->status = "Aktif";
+        $user->role = $request->role;
+        $user->save();
+
+        return redirect()->route('users.index')
+            ->with('message', 'Berhasil menambahkan user baru.')
+            ->with('status', 'success');
     }
     
 
@@ -102,7 +116,13 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $roles = ['Super Admin', 'Member'];
+        $statuses = ['Aktif', 'Tidak Aktif'];
+        return view('backEnd.users.edit', [
+            'roles' => $roles, 
+            'statuses' => $statuses, 
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -114,7 +134,18 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->name = $request->name;
+        $user->no_ktp = $request->no_ktp;
+        $user->phone_number = $request->phone_number;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->status = $request->status;
+        $user->role = $request->role;
+        $user->save();
+
+        return redirect()->route('users.index')
+            ->with('message', 'Berhasil mengubah data user.')
+            ->with('status', 'success');
     }
 
     /**
