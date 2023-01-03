@@ -3,7 +3,7 @@
 
 .body-content {
     height: 100vh;
-    background-image: url('/FrontAssets/img/background.jpg');
+    background-image: url('/FrontAssets/img/BG.jpg');
     background-position: center;
     background-size: cover;
     font-family: 'poppins';
@@ -19,6 +19,20 @@
       background-image: var(--bs-gradient)!important;
       background-color: #ffc107!important;
       color: #000 !important;
+}
+
+nav.bg-body{
+    background-color: rgba(128, 128, 128, 0.5) !important;
+}
+
+.card-bg{
+   background-color: rgba(128, 128, 128, 0.7) !important;
+   color: #fff;
+   border: none !important;
+}
+
+.nav-link{
+   color: #ffff   !important;
 }
 
 

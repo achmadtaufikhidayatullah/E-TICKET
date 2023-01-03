@@ -37,7 +37,21 @@ Route::get('/admin', function () {
     return view('backEnd.admin.index');
 })->middleware('auth')->name('adminTest');
 
+// ==== events route ====
 Route::resource('events', EventController::class);
+Route::get('/event-list', [App\Http\Controllers\EventController::class, 'indexAdmin'])->name('event.index.admin');
+
+// ==== events buy route ====
+Route::get('/event-form/{batch}', [App\Http\Controllers\EventController::class, 'eventForm'])->name('events.form');
+
+// ==== batch route ====
+Route::get('/event-batch', [App\Http\Controllers\EventController::class, 'indexBatch'])->name('batch.index');
+Route::get('/event-batch/create', [App\Http\Controllers\EventController::class, 'createBatch'])->name('batch.create');
+Route::get('/event-batch/{batch}/edit', [App\Http\Controllers\EventController::class, 'editBatch'])->name('batch.edit');
+Route::post('/event-batch', [App\Http\Controllers\EventController::class, 'storeBatch'])->name('batch.store');
+Route::put('/event-batch/{batch}', [App\Http\Controllers\EventController::class, 'updateBatch'])->name('batch.update');
+
+
 Route::resource('users', UserController::class);
 
 Auth::routes();
