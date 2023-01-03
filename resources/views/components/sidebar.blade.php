@@ -20,8 +20,8 @@
                 <a class="nav-link" href="{{ route('events.index') }}"><i class="fas fa-star"></i>
                     <span>Events</span></a>
             </li>
-            <li class="{{ Request::is('*my-ticket*') ? 'active' : '' }}">
-                <a class="nav-link" href="#"><i class="fas fa-ticket"></i> <span>My Ticket</span></a>
+            <li class="{{ Request::is('*ticket*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('ticket.index') }}"><i class="fas fa-ticket"></i> <span>My Ticket</span></a>
             </li>
 
             <li class="{{ Request::is('*users*') ? 'active' : '' }}">

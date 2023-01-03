@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,8 @@ Route::get('/event-batch/{batch}/edit', [App\Http\Controllers\EventController::c
 Route::post('/event-batch', [App\Http\Controllers\EventController::class, 'storeBatch'])->name('batch.store');
 Route::put('/event-batch/{batch}', [App\Http\Controllers\EventController::class, 'updateBatch'])->name('batch.update');
 
+// Tickets Route
+Route::resource('ticket', TicketController::class);
 
 Route::resource('users', UserController::class);
 
