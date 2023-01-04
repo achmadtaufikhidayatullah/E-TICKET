@@ -28,19 +28,19 @@
                 <a class="nav-link" href="{{ route('users.index') }}"><i class="fas fa-user"></i> <span>User</span></a>
             </li>
 
-            <li class="{{ Request::is('event-list') ? 'active' : '' }}">
+            <li class="{{ Request::is('*event-list*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('event.index.admin') }}"><i class="fas fa-star"></i> <span>Event List</span></a>
             </li>
 
-            <li class="{{ Request::is('event-batch') ? 'active' : '' }}">
+            <li class="{{ Request::is('*event-batch*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('batch.index') }}"><i class="fas fa-star"></i> <span>Event Batch</span></a>
             </li>
         </ul>
 
-        <div class="hide-sidebar-mini mt-4 mb-4 p-3">
+        <!-- <div class="hide-sidebar-mini mt-4 mb-4 p-3">
             <a href="https://getstisla.com/docs" class="btn btn-warning btn-lg btn-block btn-icon-split">
                 <i class="fas fa-globe"></i> Back to Main Page
             </a>
-        </div>
+        </div> -->
     </aside>
 </div>

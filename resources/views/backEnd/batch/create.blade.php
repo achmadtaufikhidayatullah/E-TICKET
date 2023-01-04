@@ -10,7 +10,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header shadow-lg">
-            <h1>Tambah Bacth Event</h1>
+            <h1>Tambah Batch Event</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item"><a class="text-warning" href="{{ route('home') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a class="text-warning" href="{{ route('users.index') }}">Event Batch</a>
@@ -39,9 +39,9 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="inputName">Bacth Name</label>
+                                <label for="inputName">Batch Name</label>
                                 <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                    id="inputName" placeholder="Nama user..." value="{{ old('name') }}">
+                                    id="inputName" placeholder="Nama batch" value="{{ old('name') }}">
                                 @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -91,7 +91,7 @@
                                 <label for="inputPhoneNumber">Max Ticket</label>
                                 <input type="number" name="max_ticket"
                                     class="form-control @error('max_ticket') is-invalid @enderror"
-                                    id="inputPhoneNumber" placeholder="Max Ticke for this Batch."
+                                    id="inputPhoneNumber" placeholder="Max Ticket for this Batch"
                                     value="{{ old('max_ticket') }}">
                                 @error('phone_number')
                                 <div class="invalid-feedback">

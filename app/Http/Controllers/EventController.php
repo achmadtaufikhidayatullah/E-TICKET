@@ -17,11 +17,11 @@ class EventController extends Controller
      */
     public function index()
     {
-        $eventsBatch = EventBatch::whereDate('start_date', '<=' ,Carbon::today()->format('Y-m-d'))->whereDate('end_date', '>=' ,Carbon::today()->format('Y-m-d'))->get();
-      //   $eventsBatch = EventBatch::where('start_date', '>=' ,'2023-01-01')->get();
+        $eventsBatch = EventBatch::whereDate('start_date', '<=', Carbon::today()->format('Y-m-d'))->whereDate('end_date', '>=', Carbon::today()->format('Y-m-d'))->get();
+        //   $eventsBatch = EventBatch::where('start_date', '>=' ,'2023-01-01')->get();
 
-      //   dd($eventsBatch);
-        return view('backEnd.event.index' , compact('eventsBatch'));
+        //   dd($eventsBatch);
+        return view('backEnd.event.index', compact('eventsBatch'));
     }
 
     /**
@@ -42,28 +42,29 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-         $extension = $request->file('image')->extension();
-         $nameFile = str_replace(' ', '-', $request->name);
-         $image = $nameFile . '.' . $extension;
-         
-         // Validasi file
-         $validate = $request->validate([
-               'image' => 'required|file|mimes:jpg,bmp,png,jpeg'
-            ]);
-               
-         // Upload file
-         $path = Storage::putFileAs('public/event', $request->file('image'), $image);
-
-         $validate = $request->validate([
+        $image = "";
+        
+        // Validasi file
+        $validate = $request->validate([
             'name' => 'required',
-            'image' => 'required',
+            'image' => 'file|mimes:jpg,bmp,png,jpeg',
             'description' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
             'contact_persons' => 'required',
         ]);
 
-        $validate = array_merge($validate,['status' => 'Aktif'],['image' => $image]);
+        if($request->hasFile('image')) {
+            $extension = $request->file('image')->extension();
+            $nameFile = str_replace(' ', '-', $request->name);
+            $image = $nameFile . '.' . $extension;
+
+            $path = Storage::putFileAs('public/event', $request->file('image'), $image);
+        }
+
+        // Upload file
+
+        $validate = array_merge($validate, ['status' => 'Aktif'], ['image' => $image]);
 
         $event = Event::create($validate);
 
@@ -80,7 +81,6 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        
     }
 
     /**
@@ -91,10 +91,10 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-      //   dd($event);
+        //   dd($event);
         $statuses = ['Aktif', 'Tidak Aktif'];
         return view('backEnd.event.edit', [
-            'statuses' => $statuses, 
+            'statuses' => $statuses,
             'event' => $event,
         ]);
     }
@@ -119,10 +119,10 @@ class EventController extends Controller
             ]);
 
             // Hapus file yang lama (jika ada)
-            if(!empty($event->image)){
-                $delete = Storage::delete('public/event/'.$event->image);
+            if (!empty($event->image)) {
+                $delete = Storage::delete('public/event/' . $event->image);
             }
-            
+
             // kemudian upload file yang baru
             $path = Storage::putFileAs('public/event', $request->file('image'), $image);
 
@@ -132,17 +132,17 @@ class EventController extends Controller
             ]);
         }
 
-        
+
         $validate = $request->validate([
-           'name' => 'required',
-           'description' => 'required',
-           'start_date' => 'required',
-           'end_date' => 'required',
-           'contact_persons' => 'required',
-           'status' => 'required',
-         ]);
-         // dd($request->all());
-         
+            'name' => 'required',
+            'description' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'contact_persons' => 'required',
+            'status' => 'required',
+        ]);
+        // dd($request->all());
+
         $event->update($validate);
 
         return redirect()->route('event.index.admin')
@@ -164,33 +164,33 @@ class EventController extends Controller
 
 
 
-   //  =======  CUSTOM FUNCTION  =========
-   
-   // event List
-   public function indexAdmin()
-   { 
-      $events = Event::all();
-      return view('backEnd.event.eventList', compact('events'));
-   }
+    //  =======  CUSTOM FUNCTION  =========
+
+    // event List
+    public function indexAdmin()
+    {
+        $events = Event::all();
+        return view('backEnd.event.eventList', compact('events'));
+    }
 
 
-   // Batch Event
-   public function indexBatch()
-   { 
-      $batches = EventBatch::all();
-      return view('backEnd.batch.index', compact('batches'));
-   }
+    // Batch Event
+    public function indexBatch()
+    {
+        $batches = EventBatch::all();
+        return view('backEnd.batch.index', compact('batches'));
+    }
 
-   public function createBatch()
-   {
-      $events = Event::all();
-      return view('backEnd.batch.create', compact('events'));
-   }
+    public function createBatch()
+    {
+        $events = Event::all();
+        return view('backEnd.batch.create', compact('events'));
+    }
 
-   public function storeBatch(Request $request)
-   {
-      // dd($request->all());
-      $validate = $request->validate([
+    public function storeBatch(Request $request)
+    {
+        // dd($request->all());
+        $validate = $request->validate([
             'event_id' => 'required',
             'name' => 'required',
             'description' => 'required',
@@ -200,30 +200,30 @@ class EventController extends Controller
             'max_ticket' => 'required',
         ]);
 
-        $validate = array_merge($validate,['status' => 'Aktif']);
+        $validate = array_merge($validate, ['status' => 'Aktif']);
 
         $event = EventBatch::create($validate);
 
         return redirect()->route('batch.index')
             ->with('message', 'Berhasil menambahkan event batch baru.')
             ->with('status', 'success');
-   }
+    }
 
-   public function editBatch(EventBatch $batch)
-   {
-   //   dd($batch);
-      $statuses = ['Aktif', 'Tidak Aktif'];
-      $events = Event::all();
-      return view('backEnd.batch.edit', [
-         'statuses' => $statuses, 
-         'events' => $events,
-         'batch' => $batch,
-      ]);
-   }
-
-   public function updateBatch(Request $request, EventBatch $batch)
+    public function editBatch(EventBatch $batch)
     {
-      // dd($request->all());
+        //   dd($batch);
+        $statuses = ['Aktif', 'Tidak Aktif'];
+        $events = Event::all();
+        return view('backEnd.batch.edit', [
+            'statuses' => $statuses,
+            'events' => $events,
+            'batch' => $batch,
+        ]);
+    }
+
+    public function updateBatch(Request $request, EventBatch $batch)
+    {
+        // dd($request->all());
         $validate = $request->validate([
             'event_id' => 'required',
             'name' => 'required',
@@ -233,19 +233,19 @@ class EventController extends Controller
             'price' => 'required',
             'max_ticket' => 'required',
             'status' => 'required',
-         ]);
-         // dd($request->all());
-         
+        ]);
+        // dd($request->all());
+
         $batch->update($validate);
 
         return redirect()->route('batch.index')
             ->with('message', 'Berhasil mengubah data batch.')
             ->with('status', 'success');
     }
-   
-   public function eventForm(EventBatch $batch)
+
+    public function eventForm(EventBatch $batch)
     {
-      //   dd($batch);
+        //   dd($batch);
         return view('backEnd.event.form', compact('batch'));
     }
 }

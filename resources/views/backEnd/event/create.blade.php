@@ -13,8 +13,8 @@
             <h1>Tambah Event</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item"><a class="text-warning" href="{{ route('home') }}">Dashboard</a></div>
-                <div class="breadcrumb-item"><a class="text-warning" href="{{ route('users.index') }}">User</a></div>
-                <div class="breadcrumb-item active">Tambah User</div>
+                <div class="breadcrumb-item"><a class="text-warning" href="{{ route('events.index') }}">Event</a></div>
+                <div class="breadcrumb-item active">Tambah Event</div>
             </div>
         </div>
 
@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <label for="inputName">Event Name</label>
                                 <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                    id="inputName" placeholder="Nama user..." value="{{ old('name') }}">
+                                    id="inputName" placeholder="Nama Event..." value="{{ old('name') }}">
                                 @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -37,10 +37,10 @@
                             <div class="form-group">
                                 <label for="inputNationalIdentityNumber">Event Image</label>
                                 <input type="file" name="image"
-                                    class="form-control @error('no_ktp') is-invalid @enderror"
-                                    id="inputNationalIdentityNumber" placeholder="No KTP Anda..."
-                                    value="{{ old('no_ktp') }}">
-                                @error('no_ktp')
+                                    class="form-control @error('image') is-invalid @enderror"
+                                    id="inputNationalIdentityNumber"
+                                    value="{{ old('image') }}">
+                                @error('image')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -49,9 +49,9 @@
                             <div class="form-group">
                                 <label for="inputEmail">Start Date</label>
                                 <input type="date" name="start_date"
-                                    class="form-control @error('email') is-invalid @enderror" id="inputEmail"
-                                    placeholder="Alamat email anda..." value="{{ old('email') }}">
-                                @error('email')
+                                    class="form-control @error('start_date') is-invalid @enderror" id="inputEmail"
+                                    value="{{ old('start_date') }}">
+                                @error('start_date')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -60,13 +60,9 @@
                             <div class="form-group">
                                 <label for="inputPassword">End Date</label>
                                 <input type="date" name="end_date"
-                                    class="form-control @error('password') is-invalid @enderror" id="inputPassword"
-                                    placeholder="Password akun anda..." value="{{ old('password') }}">
-                                <!-- <small id="passwordHelpBlock"
-                                            class="form-text text-muted">
-                                            Kosongkan isian ini jika tidak ingin mengubah password.
-                                        </small> -->
-                                @error('password')
+                                    class="form-control @error('end_date') is-invalid @enderror" id="inputPassword"
+                                    value="{{ old('end_date') }}">
+                                @error('end_date')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -75,10 +71,10 @@
                             <div class="form-group">
                                 <label for="inputPhoneNumber">Contact Persons</label>
                                 <input type="number" name="contact_persons"
-                                    class="form-control @error('phone_number') is-invalid @enderror"
-                                    id="inputPhoneNumber" placeholder="Nomor telepon user..."
-                                    value="{{ old('phone_number') }}">
-                                @error('phone_number')
+                                    class="form-control @error('contact_persons') is-invalid @enderror"
+                                    id="inputPhoneNumber" placeholder="Nomor telepon CP..."
+                                    value="{{ old('contact_persons') }}">
+                                @error('contact_persons')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -87,13 +83,13 @@
 
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Description</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="13" style="height: 200px;" name="description"></textarea>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="13" style="height: 200px;" name="description">{{ old('description') }}</textarea>
                             </div>
 
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-lg btn-warning">Submit</button>
-                            <a href="{{ route('users.index') }}" class="btn btn-lg btn-link text-warning">Kembali</a>
+                            <a href="{{ route('events.index') }}" class="btn btn-lg btn-link text-warning">Kembali</a>
                         </div>
                     </div>
                 </form>

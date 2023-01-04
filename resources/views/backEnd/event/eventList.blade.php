@@ -39,8 +39,8 @@
                                             <th class="text-center" width="5%">#</th>
                                             <th width="20%">Event Name</th>
                                             <th width="15%">Image</th>
-                                            <th width="15%">Date</th>
                                             <th width="15%">CP</th>
+                                            <th width="15%">Date</th>
                                             <th width="15%">Status</th>
                                             <th width="10%">Action</th>
                                         </tr>

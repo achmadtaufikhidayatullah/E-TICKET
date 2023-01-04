@@ -15,7 +15,7 @@
             <h1>Event Batch</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item"><a class="text-warning" href="{{ route('home') }}">Dashboard</a></div>
-                <div class="breadcrumb-item active">Event Bacth</div>
+                <div class="breadcrumb-item active">Event Batch</div>
             </div>
         </div>
 
