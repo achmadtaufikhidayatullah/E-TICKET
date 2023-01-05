@@ -7,6 +7,8 @@ use App\Models\Ticket;
 use App\Models\UserBankAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PaymentSuccess;
 
 class PaymentController extends Controller
 {
@@ -131,6 +133,10 @@ class PaymentController extends Controller
     {
         $payment = Payment::whereCode($code)->firstOrFail();
 
+        $invoiceLink = route('payments.invoice', $payment->code);
+
+        dd($invoiceLink);
+
         $payment->update([
             'status' => 'payment_successful'
         ]);
@@ -151,6 +157,8 @@ class PaymentController extends Controller
                 'status' => 'payment_successful'
             ]);
         }
+
+        Mail::to($payment->bookedTicket->user->email)->send(new PaymentSuccess($UserId));
 
         return redirect()->route('events.payment', $payment->bookedTicket->batch->event->id)
             ->with('message', 'Pembayaran berhasil disetujui.')
