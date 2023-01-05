@@ -75,16 +75,16 @@
                                 role="tabpanel"
                                 aria-labelledby="event-detail-tab">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-md-6 col-sm-12 mt-2">
                                         @if($batch->event->image == NULL)
                                         <img class="img-fluid" src="{{ asset('FrontAssets/img/BG.jpg') }}">
                                         @else
                                         <img src="{{ asset('storage/event/' . $batch->event->image) }}">
                                         @endif
                                     </div>
-                                    <div class="col-6">
-                                        <h1>{{ $batch->event->name }}</h1>
-                                        <h5>Batch: {{ $batch->name }} (IDR <span id="price" data-price="{{ $batch->price }}">{{ number_format($batch->price, 0, '', '.') }})</span></h5>
+                                    <div class="col-md-6 col-sm-12 mt-2">
+                                        <h1 style="font-size: 1.8rem;">{{ $batch->event->name }}</h1>
+                                        <h5 style="font-size: 1.2rem;">Batch: {{ $batch->name }} (IDR <span id="price" data-price="{{ $batch->price }}">{{ number_format($batch->price, 0, '', '.') }})</span></h5>
                                         <div class="form-group">
                                             <label for="inputNumberOfTickets">Number of Tickets</label>
                                             <input type="number" class="form-control" id="inputNumberOfTickets" min="1" max="9999" value="1">
@@ -101,7 +101,7 @@
                                 <form action="{{ route('events.purchase', $batch->id) }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="quantity" id="quantity">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped table-responsive">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -133,11 +133,11 @@
                                     </table>
                                     
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-md-6 col-sm-12">
                                             <button type="button" class="btn btn-link btn-block btn-lg mt-2 go-to-event-detail"><i class="fas fa-arrow-left mr-2"></i> Back to Event Detail</button>
                                         </div>
-                                        <div class="col-6">
-                                            <button type="submit" class="btn btn-warning btn-block btn-lg mt-2"><i class="fas fa-ticket mr-2"></i> Purchase Ticket</button>
+                                        <div class="col-md-6 col-sm-12">
+                                            <button type="submit" class="btn btn-warning btn-block btn-lg mt-2"><i class="fas fa-ticket mr-2"></i> Book Now</button>
                                         </div>
                                     </div>
                                 </form>

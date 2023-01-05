@@ -27,7 +27,7 @@
                                 <h4>Registered Users</h4>
                             </div>
                             <div class="card-body">
-                                0
+                                {{ $users }}
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                                 <h4>Total Events</h4>
                             </div>
                             <div class="card-body">
-                                0
+                                {{ $events }}
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                                 <h4>Total Ticket Sold</h4>
                             </div>
                             <div class="card-body">
-                                0
+                                {{ $tickets }}
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                                 <h4>Total Earnings</h4>
                             </div>
                             <div class="card-body">
-                                0
+                                {{ number_format($earnings, 0, '', '.') }}
                             </div>
                         </div>
                     </div>

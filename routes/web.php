@@ -35,7 +35,11 @@ Route::resource('events', EventController::class);
 Route::middleware('role:Super Admin,Admin')->group(function() {
     // Backend routes
     Route::get('/dashboard', function () {
-        return view('backEnd.dashboard.index');
+        $users = \App\Models\User::where('role', 'Member')->count();
+        $events = \App\Models\Event::count();
+        $tickets = \App\Models\Ticket::count();
+        $earnings = \App\Models\Payment::where('status', 'payment_successful')->sum('grand_total');
+        return view('backEnd.dashboard.index', compact('users', 'events', 'tickets', 'earnings'));
     })->middleware('auth')->name('dashboard');
 
     Route::get('/admin', function () {

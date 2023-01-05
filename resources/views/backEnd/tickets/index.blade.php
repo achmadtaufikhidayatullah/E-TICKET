@@ -79,11 +79,11 @@
                                         data-toggle="modal" 
                                         data-target="#uploadPaymentReceiptModal" 
                                         type="button" 
-                                        class="btn btn-warning btn-lg upload-payment">Upload Payment Receipt</button>
+                                        class="btn btn-warning btn-lg upload-payment btn-lg btn-block"><i class="fa fa-upload mr-1"></i> Upload Payment Receipt</button>
                                     @elseif($bookedTicket->status == "validating_payment")
-                                    <a href="{{ $bookedTicket->batch->event->whatsappLink() }}" class="btn btn-success btn-lg"><i class="fa-brands fa-whatsapp"></i> Contact CS</a>
+                                    <a href="{{ $bookedTicket->batch->event->whatsappLink() }}" class="btn btn-success btn-lg btn-block"><i class="fa-brands fa-whatsapp mr-1"></i> Contact CS</a>
                                     @elseif($bookedTicket->status == "payment_successful")
-                                    <a target="_blank" href="{{ route('payments.invoice', $bookedTicket->payment->code) }}" class="btn btn-warning btn-lg"><i class="fa fa-file-invoice mr-1"></i> Download Invoice</a>
+                                    <a target="_blank" href="{{ route('payments.invoice', $bookedTicket->payment->code) }}" class="btn btn-warning btn-lg btn-block"><i class="fa fa-file-invoice mr-1"></i> Download Invoice</a>
                                     @else
                                     -
                                     @endif
@@ -273,8 +273,8 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
-                    <button type="button" class="btn btn-link text-warning" data-dismiss="modal">Close</button>
-                    <button id="upload-button" type="button" class="btn btn-warning">Upload</button>
+                    <button id="upload-button" type="button" class="btn btn-warning btn-block">Upload</button>
+                    <button type="button" class="btn btn-link text-warning btn-block" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
