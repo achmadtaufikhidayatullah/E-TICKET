@@ -25,6 +25,14 @@
         href="{{ asset('css/style.css') }}">
     <link rel="stylesheet"
         href="{{ asset('css/components.css') }}">
+    
+    <style type="text/css">
+        @media print {
+            #button-section {
+                display: none;
+            }
+        }
+    </style>
 
     <!-- Start GA -->
     <script async
@@ -50,6 +58,9 @@
             <div class="main-content px-5">
                 <section class="section">
                     <div class="section-body">
+                        <div id="button-section" class="text-right">
+                            <button type="button" class="btn btn-primary btn-lg mb-3 print-button"><i class="fa fa-print mr-1"></i> Print</button>
+                        </div>
                         <div class="invoice shadow-lg border border-warning">
                             <div class="invoice-print">
                                 <div class="row">
@@ -170,6 +181,11 @@
     <!-- Template JS File -->
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+    <script>
+        $('.print-button').on('click', function() {
+            window.print()
+        })
+    </script>
 </body>
 
 </html>

@@ -1,12 +1,12 @@
 <div class="main-sidebar sidebar-style-2 shadow-lg">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand my-3">
-            <a href="{{ route('dashboard') }}">
+            <a href="#!">
                 <img src="{{ asset('FrontAssets/img/logo.png') }}" alt="" width="120">
             </a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="{{ route('dashboard') }}">
+            <a href="#!">
                 <img src="{{ asset('FrontAssets/img/logo-b.png') }}" alt="" width="20">
             </a>
         </div>
