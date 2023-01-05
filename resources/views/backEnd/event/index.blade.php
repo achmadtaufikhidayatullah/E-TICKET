@@ -16,19 +16,20 @@
         </div>
         <div class="row">
             @foreach ($eventsBatch as $event)
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+            <div class="col-lg-6 col-md-12 col-sm-12">
                 <a href="{{ route('events.form', $event->id) }}">
                     <div class="card card-statistic-1 shadow-lg">
                         <div class="card-icon bg-warning">
                             <i class="fas fa-star"></i>
                         </div>
                         <div class="card-wrap">
-                            <div class="card-header">
+                            <div class="card-header pt-3 pb-0">
                                 <h4>{{ date('d M Y', strtotime($event->start_date)) }} - {{ date('d M Y', strtotime($event->end_date)) }}</h4>
                             </div>
-                            <div class="card-body">
-                                <span class="text-dark">{{ $event->event->name }} - {{ $event->name }}</span>
-                                <p style="color: #98a6ad;font-size: 13px;line-height: 1.2;">IDR {{ number_format($event->price, 0, '', '.') }}</p>
+                            <div class="card-body mb-2">
+                                <span style="font-size: 1rem;" class="text-dark">{{ $event->event->name }} - {{ $event->name }}</span>
+                                <br>
+                                <span class="text-small font-weight-bold">IDR {{ number_format($event->price, 0, '', '.') }}</span>
                             </div>
                         </div>
                     </div>
