@@ -13,15 +13,11 @@ class UserBankAccount extends Model
     public $primaryKey = 'id';
     public $timestamps = true;
     protected $fillable = [
+        'user_id',
         'bank_code',
         'bank_name',
         'account_number',
-        'user_id',
-        'price_per_ticket',
-        'sub_total',
-        'tax',
-        'quantity',
-        'tax',
+        'account_holder_name',
         'status',
     ];
 

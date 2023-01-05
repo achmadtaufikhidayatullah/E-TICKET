@@ -249,24 +249,23 @@
                 <div class="d-sm-none d-lg-inline-block text-dark">Hi, {{ auth()->user()->name ?? 'Guest' }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">
-                    <div class="badge badge-warning">
-                        Guest
+                <!-- <div class="dropdown-title">
+                    <div class="badge badge-warning w-100">
+                        {{ auth()->user()->role ?? 'Guest' }}
                     </div>
-                </div>
-                <a href="#"
+                </div> -->
+                <!-- <a href="#"
                     class="dropdown-item has-icon">
                     <i class="far fa-user"></i> Profil
-                </a>
+                </a> -->
                 <!-- <a href="features-activities.html"
                     class="dropdown-item has-icon">
                     <i class="fas fa-bolt"></i> Activities
                 </a> -->
-                <a href="features-settings.html"
+                <!-- <a href="features-settings.html"
                     class="dropdown-item has-icon">
                     <i class="fas fa-cog"></i> Pengaturan
-                </a>
-                <div class="dropdown-divider"></div>
+                </a> -->
                 <a id="logout" href="#"
                     class="dropdown-item has-icon text-danger">
                     <i class="fas fa-sign-out-alt"></i> Logout

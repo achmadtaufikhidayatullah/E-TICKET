@@ -24,6 +24,11 @@ class Event extends Model
     ];
 
     public function batches() {
-        return $this->hasMany(EventBatch::class, 'id', 'event_id');
+        return $this->hasMany(EventBatch::class, 'event_id', 'id');
+    }
+
+    public function whatsappLink()
+    {
+        return 'http://wa.me/62' . substr($this->contact_persons, 1);
     }
 }

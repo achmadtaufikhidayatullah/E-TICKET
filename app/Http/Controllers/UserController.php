@@ -83,7 +83,9 @@ class UserController extends Controller
         $user = new User;
         $user->name = $request->name;
         $user->no_ktp = $request->no_ktp;
+        $user->phone_number = $request->phone_number;
         $user->email = $request->email;
+        $user->role = "Member";
         $user->password = bcrypt($request->password);
         $user->status = 'Tidak Aktif';
         $user->save();

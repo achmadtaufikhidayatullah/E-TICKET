@@ -21,7 +21,7 @@ class CreateEventsTable extends Migration
             $table->date('end_date');
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->json('contact_persons')->nullable();
+            $table->string('contact_persons')->nullable();
             $table->string('status');
             $table->timestamps();
         });

@@ -1,6 +1,6 @@
 @extends('backEnd.layouts.app')
 
-@section('title', 'General Dashboard')
+@section('title', 'On-Sale Events')
 
 @push('style')
 <!-- CSS Libraries -->
@@ -12,7 +12,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header shadow-lg">
-            <h1>On Sale Events</h1>
+            <h1>On-Sale Events</h1>
         </div>
         <div class="row">
             @foreach ($eventsBatch as $event)

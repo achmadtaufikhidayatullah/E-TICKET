@@ -1,6 +1,6 @@
 @extends('backEnd.layouts.app')
 
-@section('title', 'General Dashboard')
+@section('title', 'Book Ticket')
 
 @push('style')
 <!-- CSS Libraries -->
@@ -10,7 +10,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header shadow-lg">
-            <h1>Place Order</h1>
+            <h1>Book Ticket</h1>
         </div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">

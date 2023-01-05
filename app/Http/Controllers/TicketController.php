@@ -19,7 +19,7 @@ class TicketController extends Controller
     {
         $setting = Setting::first();
         $ownerAccounts = UserBankAccount::ownerAccounts();
-        $bookedTickets = BookedTicket::where('user_id', auth()->user()->id)->get();
+        $bookedTickets = BookedTicket::where('user_id', auth()->user()->id)->latest()->get();
         return view('backEnd.tickets.index', compact('bookedTickets', 'setting', 'ownerAccounts'));
     }
 

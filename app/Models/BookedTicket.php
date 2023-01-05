@@ -24,11 +24,23 @@ class BookedTicket extends Model
         'status',
     ];
 
-    public function batch() {
-        return $this->hasOne(EventBatch::class, 'event_batch_id', 'id');
+    public function batch() 
+    {
+        return $this->belongsTo(EventBatch::class, 'event_batch_id', 'id');
     }
     
-    public function payment() {
+    public function payment() 
+    {
         return $this->hasOne(Payment::class, 'booked_ticket_id', 'id');
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'booked_ticket_id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

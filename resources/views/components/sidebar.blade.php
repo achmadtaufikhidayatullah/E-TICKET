@@ -11,17 +11,10 @@
             </a>
         </div>
         <ul class="sidebar-menu">
-            <!-- <li class="menu-header">Menu</li> -->
-            <li class="{{ Request::is('*home*') ? 'active' : '' }}">
+            @if(auth()->user()->role == "Super Admin" || auth()->user()->role == "Admin")
+            <li class="{{ Request::is('*dashboard*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-home"></i>
                     <span>Dashboard</span></a>
-            </li>
-            <li class="{{ Request::is('*events*') || Request::is('*event-form*') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('events.index') }}"><i class="fas fa-star"></i>
-                    <span>Events</span></a>
-            </li>
-            <li class="{{ Request::is('*ticket*') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('ticket.index') }}"><i class="fas fa-ticket"></i> <span>My Ticket</span></a>
             </li>
 
             <li class="{{ Request::is('*users*') ? 'active' : '' }}">
@@ -35,6 +28,15 @@
             <li class="{{ Request::is('*event-batch*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('batch.index') }}"><i class="fas fa-star"></i> <span>Event Batch</span></a>
             </li>
+            @else
+            <li class="{{ Request::is('*events*') || Request::is('*event-form*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('events.index') }}"><i class="fas fa-star"></i>
+                    <span>Events</span></a>
+            </li>
+            <li class="{{ Request::is('*ticket*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('ticket.index') }}"><i class="fas fa-ticket"></i> <span>My Ticket</span></a>
+            </li>
+            @endif
         </ul>
 
         <!-- <div class="hide-sidebar-mini mt-4 mb-4 p-3">

@@ -41,8 +41,8 @@
                                             <th width="15%">Image</th>
                                             <th width="15%">CP</th>
                                             <th width="15%">Date</th>
-                                            <th width="15%">Status</th>
-                                            <th width="10%">Action</th>
+                                            <th width="10%">Status</th>
+                                            <th width="15%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -53,31 +53,30 @@
                                                 {{ $event->name }}
                                             </td>
                                             <td>
-                                               <a href="{{ asset('storage/event/'.$event->image) }}">
-                                                <img src="{{ asset('storage/event/'.$event->image) }}"
-                                                width="50px">
-                                             </a>
-                                          </td>
-                                          <td>
-                                              {{ $event->contact_persons }}
-                                          </td>
-                                          <td>
-                                              {{ date('d/m/Y', strtotime($event->start_date)) }} - {{ date('d/m/Y', strtotime($event->end_date)) }}
-                                          </td>
+                                                <a href="{{ asset('storage/event/'.$event->image) }}">
+                                                    <img src="{{ asset('storage/event/'.$event->image) }}" width="50px">
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{ $event->contact_persons }}
+                                            </td>
+                                            <td>
+                                                {{ date('d/m/Y', strtotime($event->start_date)) }} - {{ date('d/m/Y', strtotime($event->end_date)) }}
+                                            </td>
 
-                                          <td>
-                                              <div class="badge badge-success">{{ $event->status }}</div>
-                                          </td>
-                                          <td>
-                                             <a class="btn btn-warning btn-action mr-1"
-                                                   href="{{ route('events.edit', $event->id) }}" title="Edit"><i
-                                                      class="fas fa-pencil-alt"></i></a>
-                                             <!-- <a class="btn btn-danger btn-action btn-delete"
-                                                      data-toggle="tooltip"
-                                                      title="Delete"
-                                                      data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
-                                                      data-confirm-yes="deleteItem('{{ route('users.destroy', $event  ->id) }}')"><i class="fas fa-trash"></i></a> -->
-                                          </td>
+                                            <td>
+                                                <div class="badge badge-success">{{ $event->status }}</div>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-success btn-action mr-1" href="{{ route('events.payment', $event->id) }}" title="Edit"><i class="fas fa-money-check"></i></a>
+                                                <a class="btn btn-info btn-action mr-1" href="{{ route('events.ticket', $event->id) }}" title="Edit"><i class="fas fa-ticket"></i></a>
+                                                <a class="btn btn-warning btn-action mr-1" href="{{ route('events.edit', $event->id) }}" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                                <!-- <a class="btn btn-danger btn-action btn-delete"
+                                                    data-toggle="tooltip"
+                                                    title="Delete"
+                                                    data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?"
+                                                    data-confirm-yes="deleteItem('{{ route('users.destroy', $event  ->id) }}')"><i class="fas fa-trash"></i></a> -->
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -111,7 +110,6 @@
         status: "{{ session()->get('status') }}",
         position: 'topCenter',
     }
-
 </script>
 <script src="{{ asset('js/toastr.js') }}"></script>
 @endif

@@ -51,7 +51,7 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>
-                                                {{ $batch->events->name }}
+                                                {{ $batch->event->name }}
                                             </td>
                                             <td>
                                                 {{ $batch->name }}

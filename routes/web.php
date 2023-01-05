@@ -29,37 +29,46 @@ Route::get('/test-mail', [App\Http\Controllers\UserController::class, 'email'])-
 Route::get('/verification/{id}', [App\Http\Controllers\UserController::class, 'verification'])->name('regist.verification');
 Route::get('/verification-success', [App\Http\Controllers\UserController::class, 'verificationSuccess'])->name('regist.verification.success');
 
-// Backend routes
-Route::get('/dashboard', function () {
-    return view('backEnd.dashboard.index');
-})->middleware('auth')->name('dashboard');
-
-Route::get('/admin', function () {
-    return view('backEnd.admin.index');
-})->middleware('auth')->name('adminTest');
-
 // ==== events route ====
 Route::resource('events', EventController::class);
-Route::get('/event-list', [App\Http\Controllers\EventController::class, 'indexAdmin'])->name('event.index.admin');
+
+Route::middleware('role:Super Admin,Admin')->group(function() {
+    // Backend routes
+    Route::get('/dashboard', function () {
+        return view('backEnd.dashboard.index');
+    })->middleware('auth')->name('dashboard');
+
+    Route::get('/admin', function () {
+        return view('backEnd.admin.index');
+    })->middleware('auth')->name('adminTest');
+
+    Route::get('/event-list', [App\Http\Controllers\EventController::class, 'indexAdmin'])->name('event.index.admin');
+    Route::get('/event-list/{event}/payment', [App\Http\Controllers\EventController::class, 'payment'])->name('events.payment');
+    Route::get('/event-list/{event}/ticket', [App\Http\Controllers\EventController::class, 'ticket'])->name('events.ticket');
+
+    // ==== batch route ====
+    Route::get('/event-batch', [App\Http\Controllers\EventController::class, 'indexBatch'])->name('batch.index');
+    Route::get('/event-batch/create', [App\Http\Controllers\EventController::class, 'createBatch'])->name('batch.create');
+    Route::get('/event-batch/{batch}/edit', [App\Http\Controllers\EventController::class, 'editBatch'])->name('batch.edit');
+    Route::post('/event-batch', [App\Http\Controllers\EventController::class, 'storeBatch'])->name('batch.store');
+    Route::put('/event-batch/{batch}', [App\Http\Controllers\EventController::class, 'updateBatch'])->name('batch.update');
+
+    Route::resource('users', UserController::class);
+
+    Route::get('/payment/{code}/approve', [App\Http\Controllers\PaymentController::class, 'approve'])->name('payments.approve');
+    Route::get('/payment/{code}/reject', [App\Http\Controllers\PaymentController::class, 'reject'])->name('payments.reject');
+});
+
+// Tickets Route
+Route::resource('ticket', TicketController::class);
 
 // ==== events buy route ====
 Route::get('/event-form/{batch}', [App\Http\Controllers\EventController::class, 'eventForm'])->name('events.form');
 Route::post('/event/{batch}/purchase', [App\Http\Controllers\EventController::class, 'purchase'])->name('events.purchase');
 
-// ==== batch route ====
-Route::get('/event-batch', [App\Http\Controllers\EventController::class, 'indexBatch'])->name('batch.index');
-Route::get('/event-batch/create', [App\Http\Controllers\EventController::class, 'createBatch'])->name('batch.create');
-Route::get('/event-batch/{batch}/edit', [App\Http\Controllers\EventController::class, 'editBatch'])->name('batch.edit');
-Route::post('/event-batch', [App\Http\Controllers\EventController::class, 'storeBatch'])->name('batch.store');
-Route::put('/event-batch/{batch}', [App\Http\Controllers\EventController::class, 'updateBatch'])->name('batch.update');
-
-// Tickets Route
-Route::resource('ticket', TicketController::class);
-
 // Payment Route
 Route::post('/payment/{code}/upload', [App\Http\Controllers\PaymentController::class, 'upload'])->name('payments.upload');
-
-Route::resource('users', UserController::class);
+Route::get('/payment/{code}/invoice', [App\Http\Controllers\PaymentController::class, 'invoice'])->name('payments.invoice');
 
 Auth::routes();
 

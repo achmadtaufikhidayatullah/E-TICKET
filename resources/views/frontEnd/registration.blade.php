@@ -21,6 +21,12 @@
                 </div>
 
                 <div class="mb-4">
+                    <label for="phone_number" class="form-label">Your Phone Number</label>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" placeholder="Your Phone Number ex: 081xxxxxxxxx"
+                        required>
+                </div>
+
+                <div class="mb-4">
                     <label for="email" class="form-label">Your Email Address</label>
                     <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Your Email ex: customer@gmail.com"
                         required>

@@ -85,6 +85,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        // 
     }
 
     /**
@@ -286,7 +287,7 @@ class EventController extends Controller
             'unique_payment_code' => $uniquePaymentCode,
             'grand_total' => $bookedTicket->sub_total + $bookedTicket->tax + $uniquePaymentCode,
             'payment_proof' => NULL,
-            'status' => 'validating_payment',
+            'status' => 'waiting_for_payment',
         ]);
 
         return redirect()->route('ticket.index')
@@ -299,5 +300,22 @@ class EventController extends Controller
         $bookedTicket = BookedTicket::where('code', $code)->firstOrFail();
         $setting = Setting::first();
         return view('backEnd.event.form', compact('batch', 'setting'));
+    }
+
+    public function ticket(Event $event)
+    {
+        return view('backEnd.event.ticket', compact('event'));
+    }
+
+    public function payment(Event $event)
+    {
+        $eventBatch = [];
+        
+        foreach($event->batches as $batch) {
+            $eventBatch[] = $batch->id;
+        }
+
+        $bookedTickets = BookedTicket::whereIn('event_batch_id', $eventBatch)->get();
+        return view('backEnd.event.payment', compact('event', 'bookedTickets'));
     }
 }

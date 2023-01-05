@@ -22,16 +22,7 @@ class EventSeeder extends Seeder
             'end_date' => today(),
             'description' => NULL,
             'image' => NULL,
-            'contact_persons' => json_encode([
-                [
-                    'name' => 'Contact Person 01',
-                    'phone_number' => '081234234234'
-                ],
-                [
-                    'name' => 'Contact Person 02',
-                    'phone_number' => '081345345345'
-                ],
-            ]),
+            'contact_persons' => '081234234234',
             'status' => 'Aktif'
         ]);
 

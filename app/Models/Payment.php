@@ -16,6 +16,7 @@ class Payment extends Model
         'code',
         'booked_ticket_id',
         'bank_name',
+        'account_number',
         'account_holder_name',
         'grand_total',
         'unique_payment_code',
