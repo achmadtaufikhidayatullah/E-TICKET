@@ -79,7 +79,7 @@
                                         @if($batch->event->image == NULL)
                                         <img class="img-fluid" src="{{ asset('FrontAssets/img/BG.jpg') }}">
                                         @else
-                                        <img src="{{ asset('storage/event/' . $batch->event->image) }}">
+                                        <img src="{{ asset('storage/event/' . $batch->event->image) }}" style="width:100%;">
                                         @endif
                                     </div>
                                     <div class="col-md-6 col-sm-12 mt-2">
