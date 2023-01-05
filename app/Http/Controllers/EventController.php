@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\EventBatch;
 use App\Models\Payment;
 use App\Models\Setting;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -304,7 +305,16 @@ class EventController extends Controller
 
     public function ticket(Event $event)
     {
-        return view('backEnd.event.ticket', compact('event'));
+        $eventBatch = [];
+        
+        foreach($event->batches as $batch) {
+            $eventBatch[] = $batch->id;
+        }
+
+        $bookedTickets = BookedTicket::whereIn('event_batch_id', $eventBatch)->pluck('id');
+        $tickets = Ticket::whereIn('booked_ticket_id', $bookedTickets)->get();
+
+        return view('backEnd.event.ticket', compact('tickets', 'event'));
     }
 
     public function payment(Event $event)
