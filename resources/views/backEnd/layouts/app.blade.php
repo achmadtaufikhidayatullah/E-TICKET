@@ -16,8 +16,8 @@
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous"
         referrerpolicy="no-referrer" />
-        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ asset('library/izitoast/dist/css/iziToast.min.css') }}">
     @stack('style')
 
     <!-- Template CSS -->
@@ -45,7 +45,7 @@
 
 <body>
     <div id="app">
-        <div class="main-wrapper">
+        <div class="main-wrapper" style="height: 100vh;">
             <!-- Header -->
             @include('components.header')
 
@@ -69,6 +69,7 @@
     <script src="{{ asset('library/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('js/stisla.js') }}"></script>
     <script src="{{ asset('js/jquery.mask.min.js')}}"></script>
+    <script src="{{ asset('library/izitoast/dist/js/iziToast.min.js') }}"></script>
 
     @stack('scripts')
 
@@ -83,6 +84,17 @@
             $('#logoutForm').submit()
         });
     </script>
+    @if(session()->has('message'))
+    <script>
+        let data = {
+            message: "{{ session()->get('message') }}",
+            status: "{{ session()->get('status') }}",
+            position: 'topCenter',
+        }
+
+    </script>
+    <script src="{{ asset('js/toastr.js') }}"></script>
+    @endif
 </body>
 
 </html>

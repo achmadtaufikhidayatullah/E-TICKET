@@ -32,8 +32,8 @@ class EventSeeder extends Seeder
             'description' => NULL,
             'start_date' => today()->subDays(7),
             'end_date' => today(),
-            'price' => 100000,
-            'max_ticket' => 1000,
+            'price' => 99000,
+            'max_ticket' => 500,
             'status' => 'Aktif'
         ]);
     }

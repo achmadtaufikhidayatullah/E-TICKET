@@ -53,7 +53,7 @@
                                     @if($bookedTicket->status == "waiting_for_payment")
                                     <div class="badge badge-warning">Waiting For Payment</div>
                                     <br>
-                                    <small class="text-muted font-weight-bold text-small">Complete before {{ $bookedTicket->created_at->addHours(23)->format('Y/m/d h:i') }}</small>
+                                    <small class="text-muted font-weight-bold text-small">Complete payment before ticket sold out</small>
                                     @elseif($bookedTicket->status == "validating_payment")
                                     <div class="badge badge-info">Validating Payment</div>
                                     @elseif($bookedTicket->payment->status == "payment_successful")
@@ -72,6 +72,9 @@
                                 </div>
                                 <div class="card-body text-right pb-3">
                                     @if($bookedTicket->status == "waiting_for_payment" || $bookedTicket->status == "payment_rejected")
+                                    @if($bookedTicket->batch->isFull())
+                                    <button disabled type="button" class="btn btn-secondary btn-lg btn-block text-dark disabled"><i class="fa fa-ban mr-1"></i> Sold Out</button>
+                                    @else
                                     <button 
                                         data-code="{{ $bookedTicket->code }}" 
                                         data-unique-payment-code="{{ $bookedTicket->payment->unique_payment_code }}" 
@@ -80,6 +83,7 @@
                                         data-target="#uploadPaymentReceiptModal" 
                                         type="button" 
                                         class="btn btn-warning btn-lg upload-payment btn-lg btn-block"><i class="fa fa-upload mr-1"></i> Upload Payment Receipt</button>
+                                    @endif
                                     @elseif($bookedTicket->status == "validating_payment")
                                     <a href="{{ $bookedTicket->batch->event->whatsappLink() }}" class="btn btn-success btn-lg btn-block"><i class="fa-brands fa-whatsapp mr-1"></i> Contact CS</a>
                                     @elseif($bookedTicket->status == "payment_successful")

@@ -4,6 +4,7 @@
 
 @push('style')
 <!-- CSS Libraries -->
+<link rel="stylesheet" href="{{ asset('library/izitoast/dist/css/iziToast.min.css') }}">
 @endpush
 
 @section('main')
@@ -166,7 +167,7 @@
 
 @push('scripts')
 <!-- JS Libraies -->
-
+<script src="{{ asset('library/izitoast/dist/js/iziToast.min.js') }}"></script>
 <!-- Page Specific JS File -->
 <script>
     let numberOfTickets = $('#inputNumberOfTickets').val()
@@ -195,7 +196,7 @@
         $('.nav-tabs a[href="#event-detail"]').tab('show');
     })
 
-    $('#inputNumberOfTickets').on('keyup keypress keydown', function() {
+    $('#inputNumberOfTickets').on('keyup keypress keydown change', function() {
         numberOfTickets = $(this).val()
         $('#quantity').val(numberOfTickets)
 
@@ -212,4 +213,15 @@
         calculateSubTotal(numberOfTickets)
     })
 </script>
+@if(session()->has('message'))
+<script>
+    let data = {
+        message: "{{ session()->get('message') }}",
+        status: "{{ session()->get('status') }}",
+        position: 'topCenter',
+    }
+
+</script>
+<script src="{{ asset('js/toastr.js') }}"></script>
+@endif
 @endpush

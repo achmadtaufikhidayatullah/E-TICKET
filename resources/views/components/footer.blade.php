@@ -1,4 +1,4 @@
-<!-- <footer class="main-footer">
+<!-- <footer class="main-footer" style="height: 0%">
     <div class="footer-left">
         Copyright &copy; {{ date('Y') }} Bubblix Creative <div class="bullet"></div> Stisla Template By <a class="text-warning" href="https://nauval.in/">Muhamad
             Nauval Azhar</a>

@@ -27,4 +27,19 @@ class EventBatch extends Model
     public function event() {
         return $this->belongsTo(Event::class, 'event_id', 'id');
     }
+
+    public function bookedTickets()
+    {
+        return $this->hasMany(BookedTicket::class, 'event_batch_id');
+    }
+
+    public function quota()
+    {
+        return $this->bookedTickets->where('status', 'payment_successful')->sum('quantity');
+    }
+
+    public function isFull()
+    {
+        return $this->quota() >= $this->max_ticket;
+    }
 }

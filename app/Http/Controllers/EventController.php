@@ -25,7 +25,7 @@ class EventController extends Controller
         $eventsBatch = EventBatch::whereDate('start_date', '<=', Carbon::today()->format('Y-m-d'))->whereDate('end_date', '>=', Carbon::today()->format('Y-m-d'))->get();
         //   $eventsBatch = EventBatch::where('start_date', '>=' ,'2023-01-01')->get();
 
-        //   dd($eventsBatch);
+        // dd($eventsBatch->first()->quota());
         return view('backEnd.event.index', compact('eventsBatch'));
     }
 
@@ -251,6 +251,11 @@ class EventController extends Controller
 
     public function eventForm(EventBatch $batch)
     {
+        if($batch->isFull()) {
+            return redirect()->route('events.index')
+                ->with('message', 'Dah penuh coy, masih aja maksa!')
+                ->with('status', 'error');
+        }
         //   dd($batch);
         $setting = Setting::first();
         return view('backEnd.event.form', compact('batch', 'setting'));
@@ -258,6 +263,19 @@ class EventController extends Controller
 
     public function purchase(Request $request, EventBatch $batch)
     {
+        // Cek Kuota Tiket
+        if($request->quantity > $batch->max_ticket) {
+            return redirect()->route('events.form', $batch->id)
+                ->with('message', 'Jumlah pesanan melebihi kuota tiket tersisa.')
+                ->with('status', 'error');
+        }
+
+        if($batch->isFull()) {
+            return redirect()->route('ticket.index')
+                ->with('message', 'Kuota telah habis.')
+                ->with('status', 'error');
+        }
+
         do {
             $code = Str::upper(Str::random(8));
             $bookedTicket = BookedTicket::where('code', $code)->first();

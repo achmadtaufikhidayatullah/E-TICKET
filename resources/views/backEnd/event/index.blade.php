@@ -17,11 +17,17 @@
         <div class="row">
             @foreach ($eventsBatch as $event)
             <div class="col-lg-6 col-md-12 col-sm-12">
-                <a href="{{ route('events.form', $event->id) }}">
+                <a href="{{ $event->isFull() ? '#!' : route('events.form', $event->id) }}">
                     <div class="card card-statistic-1 shadow-lg">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-star"></i>
+                        @if($event->isFull())
+                        <div class="card-icon">
+                            <span style="transform: rotate(-45deg) scale(1.25);" class="badge badge-danger">Sold Out</span>
                         </div>
+                        @else
+                        <div class="card-icon bg-warning">
+                            <i class="fas fa-ticket"></i>
+                        </div>
+                        @endif
                         <div class="card-wrap">
                             <div class="card-header pt-3 pb-0">
                                 <h4>{{ date('d M Y', strtotime($event->start_date)) }} - {{ date('d M Y', strtotime($event->end_date)) }}</h4>
