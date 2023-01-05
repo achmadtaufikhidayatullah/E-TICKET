@@ -1,5 +1,25 @@
 let banks = [
     {
+        "name": "OVO",
+        "code": "999"
+    },
+    {
+        "name": "DANA",
+        "code": "998"
+    },
+    {
+        "name": "SHOPEEPAY",
+        "code": "997"
+    },
+    {
+        "name": "GOPAY",
+        "code": "996"
+    },
+    {
+        "name": "FLIP",
+        "code": "995"
+    },
+    {
         "name": "BANK BRI",
         "code": "002"
     },

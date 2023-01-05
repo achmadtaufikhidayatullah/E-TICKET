@@ -145,10 +145,6 @@
                                                     <div class="invoice-detail-name">Tax (IDR)</div>
                                                     <div class="invoice-detail-value">{{ number_format($payment->bookedTicket->tax, 0, '', '.') }}</div>
                                                 </div>
-                                                <div class="invoice-detail-item">
-                                                    <div class="invoice-detail-name">Unique Payment Code (IDR)</div>
-                                                    <div class="invoice-detail-value">{{ number_format($payment->unique_payment_code, 0, '', '.') }}</div>
-                                                </div>
                                                 <hr class="mt-2 mb-2">
                                                 <div class="invoice-detail-item">
                                                     <div class="invoice-detail-name">Grand Total (IDR)</div>

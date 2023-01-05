@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="card-body">
                                     <span class="text-dark">Yolo Fest - Early Bird</span>
-                                    <p class="text-small font-weight-bold">Total : IDR {{ number_format($bookedTicket->sub_total + $bookedTicket->tax, 0, '', '.') }} / {{ $bookedTicket->quantity }} tickets (incl. tax)</p>
+                                    <p class="text-small font-weight-bold">Total : IDR {{ number_format($bookedTicket->sub_total + $bookedTicket->tax + $bookedTicket->unique_payment_code, 0, '', '.') }} / {{ $bookedTicket->quantity }} tickets (incl. tax)</p>
                                 </div>
                             </div>
                         </div>
@@ -249,8 +249,8 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label>Unique Payment Code</label>
-                                <h4 id="unique_payment_code">-</h4>
+                                <label>Order Code</label>
+                                <h4 id="order_code">-</h4>
                             </div>
                         </div>
                         <div class="col-6">
@@ -311,10 +311,11 @@
 
     $('.upload-payment').on('click', function() {
         code = $(this).data('code')
-        let uniquePaymentCode = $(this).data('unique-payment-code')
+        // let uniquePaymentCode = $(this).data('unique-payment-code')
         let paymentTotal = $(this).data('payment-total')
 
-        $('#unique_payment_code').text(uniquePaymentCode)
+        // $('#unique_payment_code').text(uniquePaymentCode)
+        $('#order_code').text(code)
         $('#payment_total').text('IDR ' + (paymentTotal).toLocaleString("id"))
     })
 

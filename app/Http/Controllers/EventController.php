@@ -304,7 +304,8 @@ class EventController extends Controller
             'account_number' => NULL,
             'account_holder_name' => NULL,
             'unique_payment_code' => $uniquePaymentCode,
-            'grand_total' => $bookedTicket->sub_total + $bookedTicket->tax + $uniquePaymentCode,
+            // 'grand_total' => $bookedTicket->sub_total + $bookedTicket->tax + $uniquePaymentCode,
+            'grand_total' => $bookedTicket->sub_total + $bookedTicket->tax,
             'payment_proof' => NULL,
             'status' => 'waiting_for_payment',
         ]);
