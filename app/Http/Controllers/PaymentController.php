@@ -135,6 +135,8 @@ class PaymentController extends Controller
 
         $invoiceLink = route('payments.invoice', $payment->code);
 
+        Mail::to($payment->bookedTicket->user->email)->send(new PaymentSuccess($invoiceLink));
+
         dd($invoiceLink);
 
         $payment->update([
@@ -157,8 +159,6 @@ class PaymentController extends Controller
                 'status' => 'payment_successful'
             ]);
         }
-
-        Mail::to($payment->bookedTicket->user->email)->send(new PaymentSuccess($UserId));
 
         return redirect()->route('events.payment', $payment->bookedTicket->batch->event->id)
             ->with('message', 'Pembayaran berhasil disetujui.')

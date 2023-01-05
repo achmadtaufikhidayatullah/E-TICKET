@@ -11,14 +11,16 @@ class PaymentSuccess extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $invoiceLink;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($invoiceLink)
     {
-        //
+        $this->invoiceLink = $invoiceLink;
     }
 
     /**
@@ -28,6 +30,7 @@ class PaymentSuccess extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        $invoiceLink = $this->invoiceLink;
+        return $this->markdown('email.paymentSuccess' , compact('invoiceLink'));
     }
 }
