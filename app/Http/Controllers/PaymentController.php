@@ -87,6 +87,14 @@ class PaymentController extends Controller
     }
 
     public function upload(Request $request, $code) {
+        $request->validate([
+            'bank_code' => 'required|string',
+            'bank_name' => 'required|string',
+            'account_number' => 'required|string',
+            'account_holder_name' => 'required|string',
+            'payment_proof' => 'required|file|mimes:jpg,bmp,png,jpeg',
+        ]);
+
         // dd($request->all());
         $payment = Payment::whereCode($code)->firstOrFail();
 

@@ -53,7 +53,7 @@
                                     @if($bookedTicket->status == "waiting_for_payment")
                                     <div class="badge badge-warning">Waiting For Payment</div>
                                     <br>
-                                    <small class="text-muted font-weight-bold text-small">Complete payment before {{ $bookedTicket->created_at->addHours(23)->format('Y/m/d h:i') }}</small>
+                                    <small class="text-muted font-weight-bold text-small">Complete before {{ $bookedTicket->created_at->addHours(23)->format('Y/m/d h:i') }}</small>
                                     @elseif($bookedTicket->status == "validating_payment")
                                     <div class="badge badge-info">Validating Payment</div>
                                     @elseif($bookedTicket->payment->status == "payment_successful")

@@ -101,36 +101,48 @@
                                 <form action="{{ route('events.purchase', $batch->id) }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="quantity" id="quantity">
-                                    <table class="table table-striped table-responsive">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Event</th>
-                                                <th>Batch</th>
-                                                <th class="text-right">Price Per Ticket (IDR)</th>
-                                                <th class="text-center">Qty</th>
-                                                <th class="text-right">Sub Total (IDR)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>{{ $batch->event->name }}</td>
-                                                <td>{{ $batch->name }}</td>
-                                                <td class="text-right">{{ number_format($batch->price, 0, '', '.') }}</td>
-                                                <td class="text-center" id="col-qty"></td>
-                                                <td class="text-right" id="col-sub-total"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-right font-weight-bold" colspan="5">Tax (<span id="tax-percentage" data-tax="{{ $setting->tax_percentage }}"></span>{{ $setting->tax_percentage }}%)</td>
-                                                <td class="text-right" id="col-tax">12345</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-right font-weight-bold" colspan="5">Grand Total</td>
-                                                <td class="text-right" id="col-grand-total">12345</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-6">Event</div>
+                                                        <div class="col-6 font-weight-bold">{{ $batch->event->name }}</div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-6">Batch</div>
+                                                        <div class="col-6 font-weight-bold">{{ $batch->name }}</div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-6">Price Per Ticket (IDR)</div>
+                                                        <div class="col-6 font-weight-bold">{{ number_format($batch->price, 0, '', '.') }}</div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-6">Qty</div>
+                                                        <div class="col-6 font-weight-bold" id="col-qty"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-6">Tax <span id="tax-percentage" data-tax="{{ $setting->tax_percentage }}">({{ $setting->tax_percentage }}%)</span></div>
+                                                        <div class="col-6 font-weight-bold" id="col-tax"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-6">Sub Total</div>
+                                                        <div class="col-6 font-weight-bold" id="col-sub-total"></div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                     
                                     <div class="row">
                                         <div class="col-md-6 col-sm-12">
