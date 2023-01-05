@@ -16,7 +16,7 @@
                 <a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-home"></i>
                     <span>Dashboard</span></a>
             </li>
-            <li class="{{ Request::is('*events*') ? 'active' : '' }}">
+            <li class="{{ Request::is('*events*') || Request::is('*event-form*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('events.index') }}"><i class="fas fa-star"></i>
                     <span>Events</span></a>
             </li>

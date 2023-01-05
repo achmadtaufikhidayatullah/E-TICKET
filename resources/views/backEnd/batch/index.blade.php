@@ -54,7 +54,7 @@
                                                 {{ $batch->events->name }}
                                             </td>
                                             <td>
-                                                +{{ $batch->name }}
+                                                {{ $batch->name }}
                                             </td>
                                             <td>
                                                 {{ date('d/m/Y', strtotime($batch->start_date)) }} -

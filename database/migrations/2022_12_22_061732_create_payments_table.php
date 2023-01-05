@@ -15,12 +15,14 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
             $table->foreignId('booked_ticket_id')->constrained();
-            $table->string('bank_name');
-            $table->string('account_number');
-            $table->string('account_holder_name');
-            $table->string('total_price');
-            $table->string('payment_proof');
+            $table->string('bank_name')->nullable();
+            $table->string('account_number')->nullable();
+            $table->string('account_holder_name')->nullable();
+            $table->integer('grand_total')->nullable();
+            $table->integer('unique_payment_code')->nullable();
+            $table->string('payment_proof')->nullable();
             $table->string('status');
             $table->timestamps();
         });

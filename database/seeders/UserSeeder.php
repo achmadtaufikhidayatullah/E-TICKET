@@ -24,5 +24,16 @@ class UserSeeder extends Seeder
             'remember_token' => '',
             'status' => 'Aktif'
         ]);
+        
+        User::create([
+            'name' => 'Member',
+            'email' => 'member@gmail.com',
+            'password' => bcrypt('123'),
+            'role' => 'Member',
+            'no_ktp' => '1234123412341234',
+            'phone_number' => '081999888777',
+            'remember_token' => '',
+            'status' => 'Aktif'
+        ]);
     }
 }

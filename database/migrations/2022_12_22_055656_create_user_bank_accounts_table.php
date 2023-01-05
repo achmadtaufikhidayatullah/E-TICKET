@@ -16,7 +16,8 @@ class CreateUserBankAccountsTable extends Migration
         Schema::create('user_bank_accounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('bank_id')->constrained();
+            $table->string('bank_code');
+            $table->string('bank_name');
             $table->string('account_number');
             $table->string('account_holder_name');
             $table->string('status');

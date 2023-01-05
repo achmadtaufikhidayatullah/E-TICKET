@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookedTicket;
 use App\Models\Event;
 use App\Models\EventBatch;
+use App\Models\Payment;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class EventController extends Controller
@@ -246,6 +250,54 @@ class EventController extends Controller
     public function eventForm(EventBatch $batch)
     {
         //   dd($batch);
-        return view('backEnd.event.form', compact('batch'));
+        $setting = Setting::first();
+        return view('backEnd.event.form', compact('batch', 'setting'));
+    }
+
+    public function purchase(Request $request, EventBatch $batch)
+    {
+        do {
+            $code = Str::upper(Str::random(8));
+            $bookedTicket = BookedTicket::where('code', $code)->first();
+        } while( ! empty($bookedTicket));
+
+        $totalPrice = $batch->price * $request->quantity;
+        $tax = (Setting::first()->tax_percentage / 100) * $totalPrice;
+
+        $bookedTicket = BookedTicket::create([
+            'event_batch_id' => $batch->id,
+            'code' => $code,
+            'user_id' => auth()->user()->id,
+            'price_per_ticket' => $batch->price,
+            'quantity' => $request->quantity,
+            'tax' => $tax,
+            'sub_total' => $totalPrice,
+            'status' => 'waiting_for_payment'
+        ]);
+
+        $uniquePaymentCode = rand(1, 999);
+
+        $payment = Payment::create([
+            'code' => $code,
+            'booked_ticket_id' => $bookedTicket->id,
+            'bank_name' => NULL,
+            'account_number' => NULL,
+            'account_holder_name' => NULL,
+            'unique_payment_code' => $uniquePaymentCode,
+            'grand_total' => $bookedTicket->sub_total + $bookedTicket->tax + $uniquePaymentCode,
+            'payment_proof' => NULL,
+            'status' => 'validating_payment',
+        ]);
+
+        return redirect()->route('ticket.index')
+            ->with('message', 'Berhasil melakukan pemesanan tiket. Silahkan lanjutkan ke pembayaran.')
+            ->with('status', 'success');
+    }
+
+    public function uploadPayment($code)
+    {
+        $bookedTicket = BookedTicket::where('code', $code)->firstOrFail();
+        $setting = Setting::first();
+        return view('backEnd.event.form', compact('batch', 'setting'));
     }
 }

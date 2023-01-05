@@ -11,10 +11,10 @@ class Event extends Model
 
     protected $table = 'events';
     public $primaryKey = 'id';
-    public $incrementing = false;
     public $timestamps = true;
     protected $fillable = [
         'name',
+        'code',
         'start_date',
         'end_date',
         'description',
@@ -22,4 +22,8 @@ class Event extends Model
         'contact_persons',
         'status',
     ];
+
+    public function batches() {
+        return $this->hasMany(EventBatch::class, 'id', 'event_id');
+    }
 }

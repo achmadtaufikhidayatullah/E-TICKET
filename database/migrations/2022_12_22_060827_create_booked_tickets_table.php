@@ -15,10 +15,13 @@ class CreateBookedTicketsTable extends Migration
     {
         Schema::create('booked_tickets', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
             $table->foreignId('event_batch_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->string('price');
-            $table->string('quantity');
+            $table->integer('price_per_ticket');
+            $table->integer('quantity');
+            $table->integer('tax');
+            $table->integer('sub_total');
             $table->string('status');
             $table->timestamps();
         });

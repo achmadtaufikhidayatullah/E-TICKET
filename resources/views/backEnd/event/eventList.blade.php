@@ -59,7 +59,7 @@
                                              </a>
                                           </td>
                                           <td>
-                                              +{{ $event->contact_persons }}
+                                              {{ $event->contact_persons }}
                                           </td>
                                           <td>
                                               {{ date('d/m/Y', strtotime($event->start_date)) }} - {{ date('d/m/Y', strtotime($event->end_date)) }}

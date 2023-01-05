@@ -44,6 +44,7 @@ Route::get('/event-list', [App\Http\Controllers\EventController::class, 'indexAd
 
 // ==== events buy route ====
 Route::get('/event-form/{batch}', [App\Http\Controllers\EventController::class, 'eventForm'])->name('events.form');
+Route::post('/event/{batch}/purchase', [App\Http\Controllers\EventController::class, 'purchase'])->name('events.purchase');
 
 // ==== batch route ====
 Route::get('/event-batch', [App\Http\Controllers\EventController::class, 'indexBatch'])->name('batch.index');
@@ -54,6 +55,9 @@ Route::put('/event-batch/{batch}', [App\Http\Controllers\EventController::class,
 
 // Tickets Route
 Route::resource('ticket', TicketController::class);
+
+// Payment Route
+Route::post('/payment/{code}/upload', [App\Http\Controllers\PaymentController::class, 'upload'])->name('payments.upload');
 
 Route::resource('users', UserController::class);
 

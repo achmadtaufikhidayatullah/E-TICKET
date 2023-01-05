@@ -17,11 +17,11 @@ class CreateEventBatchesTable extends Migration
             $table->id();
             $table->foreignId('event_id')->constrained();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('price');
-            $table->integer('max_ticket');
+            $table->integer('max_ticket')->nullable();
             $table->string('status');
             $table->timestamps();
         });

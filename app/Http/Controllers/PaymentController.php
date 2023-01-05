@@ -82,4 +82,12 @@ class PaymentController extends Controller
     {
         //
     }
+
+    public function upload(Request $request, $code) {
+        dd($request->all());
+        $payment = Payment::whereCode($code)->firstOrFail();
+        $payment->update([
+            'bank_name' => $request->bank_name,
+        ]);
+    }
 }

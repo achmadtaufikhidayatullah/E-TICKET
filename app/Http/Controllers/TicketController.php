@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookedTicket;
+use App\Models\Setting;
 use App\Models\Ticket;
+use App\Models\UserBankAccount;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -14,7 +17,10 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return view('backEnd.tickets.index');
+        $setting = Setting::first();
+        $ownerAccounts = UserBankAccount::ownerAccounts();
+        $bookedTickets = BookedTicket::where('user_id', auth()->user()->id)->get();
+        return view('backEnd.tickets.index', compact('bookedTickets', 'setting', 'ownerAccounts'));
     }
 
     /**

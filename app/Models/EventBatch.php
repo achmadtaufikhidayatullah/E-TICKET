@@ -24,7 +24,7 @@ class EventBatch extends Model
         'status',
     ];
 
-    public function events(){
-   	    return $this->belongsTo(Event::class, 'event_id', 'id');
+    public function event() {
+        return $this->belongsTo(Event::class, 'event_id', 'id');
     }
 }
