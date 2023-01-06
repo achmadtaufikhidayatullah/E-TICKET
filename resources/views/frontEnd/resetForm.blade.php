@@ -8,7 +8,7 @@
             <h1>Reset Password</h3>
         </div>
         <div class="card-body mt-3">
-            <form action="{{ route('forget.send') }}" method="POST">
+            <form action="{{ route('forget.reset') }}" method="POST">
                @csrf
                 <div class="mb-4">
                     <label for="email" class="form-label">Your Email Address</label>

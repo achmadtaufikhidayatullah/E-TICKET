@@ -37,6 +37,7 @@ Route::get('/verification-success', [App\Http\Controllers\UserController::class,
 Route::get('/forget-password', [App\Http\Controllers\UserController::class, 'emailForm'])->name('forget.emailForm');
 Route::post('/send-reset-password', [App\Http\Controllers\UserController::class, 'sendResetPasswordMail'])->name('forget.send');
 Route::get('/forget-password/{email}', [App\Http\Controllers\UserController::class, 'resetForm'])->name('forget.resetForm');
+Route::post('/forget-password', [App\Http\Controllers\UserController::class, 'resetPassword'])->name('forget.reset');
 
 
 

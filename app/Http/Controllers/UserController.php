@@ -212,4 +212,13 @@ class UserController extends Controller
 
         return view('frontEnd.resetForm', compact('email'));
     }
+
+    public function resetPassword(Request $request)
+    {
+         // $user = User::where('email' , $email)->first();
+
+         dd($request->all());
+
+        return view('frontEnd.resetForm', compact('email'));
+    }
 }
