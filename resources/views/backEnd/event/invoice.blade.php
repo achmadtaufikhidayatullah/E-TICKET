@@ -67,7 +67,7 @@
                                     <div class="col-lg-12">
                                         <div class="invoice-title">
                                             <h2><img src="{{ asset('FrontAssets/img/logo.png') }}" alt="" width="120"></h2>
-                                            <div class="invoice-number">Order Code: {{ $payment->code }}</div>
+                                            <div class="invoice-number mt-lg-n5 mt-md-n5 mt-0">Order Code: {{ $payment->code }}</div>
                                         </div>
                                         <hr>
                                         <div class="row">
@@ -88,11 +88,13 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
+                                                @if($payment->status == "validating_payment")
                                                 <address>
                                                     <strong>Payment Method:</strong><br>
                                                     {{ $payment->bank_name }} {{ $payment->account_number }}<br>
                                                     A/N {{ $payment->account_holder_name }}
                                                 </address>
+                                                @endif
                                             </div>
                                             <div class="col-md-6 text-md-right">
                                                 <address>
