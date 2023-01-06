@@ -20,7 +20,7 @@
                     <label for="password" class="form-label">Your Password</label>
                     <div class="input-group">
                         <input type="password" class="form-control shadow rounded-pill" placeholder="Input your Password for login"
-                            aria-label="Input your Password for login" aria-describedby="basic-addon2" id="password" name="password">
+                            aria-label="Input your Password for login" aria-describedby="basic-addon2" id="password" name="password" required>
                         <button class="btn btn-outline-secondary rounded-pill shadow ms-1" type="button" id="btn-pass"><i
                                 class="fa-regular fa-eye" id="btn-eye-pass"></i></button>
                     </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -55,6 +56,11 @@ class LoginController extends Controller
                   ];
                   $this->validate($request, $roles, $customessage);
 
+                  
+                  if (!Auth::attempt(['email' => $data['email'] , 'password' => $data['password']])) {
+                     return redirect()->back()->with('toast_error', 'Your email or password is incorrect!');
+                  }
+                  // dd(Auth::attempt(['password' => $data['password']]));
                   if (Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 'Aktif'])) {
                         if(auth()->user()->role == "Super Admin" || auth()->user()->role == "Admin") {
                               return redirect()->route('dashboard');
