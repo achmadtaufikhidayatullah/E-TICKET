@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('frontEnd.index');
+    if(auth()->user()->role == "Super Admin" || auth()->user()->role == "Admin") {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('events.index');
 })->middleware('auth')->name('homeTest');
 
 Route::get('/registration', function(){
