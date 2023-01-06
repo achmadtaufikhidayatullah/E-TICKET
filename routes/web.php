@@ -32,6 +32,14 @@ Route::get('/test-mail', [App\Http\Controllers\UserController::class, 'email'])-
 Route::get('/verification/{id}', [App\Http\Controllers\UserController::class, 'verification'])->name('regist.verification');
 Route::get('/verification-success', [App\Http\Controllers\UserController::class, 'verificationSuccess'])->name('regist.verification.success');
 
+
+// Forget Password Routes
+Route::get('/forget-password', [App\Http\Controllers\UserController::class, 'emailForm'])->name('forget.emailForm');
+Route::post('/send-reset-password', [App\Http\Controllers\UserController::class, 'sendResetPasswordMail'])->name('forget.send');
+Route::get('/forget-password/{email}', [App\Http\Controllers\UserController::class, 'resetForm'])->name('forget.resetForm');
+
+
+
 // ==== events route ====
 Route::resource('events', EventController::class);
 
