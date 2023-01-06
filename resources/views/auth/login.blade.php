@@ -20,7 +20,7 @@
                     <label for="password" class="form-label">Your Password</label>
                     <div class="input-group">
                         <input type="password" class="form-control shadow rounded-pill" placeholder="Input your Password for login"
-                            aria-label="Input your Password for login" aria-describedby="basic-addon2" id="password" name="password">
+                            aria-label="Input your Password for login" aria-describedby="basic-addon2" id="password" name="password" required>
                         <button class="btn btn-outline-secondary rounded-pill shadow ms-1" type="button" id="btn-pass"><i
                                 class="fa-regular fa-eye" id="btn-eye-pass"></i></button>
                     </div>
@@ -31,6 +31,17 @@
                 </div>
             </form>
         </div>
+    </div>
+
+    <div class="aditional-section mt-4 m-auto w-50 card-100-mobile">
+      <div class="row">
+         <div class="col-6">
+            <a href="{{ route('forget.emailForm') }}" class="btn btn-danger btn-sm rounded-pill">Forget Password ?</a>
+         </div>
+         <div class="col-6 text-end">
+            <a href="https://bubblix.id/yolo-fest/" class="btn btn-sm btn-warning rounded-pill"><i class="fa-solid fa-arrow-left"></i> Back to Yolo Fest</a>
+         </div>
+      </div>
     </div>
 </div>
 

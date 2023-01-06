@@ -7,9 +7,9 @@
         <div class="d-flex">
             @if(url()->current() == route('login'))
             <a href="{{ route('regist') }}" class="btn btn-md btn-warning-gradient rounded-pill shadow">Register</a>
-            @elseif (url()->current() == route('regist') || url()->current() == route('regist.store') || url()->current() == route('regist.verification.success'))
+            @elseif (url()->current() == route('regist') || url()->current() == route('regist.store') || url()->current() == route('regist.verification.success') || url()->current() == route('forget.emailForm'))
             <a href="{{ route('login') }}" class="btn btn-md btn-warning-gradient rounded-pill shadow">Login</a>
-            @else
+            {{-- @else
             <div class="btn-group">
                 <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}" alt="" width="50"
                     class="rounded-circle dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -21,7 +21,7 @@
                         </form>
                     </li>
                 </ul>
-            </div>
+            </div> --}}
             @endif
         </div>
     </div>

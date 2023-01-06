@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SenEmail;
+use App\Mail\resetPassword;
 
 class UserController extends Controller
 {
@@ -179,5 +180,54 @@ class UserController extends Controller
         $name = $user->name;
 
         return redirect()->route('regist.verification.success')->with(compact('name'));
+    }
+
+    public function emailForm()
+    {
+        return view('frontEnd.emailForm');
+    }
+
+    public function sendResetPasswordMail(Request $request)
+    {
+         $user = User::where('email' , $request->email)->first();
+
+         if ($user == null) {
+            return redirect()->back()->with('toast_error', 'Your email has not been registered!');
+         }
+
+         $email = $request->email;
+
+         Mail::to($email)->send(new resetPassword($email));
+
+         // dd($user);
+
+        return view('frontEnd.resetRequest');
+    }
+
+    public function resetForm($email)
+    {
+         // $user = User::where('email' , $email)->first();
+
+         // dd($email);
+
+        return view('frontEnd.resetForm', compact('email'));
+    }
+
+    public function resetPassword(Request $request)
+    {
+
+         if ($request->password != $request->confirm_password) {
+               return redirect()->back()->with('toast_error', 'Confirmation Email does not match with entered email!')->withInput();
+         }
+
+         $user = User::where('email' , $request->email)->first();
+         
+         // dd($request->password);
+         $user->update([
+            'password' => bcrypt($request->password),
+         ]);
+
+
+        return view('frontEnd.resetSuccess');
     }
 }
