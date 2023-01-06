@@ -208,8 +208,8 @@ class UserController extends Controller
     {
          // $user = User::where('email' , $email)->first();
 
-         dd($email);
+         // dd($email);
 
-        return view('frontEnd.resetRequest');
+        return view('frontEnd.resetForm', compact('email'));
     }
 }
