@@ -22,6 +22,25 @@
 
         <div class="section-body">
             <div class="row">
+            <div class="col-12">
+                    <div class="card shadow-lg">
+                        <div class="card-header">
+                            <h4 class="text-warning">Ticket Sold</h4>
+                        </div>
+                        <div class="card-body mt-0 pt-0">
+                            <div class="row">
+                                @foreach($event->batches as $batch)
+                                    <div class="col-2">
+                                        <h6>{{ $batch->name }}</h6>
+                                        <h4 class="text-dark">
+                                            <span class="{{ $batch->quota() >= $batch->max_ticket ? 'text-danger' : 'text-success' }}">{{ $batch->quota() }}</span> / {{ $batch->max_ticket }}
+                                        </h4>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-12">
                     <div class="card shadow-lg">
                         <div class="card-header">

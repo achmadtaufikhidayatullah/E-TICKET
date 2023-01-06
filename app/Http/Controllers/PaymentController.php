@@ -100,6 +100,12 @@ class PaymentController extends Controller
         // dd($request->all());
         $payment = Payment::whereCode($code)->firstOrFail();
 
+        if($payment->bookedTicket->batch->isFull()) {
+            return redirect()->route('ticket.index')
+                ->with('message', 'Kuota telah habis.')
+                ->with('status', 'error');
+        }
+
         $payment->update([
             'bank_code' => $request->bank_code,
             'bank_name' => $request->bank_name,
@@ -121,6 +127,13 @@ class PaymentController extends Controller
                 'account_number' => $request->account_number,
                 'account_holder_name' => $request->account_holder_name,
                 'status' => 'member_account'
+            ]);
+        } else {
+            auth()->user()->userBankAccount->update([
+                'bank_code' => $request->bank_code,
+                'bank_name' => $request->bank_name,
+                'account_number' => $request->account_number,
+                'account_holder_name' => $request->account_holder_name,
             ]);
         }
 

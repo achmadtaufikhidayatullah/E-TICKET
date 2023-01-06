@@ -131,14 +131,20 @@
                                                 </li>
                                                 <li class="list-group-item">
                                                     <div class="row">
+                                                        <div class="col-6">Sub Total</div>
+                                                        <div class="col-6 font-weight-bold" id="col-sub-total"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
                                                         <div class="col-6">Tax <span id="tax-percentage" data-tax="{{ $setting->tax_percentage }}">({{ $setting->tax_percentage }}%)</span></div>
                                                         <div class="col-6 font-weight-bold" id="col-tax"></div>
                                                     </div>
                                                 </li>
                                                 <li class="list-group-item">
                                                     <div class="row">
-                                                        <div class="col-6">Sub Total</div>
-                                                        <div class="col-6 font-weight-bold" id="col-sub-total"></div>
+                                                        <div class="col-6">Grand Total</div>
+                                                        <div class="col-6 font-weight-bold" id="col-grand-total"></div>
                                                     </div>
                                                 </li>
                                             </ul>

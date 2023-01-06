@@ -344,7 +344,7 @@ class EventController extends Controller
             $eventBatch[] = $batch->id;
         }
 
-        $bookedTickets = BookedTicket::whereIn('event_batch_id', $eventBatch)->get();
+        $bookedTickets = BookedTicket::whereIn('event_batch_id', $eventBatch)->latest()->get();
         return view('backEnd.event.payment', compact('event', 'bookedTickets'));
     }
 }

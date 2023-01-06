@@ -66,16 +66,19 @@ Route::middleware('role:Super Admin,Admin')->group(function() {
     Route::get('/payment/{code}/reject', [App\Http\Controllers\PaymentController::class, 'reject'])->name('payments.reject');
 });
 
-// Tickets Route
-Route::resource('ticket', TicketController::class);
+Route::middleware('auth')->group(function() {
+    // Tickets Route
+    Route::resource('ticket', TicketController::class);
+    
+    // ==== events buy route ====
+    Route::get('/event-form/{batch}', [App\Http\Controllers\EventController::class, 'eventForm'])->name('events.form');
+    Route::post('/event/{batch}/purchase', [App\Http\Controllers\EventController::class, 'purchase'])->name('events.purchase');
+    
+    // Payment Route
+    Route::post('/payment/{code}/upload', [App\Http\Controllers\PaymentController::class, 'upload'])->name('payments.upload');
+    Route::get('/payment/{code}/invoice', [App\Http\Controllers\PaymentController::class, 'invoice'])->name('payments.invoice');
+});
 
-// ==== events buy route ====
-Route::get('/event-form/{batch}', [App\Http\Controllers\EventController::class, 'eventForm'])->name('events.form');
-Route::post('/event/{batch}/purchase', [App\Http\Controllers\EventController::class, 'purchase'])->name('events.purchase');
-
-// Payment Route
-Route::post('/payment/{code}/upload', [App\Http\Controllers\PaymentController::class, 'upload'])->name('payments.upload');
-Route::get('/payment/{code}/invoice', [App\Http\Controllers\PaymentController::class, 'invoice'])->name('payments.invoice');
 
 Auth::routes();
 
