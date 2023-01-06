@@ -203,4 +203,13 @@ class UserController extends Controller
 
         return view('frontEnd.resetRequest');
     }
+
+    public function resetForm($email)
+    {
+         // $user = User::where('email' , $email)->first();
+
+         dd($email);
+
+        return view('frontEnd.resetRequest');
+    }
 }
