@@ -36,10 +36,13 @@
     <div class="aditional-section mt-4 m-auto w-50 card-100-mobile">
       <div class="row">
          <div class="col-6">
-            <a href="{{ route('forget.emailForm') }}" class="btn btn-danger btn-sm rounded-pill">Forget Password ?</a>
+            <a href="{{ route('forget.emailForm') }}" class="btn btn-danger btn-sm rounded-pill bg-gradient">Forget Password ?</a>
          </div>
          <div class="col-6 text-end">
-            <a href="https://bubblix.id/yolo-fest/" class="btn btn-sm btn-warning rounded-pill"><i class="fa-solid fa-arrow-left"></i> Back to Yolo Fest</a>
+            <a href="https://bubblix.id/yolo-fest/" class="btn btn-sm btn-warning rounded-pill bg-gradient"><i class="fa-solid fa-arrow-left"></i> Back to Yolo Fest</a>
+         </div>
+         <div class="col-12 text-center mt-5">
+            <a href="{{ route('resend.form') }}" class="btn btn-md btn-secondary rounded-pill bg-gradient"><i class="fa-regular fa-envelope"></i> Resend Verification Mail</a>
          </div>
       </div>
     </div>

@@ -230,4 +230,27 @@ class UserController extends Controller
 
         return view('frontEnd.resetSuccess');
     }
+
+    public function resendForm()
+    {
+
+        return view('frontEnd.resendForm');
+    }
+
+    public function resendEmailVerification(Request $request)
+    {
+         $user = User::where('email' , $request->email)->first();
+
+         if ($user == null) {
+            return redirect()->back()->with('toast_error', 'Your email has not been registered!');
+         }
+
+         $UserId = $user->id;
+
+         // dd($UserId);
+
+         Mail::to($request->email)->send(new SenEmail($UserId));
+
+         return view('frontEnd.resendSuccess');
+    }
 }

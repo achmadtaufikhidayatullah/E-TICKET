@@ -39,6 +39,9 @@ Route::post('/send-reset-password', [App\Http\Controllers\UserController::class,
 Route::get('/forget-password/{email}', [App\Http\Controllers\UserController::class, 'resetForm'])->name('forget.resetForm');
 Route::post('/forget-password', [App\Http\Controllers\UserController::class, 'resetPassword'])->name('forget.reset');
 
+// Resend Email Verification Routes
+Route::get('/resend-form', [App\Http\Controllers\UserController::class, 'resendForm'])->name('resend.form');
+Route::post('/resend-form', [App\Http\Controllers\UserController::class, 'resendEmailVerification'])->name('resend.emailVerification');
 
 
 // ==== events route ====
