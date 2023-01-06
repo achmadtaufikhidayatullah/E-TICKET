@@ -16,7 +16,7 @@ class SettingSeeder extends Seeder
     {
         Setting::create([
             'active_event' => 1,
-            'tax_percentage' => 5,
+            'tax_percentage' => 10,
         ]);
     }
 }
