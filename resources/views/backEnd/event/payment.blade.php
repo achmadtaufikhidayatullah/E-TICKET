@@ -139,15 +139,15 @@
                                                         {{ $bookedTicket->quantity }}
                                                     </td>
                                                     <td>
-                                                        <a target="_blank" href="{{ Storage::url($bookedTicket->payment->payment_proof) }}" class="btn btn-warning">
+                                                        {{-- <a target="_blank" href="{{ Storage::url($bookedTicket->payment->payment_proof) }}" class="btn btn-warning">
                                                             <i class="fa fa-download"></i>
-                                                        </a>
+                                                        </a> --}}
                                                     </td>
                                                     <td>
                                                         <div class="badge badge-warning">Waiting For Payment</div>
                                                     </td>
                                                     <td>
-                                                        <a class="btn btn-success btn-action mr-1" href="{{ route('payments.approve', $bookedTicket->payment->code) }}" title="Approve"><i class="fas fa-check"></i></a>
+                                                        {{-- <a class="btn btn-success btn-action mr-1" href="{{ route('payments.approve', $bookedTicket->payment->code) }}" title="Approve"><i class="fas fa-check"></i></a> --}}
                                                         <a class="btn btn-danger btn-action mr-1" href="{{ route('payments.reject', $bookedTicket->payment->code) }}" title="Reject"><i class="fas fa-times"></i></a>
                                                     </td>
                                                 </tr>
