@@ -60,6 +60,7 @@
                                             <th>Payment Approved At</th>
                                             <th>Buyer</th>
                                             <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -91,6 +92,13 @@
                                                 @else
                                                 <div class="badge badge-danger">Book / Payment Rejected</div>
                                                 @endif
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-danger btn-action btn-delete"
+                                                        data-toggle="tooltip"
+                                                        title="Delete"
+                                                        data-confirm="Delete Ticket Code: {{ $ticket->code }} ?|This action can not be undone. Do you want to continue?"
+                                                        data-confirm-yes="deleteItem('{{ route('ticket.destroy', $ticket->id) }}')"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach

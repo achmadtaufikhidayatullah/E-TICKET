@@ -154,17 +154,21 @@ class PaymentController extends Controller
             'status' => 'payment_successful'
         ]);
 
-        for($i = 0; $i < $payment->bookedTicket->quantity; $i++) {
-            do {
-                $code = $payment->code . Str::upper(Str::random(4));
-                $ticket = Ticket::where('code', $code)->first();
-            } while( ! empty($ticket));
-
-            Ticket::create([
-                'code' => $code,
-                'booked_ticket_id' => $payment->bookedTicket->id,
-                'status' => 'payment_successful'
-            ]);
+        // Cek apakah pembayaran sudah pernah di-acc dan dicetak tiketnya
+        $checkTicket = Ticket::where('booked_ticket_id', $payment->bookedTicket->id)->first();
+        if( ! $checkTicket) {
+            for($i = 0; $i < $payment->bookedTicket->quantity; $i++) {
+                do {
+                    $code = $payment->code . Str::upper(Str::random(4));
+                    $ticket = Ticket::where('code', $code)->first();
+                } while( ! empty($ticket));
+    
+                Ticket::create([
+                    'code' => $code,
+                    'booked_ticket_id' => $payment->bookedTicket->id,
+                    'status' => 'payment_successful'
+                ]);
+            }
         }
 
         $invoiceLink = route('payments.invoice', $payment->code);
