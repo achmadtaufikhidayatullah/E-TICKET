@@ -215,10 +215,19 @@ class UserController extends Controller
 
     public function resetPassword(Request $request)
     {
-         // $user = User::where('email' , $email)->first();
 
-         dd($request->all());
+         if ($request->password != $request->confirm_password) {
+               return redirect()->back()->with('toast_error', 'Confirmation Email does not match with entered email!')->withInput();
+         }
 
-        return view('frontEnd.resetForm', compact('email'));
+         $user = User::where('email' , $request->email)->first();
+         
+         // dd($request->password);
+         $user->update([
+            'password' => bcrypt($request->password),
+         ]);
+
+
+        return view('frontEnd.resetSuccess');
     }
 }

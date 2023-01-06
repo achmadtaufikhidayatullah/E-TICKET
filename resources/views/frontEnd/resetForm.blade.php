@@ -9,18 +9,16 @@
         </div>
         <div class="card-body mt-3">
             <form action="{{ route('forget.reset') }}" method="POST">
-               @csrf
-                <div class="mb-4">
-                    <label for="email" class="form-label">Your Email Address</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Your Email ex: member@gmail.com"
-                        required>
-                </div>
+                @csrf
+                <input type="hidden" class="form-control" id="email" name="email" value="{{ $email }}"
+                    placeholder="Your Email ex: member@gmail.com" required>
 
                 <div class="mb-4">
                     <label for="password" class="form-label">Your New Password</label>
                     <div class="input-group">
                         <input type="password" class="form-control" placeholder="Input your Password for login"
-                            aria-label="Input your Password for login" aria-describedby="basic-addon2" id="password" name="password" required>
+                            aria-label="Input your Password for login" aria-describedby="basic-addon2" id="password"
+                            name="password" required>
                         <button class="btn btn-outline-secondary" type="button" id="btn-pass"><i
                                 class="fa-regular fa-eye" id="btn-eye-pass"></i></button>
                     </div>
