@@ -331,7 +331,7 @@ class EventController extends Controller
         }
 
         $bookedTickets = BookedTicket::whereIn('event_batch_id', $eventBatch)->pluck('id');
-        $tickets = Ticket::whereIn('booked_ticket_id', $bookedTickets)->get();
+        $tickets = Ticket::whereIn('booked_ticket_id', $bookedTickets)->latest()->get();
 
         return view('backEnd.event.ticket', compact('tickets', 'event'));
     }
