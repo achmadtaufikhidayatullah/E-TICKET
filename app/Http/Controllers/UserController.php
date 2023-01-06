@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SenEmail;
 use App\Mail\resetPassword;
+use App\Mail\VerificationMail;
 
 class UserController extends Controller
 {
@@ -93,7 +94,7 @@ class UserController extends Controller
 
         $UserId = $user->id;
 
-        Mail::to($request->email)->send(new SenEmail($UserId));
+        Mail::to($request->email)->send(new VerificationMail($UserId));
 
         return view('frontEnd.registSuccess');
     }
@@ -165,7 +166,7 @@ class UserController extends Controller
     public function email()
     {
         $UserId = 1;
-        Mail::to('achmadtaufikhidayatullah6@gmail.com')->send(new SenEmail($UserId));
+        Mail::to('achmadtaufikhidayatullah6@gmail.com')->send(new VerificationMail($UserId));
         return 'Berhasil';
     }
 
@@ -249,7 +250,7 @@ class UserController extends Controller
 
          // dd($UserId);
 
-         Mail::to($request->email)->send(new SenEmail($UserId));
+         Mail::to($request->email)->send(new VerificationMail($UserId));
 
          return view('frontEnd.resendSuccess');
     }
