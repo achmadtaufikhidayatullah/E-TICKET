@@ -53,7 +53,6 @@ class EventController extends Controller
         $validate = $request->validate([
             'name' => 'required',
             'image' => 'file|mimes:jpg,bmp,png,jpeg',
-            'description' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
             'contact_persons' => 'required',
@@ -86,7 +85,23 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        // 
+        $soldTicket = 0;
+        $eventBatch = [];
+        
+        foreach($event->batches as $batch) {
+            $eventBatch[] = $batch->id;
+        }
+
+        $bookedTickets = BookedTicket::whereIn('event_batch_id', $eventBatch)->get();
+        
+        foreach($event->batches as $batch) {
+            $soldTicket += $batch->quota();
+        }
+
+        $earnings = Payment::whereIn('booked_ticket_id', $bookedTickets->where('status', 'payment_successful')->pluck('id'))
+            ->where('status', 'payment_successful')->sum('grand_total');
+
+        return view('backEnd.event.show', compact('bookedTickets', 'soldTicket', 'earnings', 'event'));
     }
 
     /**
@@ -141,7 +156,6 @@ class EventController extends Controller
 
         $validate = $request->validate([
             'name' => 'required',
-            'description' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
             'contact_persons' => 'required',
@@ -199,7 +213,6 @@ class EventController extends Controller
         $validate = $request->validate([
             'event_id' => 'required',
             'name' => 'required',
-            'description' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
             'price' => 'required',
@@ -208,10 +221,10 @@ class EventController extends Controller
 
         $validate = array_merge($validate, ['status' => 'Aktif']);
 
-        $event = EventBatch::create($validate);
+        $batch = EventBatch::create($validate);
 
-        return redirect()->route('batch.index')
-            ->with('message', 'Berhasil menambahkan event batch baru.')
+        return redirect()->route('events.show', $batch->event->id)
+            ->with('message', 'Berhasil menambahkan batch baru.')
             ->with('status', 'success');
     }
 
@@ -233,7 +246,6 @@ class EventController extends Controller
         $validate = $request->validate([
             'event_id' => 'required',
             'name' => 'required',
-            'description' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
             'price' => 'required',
@@ -244,7 +256,7 @@ class EventController extends Controller
 
         $batch->update($validate);
 
-        return redirect()->route('batch.index')
+        return redirect()->route('events.show', $batch->event->id)
             ->with('message', 'Berhasil mengubah data batch.')
             ->with('status', 'success');
     }
@@ -322,29 +334,17 @@ class EventController extends Controller
         return view('backEnd.event.form', compact('batch', 'setting'));
     }
 
-    public function ticket(Event $event)
+    public function ticket(EventBatch $batch)
     {
-        $eventBatch = [];
-        
-        foreach($event->batches as $batch) {
-            $eventBatch[] = $batch->id;
-        }
-
-        $bookedTickets = BookedTicket::whereIn('event_batch_id', $eventBatch)->pluck('id');
+        $bookedTickets = BookedTicket::where('event_batch_id', $batch->id)->pluck('id');
         $tickets = Ticket::whereIn('booked_ticket_id', $bookedTickets)->latest()->get();
 
-        return view('backEnd.event.ticket', compact('tickets', 'event'));
+        return view('backEnd.event.ticket', compact('tickets', 'batch'));
     }
 
-    public function payment(Event $event)
+    public function payment(EventBatch $batch)
     {
-        $eventBatch = [];
-        
-        foreach($event->batches as $batch) {
-            $eventBatch[] = $batch->id;
-        }
-
-        $bookedTickets = BookedTicket::whereIn('event_batch_id', $eventBatch)->latest()->get();
-        return view('backEnd.event.payment', compact('event', 'bookedTickets'));
+        $bookedTickets = BookedTicket::where('event_batch_id', $batch->id)->latest()->get();
+        return view('backEnd.event.payment', compact('batch', 'bookedTickets'));
     }
 }

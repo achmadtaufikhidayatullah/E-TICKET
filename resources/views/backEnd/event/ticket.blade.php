@@ -1,6 +1,6 @@
 @extends('backEnd.layouts.app')
 
-@section('title', $event->name)
+@section('title', $batch->event->name)
 
 @push('style')
 <!-- CSS Libraries -->
@@ -12,11 +12,12 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header shadow-lg">
-            <h1>Event Tickets - {{ $event->name }}</h1>
+            <h1>{{ $batch->event->name }} ({{ $batch->name }}) &mdash; Ticket</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item"><a class="text-warning" href="{{ route('home') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a class="text-warning" href="{{ route('event.index.admin') }}">Event</a></div>
-                <div class="breadcrumb-item active">Event Ticket</div>
+                <div class="breadcrumb-item"><a class="text-warning" href="{{ route('events.show', $batch->event->id) }}">{{ $batch->event->name }}</a></div>
+                <div class="breadcrumb-item active">{{ $batch->name }}'s Ticket</div>
             </div>
         </div>
 
@@ -24,37 +25,26 @@
             <div class="row">
             <div class="col-12">
                     <div class="card shadow-lg">
-                        <div class="card-header">
-                            <h4 class="text-warning">Ticket Sold</h4>
-                        </div>
-                        <div class="card-body mt-0 pt-0">
+                        <div class="card-body">
                             <div class="row">
-                                @foreach($event->batches as $batch)
-                                    <div class="col-2">
-                                        <h6>{{ $batch->name }}</h6>
-                                        <h4 class="text-dark">
-                                            <span class="{{ $batch->quota() >= $batch->max_ticket ? 'text-danger' : 'text-success' }}">{{ $batch->quota() }}</span> / {{ $batch->max_ticket }}
-                                        </h4>
-                                    </div>
-                                @endforeach
+                                <div class="col-2">
+                                    <h6>Ticket Sold</h6>
+                                    <h4 class="text-dark">
+                                        <span class="{{ $batch->quota() >= $batch->max_ticket ? 'text-danger' : 'text-success' }}">{{ $batch->quota() }}</span> / {{ $batch->max_ticket }}
+                                    </h4>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="card shadow-lg">
-                        <div class="card-header">
-                            <h4 class="text-warning">Ticket List</h4>
-                            <div class="card-header-action">
-                            </div>
-                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table-striped table datatables">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Event / Batch</th>
                                             <th>Ticket Code</th>
                                             <th>Payment Code</th>
                                             <th>Payment Approved At</th>
@@ -67,9 +57,6 @@
                                         @foreach($tickets as $ticket)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>
-                                                {{ $ticket->bookedTicket->batch->event->name . ' / ' . $ticket->bookedTicket->batch->name }}
-                                            </td>
                                             <td>
                                                 {{ $ticket->code }}
                                             </td>
@@ -89,16 +76,20 @@
                                                 <div class="badge badge-info">Validating Payment</div>
                                                 @elseif($ticket->status == "payment_successful")
                                                 <div class="badge badge-success">Payment Successful</div>
+                                                @elseif($ticket->status == "cancelled")
+                                                <div class="badge badge-danger">Ticket Cancelled</div>
                                                 @else
                                                 <div class="badge badge-danger">Book / Payment Rejected</div>
                                                 @endif
                                             </td>
                                             <td>
+                                                @if($ticket->status != "cancelled")
                                                 <a class="btn btn-danger btn-action btn-delete"
                                                         data-toggle="tooltip"
-                                                        title="Delete"
-                                                        data-confirm="Delete Ticket Code: {{ $ticket->code }} ?|This action can not be undone. Do you want to continue?"
+                                                        title="Cancel"
+                                                        data-confirm="Cancel Ticket Code: {{ $ticket->code }} ?| Do you want to continue?"
                                                         data-confirm-yes="deleteItem('{{ route('ticket.destroy', $ticket->id) }}')"><i class="fas fa-trash"></i></a>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

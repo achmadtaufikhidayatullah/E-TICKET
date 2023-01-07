@@ -11,7 +11,6 @@ class EventBatch extends Model
 
     protected $table = 'event_batches';
     public $primaryKey = 'id';
-    public $incrementing = false;
     public $timestamps = true;
     protected $fillable = [
         'event_id',
@@ -35,7 +34,13 @@ class EventBatch extends Model
 
     public function quota()
     {
-        return $this->bookedTickets->where('status', 'payment_successful')->sum('quantity');
+        $quota = 0;
+        $bookedTickets = $this->bookedTickets->where('status', 'payment_successful');
+        foreach($bookedTickets as $bookedTicket) {
+            $quota += $bookedTicket->tickets->where('status', 'payment_successful')->count();
+        }
+
+        return $quota;
     }
 
     public function isFull()

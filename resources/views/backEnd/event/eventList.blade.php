@@ -42,7 +42,7 @@
                                             <th width="15%">CP</th>
                                             <th width="15%">Date</th>
                                             <th width="10%">Status</th>
-                                            <th width="15%">Action</th>
+                                            <th width="10%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -68,9 +68,10 @@
                                                 <div class="badge badge-success">{{ $event->status }}</div>
                                             </td>
                                             <td>
-                                                <a class="btn btn-success btn-action mr-1" href="{{ route('events.payment', $event->id) }}" title="Edit"><i class="fas fa-money-check"></i></a>
-                                                <a class="btn btn-info btn-action mr-1" href="{{ route('events.ticket', $event->id) }}" title="Edit"><i class="fas fa-ticket"></i></a>
+                                                <a class="btn btn-info btn-action mr-1" href="{{ route('events.show', $event->id) }}" title="Show"><i class="fas fa-search"></i></a>
                                                 <a class="btn btn-warning btn-action mr-1" href="{{ route('events.edit', $event->id) }}" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                                <!-- <a class="btn btn-success btn-action mr-1" href="{{ route('events.payment', $event->id) }}" title="Edit"><i class="fas fa-money-check"></i></a>
+                                                <a class="btn btn-info btn-action mr-1" href="{{ route('events.ticket', $event->id) }}" title="Edit"><i class="fas fa-ticket"></i></a> -->
                                                 <!-- <a class="btn btn-danger btn-action btn-delete"
                                                     data-toggle="tooltip"
                                                     title="Delete"

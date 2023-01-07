@@ -23,6 +23,11 @@
             <div class="row">
                 <form class="col-12" action="{{ route('events.update', $event->id) }}" method="POST"
                     enctype="multipart/form-data">
+                    <!-- <ul>
+                        @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul> -->
                     @method('PUT')
                     @csrf
                     <div class="card shadow-lg">

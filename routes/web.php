@@ -47,38 +47,39 @@ Route::post('/resend-form', [App\Http\Controllers\UserController::class, 'resend
 // ==== events route ====
 Route::resource('events', EventController::class);
 
-Route::middleware('role:Super Admin,Admin')->group(function() {
-    // Backend routes
-    Route::get('/dashboard', function () {
-        $users = \App\Models\User::where('role', 'Member')->count();
-        $events = \App\Models\Event::count();
-        $tickets = \App\Models\Ticket::count();
-        $earnings = \App\Models\Payment::where('status', 'payment_successful')->sum('grand_total');
-        return view('backEnd.dashboard.index', compact('users', 'events', 'tickets', 'earnings'));
-    })->middleware('auth')->name('dashboard');
-
-    Route::get('/admin', function () {
-        return view('backEnd.admin.index');
-    })->middleware('auth')->name('adminTest');
-
-    Route::get('/event-list', [App\Http\Controllers\EventController::class, 'indexAdmin'])->name('event.index.admin');
-    Route::get('/event-list/{event}/payment', [App\Http\Controllers\EventController::class, 'payment'])->name('events.payment');
-    Route::get('/event-list/{event}/ticket', [App\Http\Controllers\EventController::class, 'ticket'])->name('events.ticket');
-
-    // ==== batch route ====
-    Route::get('/event-batch', [App\Http\Controllers\EventController::class, 'indexBatch'])->name('batch.index');
-    Route::get('/event-batch/create', [App\Http\Controllers\EventController::class, 'createBatch'])->name('batch.create');
-    Route::get('/event-batch/{batch}/edit', [App\Http\Controllers\EventController::class, 'editBatch'])->name('batch.edit');
-    Route::post('/event-batch', [App\Http\Controllers\EventController::class, 'storeBatch'])->name('batch.store');
-    Route::put('/event-batch/{batch}', [App\Http\Controllers\EventController::class, 'updateBatch'])->name('batch.update');
-
-    Route::resource('users', UserController::class);
-
-    Route::get('/payment/{code}/approve', [App\Http\Controllers\PaymentController::class, 'approve'])->name('payments.approve');
-    Route::get('/payment/{code}/reject', [App\Http\Controllers\PaymentController::class, 'reject'])->name('payments.reject');
-});
-
 Route::middleware('auth')->group(function() {
+    Route::middleware('role:Super Admin,Admin')->group(function() {
+        // Backend routes
+        Route::get('/dashboard', function () {
+            $users = \App\Models\User::where('role', 'Member')->count();
+            $events = \App\Models\Event::count();
+            $tickets = \App\Models\Ticket::count();
+            $earnings = \App\Models\Payment::where('status', 'payment_successful')->sum('grand_total');
+            return view('backEnd.dashboard.index', compact('users', 'events', 'tickets', 'earnings'));
+        })->middleware('auth')->name('dashboard');
+
+        Route::get('/admin', function () {
+            return view('backEnd.admin.index');
+        })->middleware('auth')->name('adminTest');
+
+        Route::get('/event-list', [App\Http\Controllers\EventController::class, 'indexAdmin'])->name('event.index.admin');
+        Route::get('/event-list/{event}', [App\Http\Controllers\EventController::class, 'show'])->name('events.show');
+        Route::get('/event-batch/{batch}/payment', [App\Http\Controllers\EventController::class, 'payment'])->name('events.payment');
+        Route::get('/event-batch/{batch}/ticket', [App\Http\Controllers\EventController::class, 'ticket'])->name('events.ticket');
+
+        // ==== batch route ====
+        Route::get('/event-batch', [App\Http\Controllers\EventController::class, 'indexBatch'])->name('batch.index');
+        Route::get('/event-batch/create', [App\Http\Controllers\EventController::class, 'createBatch'])->name('batch.create');
+        Route::get('/event-batch/{batch}/edit', [App\Http\Controllers\EventController::class, 'editBatch'])->name('batch.edit');
+        Route::post('/event-batch', [App\Http\Controllers\EventController::class, 'storeBatch'])->name('batch.store');
+        Route::put('/event-batch/{batch}', [App\Http\Controllers\EventController::class, 'updateBatch'])->name('batch.update');
+
+        Route::resource('users', UserController::class);
+
+        Route::get('/payment/{code}/approve', [App\Http\Controllers\PaymentController::class, 'approve'])->name('payments.approve');
+        Route::get('/payment/{code}/reject', [App\Http\Controllers\PaymentController::class, 'reject'])->name('payments.reject');
+    });
+
     // Tickets Route
     Route::resource('ticket', TicketController::class);
     
@@ -90,7 +91,6 @@ Route::middleware('auth')->group(function() {
     Route::post('/payment/{code}/upload', [App\Http\Controllers\PaymentController::class, 'upload'])->name('payments.upload');
     Route::get('/payment/{code}/invoice', [App\Http\Controllers\PaymentController::class, 'invoice'])->name('payments.invoice');
 });
-
 
 Auth::routes();
 

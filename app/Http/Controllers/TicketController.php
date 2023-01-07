@@ -87,11 +87,13 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         if($ticket) {
-            $ticket->delete();
+            $ticket->update([
+                'status' => 'cancelled'
+            ]);
         }
 
-        return redirect()->route('events.ticket')
-            ->with('message', 'Berhasil melakukan pemesanan tiket. Silahkan lanjutkan ke pembayaran.')
+        return redirect()->route('events.ticket', $ticket->bookedTicket->batch->id)
+            ->with('message', 'Berhasil membatalkan tiket.')
             ->with('status', 'success');
     }
 }

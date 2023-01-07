@@ -25,9 +25,9 @@
                 <a class="nav-link" href="{{ route('event.index.admin') }}"><i class="fas fa-star"></i> <span>Event List</span></a>
             </li>
 
-            <li class="{{ Request::is('*event-batch*') ? 'active' : '' }}">
+            <!-- <li class="{{ Request::is('*event-batch*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('batch.index') }}"><i class="fas fa-star"></i> <span>Event Batch</span></a>
-            </li>
+            </li> -->
             @else
             <li class="{{ Request::is('*events*') || Request::is('*event-form*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('events.index') }}"><i class="fas fa-star"></i>

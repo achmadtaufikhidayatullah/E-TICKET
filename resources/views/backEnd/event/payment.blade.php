@@ -1,6 +1,6 @@
 @extends('backEnd.layouts.app')
 
-@section('title', $event->name)
+@section('title', $batch->event->name)
 
 @push('style')
 <!-- CSS Libraries -->
@@ -12,11 +12,12 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header shadow-lg">
-            <h1>Event Payment - {{ $event->name }}</h1>
+            <h1>{{ $batch->event->name }} ({{ $batch->name }}) &mdash; Payments</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item"><a class="text-warning" href="{{ route('home') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a class="text-warning" href="{{ route('event.index.admin') }}">Event</a></div>
-                <div class="breadcrumb-item active">Event Detail</div>
+                <div class="breadcrumb-item"><a class="text-warning" href="{{ route('events.show', $batch->event->id) }}">{{ $batch->event->name }}</a></div>
+                <div class="breadcrumb-item active">{{ $batch->name }}'s Tickets</div>
             </div>
         </div>
 
@@ -24,30 +25,44 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card shadow-lg">
-                        <div class="card-header">
-                            <h4 class="text-warning">Ticket Sold</h4>
-                        </div>
-                        <div class="card-body mt-0 pt-0">
+                        <div class="card-body">
                             <div class="row">
-                                @foreach($event->batches as $batch)
-                                    <div class="col-2">
-                                        <h6>{{ $batch->name }}</h6>
-                                        <h4 class="text-dark">
-                                            <span class="{{ $batch->quota() >= $batch->max_ticket ? 'text-danger' : 'text-success' }}">{{ $batch->quota() }}</span> / {{ $batch->max_ticket }}
-                                        </h4>
-                                    </div>
-                                @endforeach
+                                <div class="col-4">
+                                    <h6>Ticket Sold</h6>
+                                    <h4 class="text-dark">
+                                        <span class="{{ $batch->quota() >= $batch->max_ticket ? 'text-danger' : 'text-success' }}">{{ $batch->quota() }}</span> / {{ $batch->max_ticket }}
+                                    </h4>
+                                </div>
+                                <div class="col-2">
+                                    <h6>Waiting for Payment</h6>
+                                    <h4 class="text-dark">
+                                        <span>{{ $bookedTickets->where('status', 'waiting_for_payment')->count() }}</span>
+                                    </h4>
+                                </div>
+                                <div class="col-2">
+                                    <h6>Needs Validation</h6>
+                                    <h4 class="text-dark">
+                                        <span>{{ $bookedTickets->where('status', 'validating_payment')->count() }}</span>
+                                    </h4>
+                                </div>
+                                <div class="col-2">
+                                    <h6>Approved</h6>
+                                    <h4 class="text-dark">
+                                        <span>{{ $bookedTickets->where('status', 'payment_successful')->count() }}</span>
+                                    </h4>
+                                </div>
+                                <div class="col-2">
+                                    <h6>Rejected</h6>
+                                    <h4 class="text-dark">
+                                        <span>{{ $bookedTickets->where('status', 'payment_rejected')->count() }}</span>
+                                    </h4>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="card shadow-lg">
-                        <div class="card-header">
-                            <h4 class="text-warning">Payment List</h4>
-                            <div class="card-header-action">
-                            </div>
-                        </div>
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-fill"
                                 id="myTab2"

@@ -21,19 +21,19 @@
                 @foreach($bookedTickets as $bookedTicket)
                 <div class="card card-statistic-1 shadow-lg">
                     <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="card-wrap">
                                 <div class="card-header">
                                     <h4 class="text-warning">Order Date : {{ $bookedTicket->created_at->isoFormat('Y/MM/DD hh:mm') }}</h4>
                                 </div>
                                 <div class="card-body">
-                                    <span class="text-dark">Yolo Fest - Early Bird</span>
+                                    <span class="text-dark">{{ $bookedTicket->batch->event->name }} - {{ $bookedTicket->batch->name }}</span>
                                     <p class="text-small font-weight-bold">Total : IDR {{ number_format($bookedTicket->sub_total + $bookedTicket->tax + $bookedTicket->unique_payment_code, 0, '', '.') }} / {{ $bookedTicket->quantity }} tickets (incl. tax)</p>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="col-lg-2 col-md-6 col-sm-6 col-12">
                             <div class="card-wrap">
                                 <div class="card-header">
                                     <h4 class="text-warning">Order Code</h4>
@@ -230,39 +230,56 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label>Bank</label>
+                                <label>
+                                    Nama Bank<br>
+                                    <em>Bank Name</em>
+                                </label>
                                 <input required type="hidden" name="bank_name" id="bank_name">
                                 <select required data-bank="{{ auth()->user()->userBankAccount->bank_code ?? '' }}" name="bank_code" id="bank-options" class="form-control"></select>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label>Account Number</label>
+                                <label>
+                                    Nomor Rekening<br>
+                                    <em>Account Number</em>
+                                </label>
                                 <input required type="text" class="form-control" name="account_number" value="{{ auth()->user()->userBankAccount->account_number ?? '' }}">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Account Holder Name</label>
+                        <label>
+                            Nama Pemilik Rekening<br>
+                            <em>Account Holder Name</em>
+                        </label>
                         <input required type="text" class="form-control" name="account_holder_name" value="{{ auth()->user()->userBankAccount->account_holder_name ?? '' }}">
                     </div>
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label>Order Code</label>
+                                <label>
+                                    Kode Pemesanan<br>
+                                    <em>Order Code</em>
+                                </label>
                                 <h4 id="order_code">-</h4>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label>Payment Total</label>
+                                <label>
+                                    Total Pembayaran<br>
+                                    <em>Payment Total</em>
+                                </label>
                                 <h4 id="payment_total">-</h4>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <p>Please transfer the required payment into one of these available accounts:
+                            <p style="line-height: 1.25;">
+                                Silakan transfer ke salah satu rekening di bawah ini sesuai dengan total pembayaran<br>
+                                <em>Please transfer the required payment into one of these available accounts</em>
                                 <ul>
                                     @foreach($ownerAccounts as $account)
                                     <li><strong>{{ $account->bank_name }} {{ $account->account_number }} a.n {{ $account->account_holder_name }}</strong></li>
@@ -272,7 +289,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Payment Receipt</label>
+                        <label>
+                            Bukti Pembayaran<br>
+                            <em>Payment Receipt</em>
+                        </label>
                         <input required type="file" class="form-control" name="payment_proof">
                     </div>
                 </div>
