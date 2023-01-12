@@ -154,6 +154,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <strong>Note:</strong> Harap simpan invoice ini karena akan digunakan sebagai penukaran tiket fisik di booth yolofest.
+                                                <br>
+                                                Info booth akan di share di instagram <a target="_blank" href="http://instagram.com/yolofest_">@yolofest_</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

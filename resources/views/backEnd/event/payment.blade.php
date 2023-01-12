@@ -27,31 +27,31 @@
                     <div class="card shadow-lg">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-6 col-sm-12 mt-2">
                                     <h6>Ticket Sold</h6>
                                     <h4 class="text-dark">
                                         <span class="{{ $batch->quota() >= $batch->max_ticket ? 'text-danger' : 'text-success' }}">{{ $batch->quota() }}</span> / {{ $batch->max_ticket }}
                                     </h4>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-lg-2 col-md-6 col-sm-12 mt-2">
                                     <h6>Waiting for Payment</h6>
                                     <h4 class="text-dark">
                                         <span>{{ $bookedTickets->where('status', 'waiting_for_payment')->count() }}</span>
                                     </h4>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-lg-2 col-md-6 col-sm-12 mt-2">
                                     <h6>Needs Validation</h6>
                                     <h4 class="text-dark">
                                         <span>{{ $bookedTickets->where('status', 'validating_payment')->count() }}</span>
                                     </h4>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-lg-2 col-md-6 col-sm-12 mt-2">
                                     <h6>Approved</h6>
                                     <h4 class="text-dark">
                                         <span>{{ $bookedTickets->where('status', 'payment_successful')->count() }}</span>
                                     </h4>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-lg-2 col-md-6 col-sm-12 mt-2">
                                     <h6>Rejected</h6>
                                     <h4 class="text-dark">
                                         <span>{{ $bookedTickets->where('status', 'payment_rejected')->count() }}</span>

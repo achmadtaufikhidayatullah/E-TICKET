@@ -56,6 +56,8 @@
                                     <small class="text-muted font-weight-bold text-small">Complete payment before ticket sold out</small>
                                     @elseif($bookedTicket->status == "validating_payment")
                                     <div class="badge badge-info">Validating Payment</div>
+                                    <br>
+                                    <small class="text-muted font-weight-bold text-small">Validating payment within 24 hours max</small>
                                     @elseif($bookedTicket->payment->status == "payment_successful")
                                     <div class="badge badge-success">Payment Successful</div>
                                     @else

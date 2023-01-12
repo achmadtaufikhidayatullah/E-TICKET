@@ -17,7 +17,7 @@
                 <h1>Dashboard</h1>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                     <div class="card card-statistic-1 shadow-lg">
                         <div class="card-icon bg-warning">
                             <i class="fas fa-user"></i>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                     <div class="card card-statistic-1 shadow-lg">
                         <div class="card-icon bg-warning">
                             <i class="fas fa-star"></i>
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1 shadow-lg">
                         <div class="card-icon bg-warning">
                             <i class="fas fa-ticket"></i>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </section>
     </div>
 @endsection
