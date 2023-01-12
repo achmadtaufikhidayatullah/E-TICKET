@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -46,5 +47,13 @@ class EventBatch extends Model
     public function isFull()
     {
         return $this->quota() >= $this->max_ticket;
+    }
+
+    public function isActive()
+    {
+        $startDate = Carbon::createFromFormat('Y-m-d', $this->start_date);
+        $endDate = Carbon::createFromFormat('Y-m-d', $this->end_date);
+
+        return $this->status == "Aktif" && today()->gte($startDate) && today()->lte($endDate);
     }
 }

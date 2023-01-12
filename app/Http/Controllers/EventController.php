@@ -22,7 +22,10 @@ class EventController extends Controller
      */
     public function index()
     {
-        $eventsBatch = EventBatch::whereDate('start_date', '<=', Carbon::today()->format('Y-m-d'))->whereDate('end_date', '>=', Carbon::today()->format('Y-m-d'))->get();
+        $eventsBatch = EventBatch::whereDate('start_date', '<=', Carbon::today()->format('Y-m-d'))
+            ->whereDate('end_date', '>=', Carbon::today()->format('Y-m-d'))
+            ->where('status', 'Aktif')
+            ->get();
         //   $eventsBatch = EventBatch::where('start_date', '>=' ,'2023-01-01')->get();
 
         // dd($eventsBatch->first()->quota());
@@ -266,6 +269,12 @@ class EventController extends Controller
         if($batch->isFull()) {
             return redirect()->route('events.index')
                 ->with('message', 'Dah penuh coy, masih aja maksa!')
+                ->with('status', 'error');
+        }
+        
+        if( ! $batch->isActive()) {
+            return redirect()->route('events.index')
+                ->with('message', 'Batch "' . $batch->name . '" sudah ditutup. Stay tune untuk batch selanjutnya!')
                 ->with('status', 'error');
         }
         //   dd($batch);
