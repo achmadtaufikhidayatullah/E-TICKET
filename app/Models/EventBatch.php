@@ -54,6 +54,6 @@ class EventBatch extends Model
         $startDate = Carbon::createFromFormat('Y-m-d', $this->start_date);
         $endDate = Carbon::createFromFormat('Y-m-d', $this->end_date);
 
-        return $this->status == "Aktif" && today()->gte($startDate) && today()->lte($endDate);
+        return $this->status == "Aktif" && (today()->gte($startDate) || $endDate->gte(today()));
     }
 }

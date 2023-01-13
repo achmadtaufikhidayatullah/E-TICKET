@@ -30,7 +30,7 @@
                         @endif
                         <div class="card-wrap">
                             <div class="card-header pt-3 pb-0">
-                                <h4>{{ date('d M Y', strtotime($event->start_date)) }} - {{ date('d M Y', strtotime($event->end_date)) }}</h4>
+                                <!-- <h4>{{ date('d M Y', strtotime($event->start_date)) }} - {{ date('d M Y', strtotime($event->end_date)) }}</h4> -->
                             </div>
                             <div class="card-body mb-2">
                                 <span style="font-size: 1rem;" class="text-dark">{{ $event->event->name }} - {{ $event->name }}</span>
