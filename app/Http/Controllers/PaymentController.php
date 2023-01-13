@@ -175,7 +175,7 @@ class PaymentController extends Controller
 
         Mail::to($payment->bookedTicket->user->email)->send(new PaymentSuccess($invoiceLink));
 
-        return redirect()->route('events.payment', $payment->bookedTicket->batch->event->id)
+        return redirect()->route('events.payment', $payment->bookedTicket->batch->id)
             ->with('message', 'Pembayaran berhasil disetujui.')
             ->with('status', 'success');
     }
@@ -192,7 +192,7 @@ class PaymentController extends Controller
             'status' => 'payment_rejected'
         ]);
 
-        return redirect()->route('events.payment', $payment->bookedTicket->batch->event->id)
+        return redirect()->route('events.payment', $payment->bookedTicket->batch->id)
             ->with('message', 'Pembayaran berhasil ditolak.')
             ->with('status', 'success');
     }
