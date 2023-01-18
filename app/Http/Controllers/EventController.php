@@ -8,10 +8,12 @@ use App\Models\EventBatch;
 use App\Models\Payment;
 use App\Models\Setting;
 use App\Models\Ticket;
+use App\Models\UserBankAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Jenssegers\Agent\Agent;
 
 class EventController extends Controller
 {
@@ -22,6 +24,7 @@ class EventController extends Controller
      */
     public function index()
     {
+        $agent = new Agent();
         $eventsBatch = EventBatch::whereDate('start_date', '<=', Carbon::today()->format('Y-m-d'))
             ->whereDate('end_date', '>=', Carbon::today()->format('Y-m-d'))
             ->where('status', 'Aktif')
@@ -29,7 +32,14 @@ class EventController extends Controller
         //   $eventsBatch = EventBatch::where('start_date', '>=' ,'2023-01-01')->get();
 
         // dd($eventsBatch->first()->quota());
-        return view('backEnd.event.index', compact('eventsBatch'));
+        if($agent->isDesktop()) {
+            return view('backEnd.event.index', compact('eventsBatch'));
+        } else {
+            $setting = Setting::first();
+            $ownerAccounts = UserBankAccount::ownerAccounts();
+            $bookedTickets = BookedTicket::where('user_id', auth()->user()->id)->latest()->get();
+            return view('backEnd.event.mobile', compact('eventsBatch', 'bookedTickets', 'setting', 'ownerAccounts'));
+        }
     }
 
     /**
@@ -331,9 +341,16 @@ class EventController extends Controller
             'status' => 'waiting_for_payment',
         ]);
 
-        return redirect()->route('ticket.index')
-            ->with('message', 'Berhasil melakukan pemesanan tiket. Silahkan lanjutkan ke pembayaran.')
-            ->with('status', 'success');
+        $agent = new Agent();
+        if($agent->isDesktop()) {
+            return redirect()->route('ticket.index')
+                ->with('message', 'Berhasil melakukan pemesanan tiket. Silahkan lanjutkan ke pembayaran.')
+                ->with('status', 'success');
+        }
+
+        return redirect()->route('events.index', ['show' => 'myTicket'])
+                ->with('message', 'Berhasil melakukan pemesanan tiket. Silahkan lanjutkan ke pembayaran.')
+                ->with('status', 'success');
     }
 
     public function uploadPayment($code)

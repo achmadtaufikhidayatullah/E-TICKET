@@ -1,3 +1,4 @@
+@desktop
 <div class="main-sidebar sidebar-style-2 shadow-lg">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand my-3">
@@ -40,3 +41,4 @@
         </ul>
     </aside>
 </div>
+@enddesktop

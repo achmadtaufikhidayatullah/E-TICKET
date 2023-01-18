@@ -4,8 +4,7 @@
 
 @push('style')
 <!-- CSS Libraries -->
-<link rel="stylesheet" href="{{ asset('library/jqvmap/dist/jqvmap.min.css') }}">
-<link rel="stylesheet" href="{{ asset('library/summernote/dist/summernote-bs4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/izitoast/dist/css/iziToast.min.css') }}">
 @endpush
 
 @section('main')
@@ -49,13 +48,20 @@
 
 @push('scripts')
 <!-- JS Libraies -->
-<script src="{{ asset('library/simpleweather/jquery.simpleWeather.min.js') }}"></script>
-<script src="{{ asset('library/chart.js/dist/Chart.min.js') }}"></script>
-<script src="{{ asset('library/jqvmap/dist/jquery.vmap.min.js') }}"></script>
-<script src="{{ asset('library/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
-<script src="{{ asset('library/summernote/dist/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('library/izitoast/dist/js/iziToast.min.js') }}"></script>
 <script src="{{ asset('library/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/index-0.js') }}"></script>
+
+@if(session()->has('message'))
+<script>
+    let data = {
+        message: "{{ session()->get('message') }}",
+        status: "{{ session()->get('status') }}",
+        position: 'topCenter',
+    }
+</script>
+<script src="{{ asset('js/toastr.js') }}"></script>
+@endif
 @endpush

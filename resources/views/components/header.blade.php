@@ -2,10 +2,19 @@
 <nav class="navbar navbar-expand-lg main-navbar">
     <form class="form-inline mr-auto">
         <ul class="navbar-nav mr-3">
+            @desktop
             <li><a href="#"
                     data-toggle="sidebar"
                     class="nav-link nav-link-lg"><i class="fas fa-bars text-dark"></i></a></li>
-            
+            @enddesktop
+            @mobile
+            <li>
+                <a href="#"
+                    class="nav-link nav-link-lg">
+                    <img src="{{ asset('FrontAssets/img/logo-b.png') }}" alt="" width="20">
+                </a>
+            </li>
+            @endmobile
         </ul>
     </form>
     <ul class="navbar-nav navbar-right">

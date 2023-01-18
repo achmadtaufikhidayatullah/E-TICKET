@@ -47,58 +47,21 @@
 
                 <div class="card shadow-lg">
                     <div class="card-body">
-                        <ul class="nav nav-tabs nav-fill"
-                            id="myTab2"
-                            role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active"
-                                    id="event-detail-tab"
-                                    data-toggle="tab"
-                                    href="#event-detail"
-                                    role="tab"
-                                    aria-controls="event-detail"
-                                    aria-selected="true">Event Detail</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                    id="checkout-tab"
-                                    data-toggle="tab"
-                                    href="#checkout"
-                                    role="tab"
-                                    aria-controls="checkout"
-                                    aria-selected="true">Checkout</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content tab-bordered"
-                            id="myTab3Content">
-                            <div class="tab-pane fade show active"
-                                id="event-detail"
-                                role="tabpanel"
-                                aria-labelledby="event-detail-tab">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-12 mt-2">
-                                        @if($batch->event->image == NULL)
-                                        <img class="img-fluid" src="{{ asset('FrontAssets/img/BG.jpg') }}">
-                                        @else
-                                        <img src="{{ asset('storage/event/' . $batch->event->image) }}" style="width:100%;">
-                                        @endif
-                                    </div>
-                                    <div class="col-md-6 col-sm-12 mt-2">
-                                        <h1 style="font-size: 1.8rem;">{{ $batch->event->name }}</h1>
-                                        <h5 style="font-size: 1.2rem;">Batch: {{ $batch->name }} (IDR <span id="price" data-price="{{ $batch->price }}">{{ number_format($batch->price, 0, '', '.') }})</span></h5>
-                                        <div class="form-group">
-                                            <label for="inputNumberOfTickets">Number of Tickets</label>
-                                            <input type="number" class="form-control" id="inputNumberOfTickets" min="1" max="9999" value="1">
-                                            <button type="button" class="btn btn-warning btn-lg btn-block mt-2 go-to-checkout"><i class="fas fa-arrow-right mr-2"></i> Go to Checkout</button>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 mt-2">
+                                @if($batch->event->image == NULL)
+                                <img class="img-fluid" src="{{ asset('FrontAssets/img/BG.jpg') }}">
+                                @else
+                                <img src="{{ asset('storage/event/' . $batch->event->image) }}" style="width:100%;">
+                                @endif
                             </div>
-                            <div class="tab-pane fade"
-                                id="checkout"
-                                role="tabpanel"
-                                aria-labelledby="record-evaluasi-tab">
-                                <h4 class="mt-3 mb-3">Checkout</h4>
+                            <div class="col-md-6 col-sm-12 mt-2">
+                                <h1 style="font-size: 1.8rem;">{{ $batch->event->name }}</h1>
+                                <h5 style="font-size: 1.2rem;">Batch: {{ $batch->name }}</h5>
+                                <div class="form-group">
+                                    <label for="inputNumberOfTickets">Number of Tickets</label>
+                                    <input type="number" class="form-control" id="inputNumberOfTickets" min="1" max="9999" value="1">
+                                </div>
                                 <form action="{{ route('events.purchase', $batch->id) }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="quantity" id="quantity">
@@ -107,20 +70,8 @@
                                             <ul class="list-group">
                                                 <li class="list-group-item">
                                                     <div class="row">
-                                                        <div class="col-6">Event</div>
-                                                        <div class="col-6 font-weight-bold">{{ $batch->event->name }}</div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-6">Batch</div>
-                                                        <div class="col-6 font-weight-bold">{{ $batch->name }}</div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <div class="row">
                                                         <div class="col-6">Price Per Ticket (IDR)</div>
-                                                        <div class="col-6 font-weight-bold">{{ number_format($batch->price, 0, '', '.') }}</div>
+                                                        <div class="col-6 font-weight-bold"><span id="price" data-price="{{ $batch->price }}">{{ number_format($batch->price, 0, '', '.') }}</span></div>
                                                     </div>
                                                 </li>
                                                 <li class="list-group-item">
@@ -152,17 +103,13 @@
                                     </div>
                                     
                                     <div class="row">
-                                        <div class="col-md-6 col-sm-12">
-                                            <button type="button" class="btn btn-link btn-block btn-lg mt-2 go-to-event-detail"><i class="fas fa-arrow-left mr-2"></i> Back to Event Detail</button>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-12">
                                             <button type="submit" class="btn btn-warning btn-block btn-lg mt-2"><i class="fas fa-ticket mr-2"></i> Book Now</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -180,6 +127,10 @@
     let calculateSubTotal = (numberOfTickets) => {
         let price = $('#price').data('price')
         let taxPercentage = $('#tax-percentage').data('tax')
+
+        if(numberOfTickets < 1) {
+            numberOfTickets = 1;
+        }
 
         let subTotal = numberOfTickets * price
         let tax = Math.round((taxPercentage / 100) * subTotal)
