@@ -2,7 +2,7 @@
 
 
 .body-content {
-    height: 100vh;
+    height: 100%;
     background-image: url('/FrontAssets/img/bgwp.jpg');
     background-position: center;
     background-size: cover;

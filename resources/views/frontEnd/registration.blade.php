@@ -11,29 +11,44 @@
             <form action="{{ route('regist.store') }}" method="POST">
                @csrf
                 <div class="mb-4">
-                    <label for="id-card" class="form-label">Your ID Card Number</label>
-                    <input type="number" class="form-control" id="id-card" placeholder="Your full name" name="no_ktp" value="{{ old('no_ktp') }}" required>
+                    <label for="id-card" class="form-label">
+                        <small>No. KTP</small><br>
+                        <small class="text-muted"><em>ID Card Number</em></small>
+                    </label>
+                    <input type="number" class="form-control" id="id-card" placeholder="Ex: 5171xxxxxxxxxxxx" name="no_ktp" value="{{ old('no_ktp') }}" required>
                 </div>
 
                 <div class="mb-4">
-                    <label for="Nama" class="form-label">Your Name</label>
+                    <label for="Nama" class="form-label">
+                        <small>Nama Lengkap</small><br>
+                        <small class="text-muted"><em>Full Name</em></small>
+                    </label>
                     <input type="text" class="form-control" id="name" placeholder="Your full name" name="name" value="{{ old('name') }}" required>
                 </div>
 
                 <div class="mb-4">
-                    <label for="phone_number" class="form-label">Your Phone Number</label>
+                    <label for="phone_number" class="form-label">
+                        <small>Nomor Handphone</small><br>
+                        <small class="text-muted"><em>Phone Number</em></small>
+                    </label>
                     <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" placeholder="Your Phone Number ex: 081xxxxxxxxx"
                         required>
                 </div>
 
                 <div class="mb-4">
-                    <label for="email" class="form-label">Your Email Address</label>
+                    <label for="email" class="form-label">
+                        <small>ALamat Email</small><br>
+                        <small class="text-muted"><em>Email Address</em></small>
+                    </label>
                     <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Your Email ex: customer@gmail.com"
                         required>
                 </div>
 
                 <div class="mb-4">
-                    <label for="password" class="form-label">Your Password</label>
+                    <label for="password" class="form-label">
+                        <small>Kata Sandi</small><br>
+                        <small class="text-muted"><em>Password</em></small>
+                    </label>
                     <div class="input-group">
                         <input type="password" class="form-control" placeholder="Input your Password for login"
                             aria-label="Input your Password for login" aria-describedby="basic-addon2" id="password" name="password" required>
@@ -43,7 +58,10 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="confirmation-password" class="form-label">Confirm Your Password</label>
+                    <label for="confirmation-password" class="form-label">
+                        <small>Konfirmasi Kata Sandi</small><br>
+                        <small class="text-muted"><em>Password Confirmation</em></small>
+                    </label>
                     <div class="input-group">
                         <input type="password" class="form-control" placeholder="Reinput Your Password here"
                             aria-label="Input your Password for login" aria-describedby="basic-addon2"
@@ -54,7 +72,7 @@
                 </div>
 
                 <div class="text-center mt-5">
-                    <button type="submit" class="btn btn-primary btn-lg">Regist</button>
+                    <button type="submit" class="btn btn-primary btn-lg">Register</button>
                 </div>
             </form>
         </div>
@@ -64,7 +82,7 @@
 
 @push('bottom')
 <script>
-    document.getElementById("id-card").placeholder = "Your id card number Ex : 517104xxxxxx";
+    // document.getElementById("id-card").placeholder = "Ex: 517104xxxxxx";
     $('#btn-pass').on('click', function () {
         var className = $('#btn-eye-pass').attr('class');
 

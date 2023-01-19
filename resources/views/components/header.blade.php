@@ -8,12 +8,18 @@
                     class="nav-link nav-link-lg"><i class="fas fa-bars text-dark"></i></a></li>
             @enddesktop
             @mobile
+            @if(auth()->user()->role == "Super Admin" || auth()->user()->role == "Admin")
+            <li><a href="#"
+                    data-toggle="sidebar"
+                    class="nav-link nav-link-lg"><i class="fas fa-bars text-dark"></i></a></li>
+            @else
             <li>
                 <a href="#"
                     class="nav-link nav-link-lg">
                     <img src="{{ asset('FrontAssets/img/logo-b.png') }}" alt="" width="20">
                 </a>
             </li>
+            @endif
             @endmobile
         </ul>
     </form>
