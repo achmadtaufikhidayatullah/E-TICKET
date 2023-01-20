@@ -105,6 +105,11 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-warning btn-block btn-lg mt-2"><i class="fas fa-ticket mr-2"></i> Book Now</button>
+                                            @mobile
+                                            <a href="{{ route('events.index') }}" class="btn btn-block btn-link text-warning btn-lg mt-2"><i class="fas fa-reply mr-2"></i> Back to My Ticket</a>
+                                            @elsemobile
+                                            <a href="{{ route('ticket.index') }}" class="btn btn-block btn-link text-warning btn-lg mt-2"><i class="fas fa-reply mr-2"></i> Back to My Ticket</a>
+                                            @endmobile
                                         </div>
                                     </div>
                                 </form>

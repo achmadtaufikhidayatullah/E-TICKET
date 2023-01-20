@@ -94,7 +94,7 @@ class PaymentController extends Controller
             'bank_name' => 'required|string',
             'account_number' => 'required|string',
             'account_holder_name' => 'required|string',
-            'payment_proof' => 'required|file|mimes:jpg,bmp,png,jpeg',
+            'payment_proof' => 'required|file|max:2048|mimes:jpg,png,jpeg',
         ]);
 
         // dd($request->all());

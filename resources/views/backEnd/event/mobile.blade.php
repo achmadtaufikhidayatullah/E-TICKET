@@ -13,6 +13,12 @@
     <section class="section">
         <div class="row">
             <div class="col-12">
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    Terdapat isian yang tidak valid. Silakan cek kembali isian Anda pada form pembayaran.<br>
+                    <em>There is an invalid field. Please re-check your entries on the payment form.</em>
+                </div>
+                @endif
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <ul class="nav nav-pills nav-fill"
@@ -145,7 +151,7 @@
                                                                 data-toggle="modal" 
                                                                 data-target="#uploadPaymentReceiptModal" 
                                                                 type="button" 
-                                                                class="btn btn-warning btn-lg upload-payment btn-lg btn-block"><i class="fa fa-upload mr-1"></i> Upload Payment Receipt</button>
+                                                                class="btn btn-warning btn-lg upload-payment btn-lg btn-block"><i class="fa fa-upload mr-1"></i> Bayar Tiket</button>
                                                             @endif
                                                             @elseif($bookedTicket->status == "validating_payment")
                                                             <a href="{{ $bookedTicket->batch->event->whatsappLink() }}" class="btn btn-success btn-lg btn-block"><i class="fa-brands fa-whatsapp mr-1"></i> Contact CS</a>
@@ -184,32 +190,47 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="form-group">
                                 <label>
-                                    Nama Bank<br>
-                                    <em>Bank Name</em>
+                                    Nama Bank <span class="text-danger">*</span><br>
+                                    <em>Bank Name <span class="text-danger">*</span></em>
                                 </label>
                                 <input required type="hidden" name="bank_name" id="bank_name">
-                                <select required data-bank="{{ auth()->user()->userBankAccount->bank_code ?? '' }}" name="bank_code" id="bank-options" class="form-control"></select>
+                                <select required data-bank="{{ auth()->user()->userBankAccount->bank_code ?? old('bank_code') }}" name="bank_code" id="bank-options" class="form-control @error('bank_name') is-invalid @enderror"></select>
+                                @error('bank_name')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="form-group">
                                 <label>
-                                    Nomor Rekening<br>
-                                    <em>Account Number</em>
+                                    Nomor Rekening / Nomor E-wallet <span class="text-danger">*</span><br>
+                                    <em>Account Number / E-wallet Number <span class="text-danger">*</span></em>
                                 </label>
-                                <input required type="text" class="form-control" name="account_number" value="{{ auth()->user()->userBankAccount->account_number ?? '' }}">
+                                <input required type="text" class="form-control @error('account_number') is-invalid @enderror" name="account_number" value="{{ auth()->user()->userBankAccount->account_number ?? old('account_number') }}">
+                                @error('account_number')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>
-                            Nama Pemilik Rekening<br>
-                            <em>Account Holder Name</em>
+                            Nama Pemilik Rekening <span class="text-danger">*</span><br>
+                            <em>Account Holder Name <span class="text-danger">*</span></em>
                         </label>
-                        <input required type="text" class="form-control" name="account_holder_name" value="{{ auth()->user()->userBankAccount->account_holder_name ?? '' }}">
+                        <input required type="text" class="form-control @error('account_holder_name') is-invalid @enderror" name="account_holder_name" value="{{ auth()->user()->userBankAccount->account_holder_name ?? old('account_holder_name') }}">
+                        @error('account_holder_name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                     <div class="row">
                         <div class="col-6">
@@ -246,14 +267,27 @@
                     </div>
                     <div class="form-group">
                         <label>
-                            Bukti Pembayaran<br>
-                            <em>Payment Receipt</em>
+                            Bukti Pembayaran <span class="text-danger">*</span><br>
+                            <em>Payment Receipt <span class="text-danger">*</span></em>
                         </label>
-                        <input required type="file" class="form-control" name="payment_proof">
+                        <input required type="file" class="form-control @error('payment_proof') is-invalid @enderror" name="payment_proof">
+                        @error('payment_proof')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                        <small>Harap upload gambar dengan format .jpg / .png dengan ukuran maksimal 2MB</small><br>
+                        <small><em>Please upload an image with .jpg / .png format with 2MB max size</em></small>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <span class="text-danger">*</span> wajib diisi <br>
+                            <em><span class="text-danger">*</span> required field</em>
+                        </label>
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
-                    <button id="upload-button" type="button" class="btn btn-warning btn-block">Upload</button>
+                    <button id="upload-button" type="submit" class="btn btn-warning btn-block">Upload</button>
                     <button type="button" class="btn btn-link text-warning btn-block" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -300,6 +334,10 @@
         // $('#unique_payment_code').text(uniquePaymentCode)
         $('#order_code').text(code)
         $('#payment_total').text('IDR ' + (paymentTotal).toLocaleString("id"))
+
+        let url = "{{ route('payments.upload', 'xxx') }}".replace('xxx', code)
+        let form = $('#upload-payment-form')
+        form.attr('action', url)
     })
 
     let setBankName = () => {
@@ -311,13 +349,6 @@
 
     $('#bank-options').on('change', function() {
         setBankName()
-    })
-
-    $('#upload-button').on('click', function() {
-        let url = "{{ route('payments.upload', '69') }}".replace('69', code)
-        let form = $('#upload-payment-form')
-        form.attr('action', url)
-        form.submit()
     })
 </script>
 @endpush
