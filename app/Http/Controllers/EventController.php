@@ -367,6 +367,12 @@ class EventController extends Controller
             'status' => 'booking_canceled'
         ]);
 
+        if(auth()->user()->role == "Super Admin") {
+            return redirect()->route('events.payment', $bookedTicket->batch->id)
+                ->with('message', 'Pemesanan tiket berhasil dibatalkan.')
+                ->with('status', 'success');
+        }
+
         $agent = new Agent();
         if($agent->isDesktop()) {
             return redirect()->route('ticket.index')

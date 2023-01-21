@@ -31,7 +31,7 @@
                 <a class="nav-link" href="{{ route('batch.index') }}"><i class="fas fa-star"></i> <span>Event Batch</span></a>
             </li> -->
             @else
-            <li class="{{ Request::is('*events*') || Request::is('*event-form*') ? 'active' : '' }}">
+            <li class="{{ Request::is('*events*') || Request::is('*event*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('events.index') }}"><i class="fas fa-star"></i>
                     <span>Events</span></a>
             </li>
@@ -67,7 +67,7 @@
                 <a class="nav-link" href="{{ route('users.index') }}"><i class="fas fa-user"></i> <span>User</span></a>
             </li>
 
-            <li class="{{ Request::is('*event-list*') ? 'active' : '' }}">
+            <li class="{{ Request::is('*event*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('event.index.admin') }}"><i class="fas fa-star"></i> <span>Event List</span></a>
             </li>
 
@@ -75,7 +75,7 @@
                 <a class="nav-link" href="{{ route('batch.index') }}"><i class="fas fa-star"></i> <span>Event Batch</span></a>
             </li> -->
             @else
-            <li class="{{ Request::is('*events*') || Request::is('*event-form*') ? 'active' : '' }}">
+            <li class="{{ Request::is('*events*') || Request::is('*event*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('events.index') }}"><i class="fas fa-star"></i>
                     <span>Events</span></a>
             </li>

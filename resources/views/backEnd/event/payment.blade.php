@@ -14,7 +14,6 @@
         <div class="section-header shadow-lg">
             <h1>{{ $batch->event->name }} ({{ $batch->name }}) &mdash; Payments</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item"><a class="text-warning" href="{{ route('home') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a class="text-warning" href="{{ route('event.index.admin') }}">Event</a></div>
                 <div class="breadcrumb-item"><a class="text-warning" href="{{ route('events.show', $batch->event->id) }}">{{ $batch->event->name }}</a></div>
                 <div class="breadcrumb-item active">{{ $batch->name }}'s Tickets</div>
@@ -52,9 +51,9 @@
                                     </h4>
                                 </div>
                                 <div class="col-lg-2 col-md-6 col-sm-12 mt-2">
-                                    <h6>Rejected</h6>
+                                    <h6>Book Canceled & Payment Rejected</h6>
                                     <h4 class="text-dark">
-                                        <span>{{ $bookedTickets->where('status', 'payment_rejected')->count() }}</span>
+                                        <span>{{ $bookedTickets->whereIn('status', ['payment_rejected', 'booking_canceled'])->count() }}</span>
                                     </h4>
                                 </div>
                             </div>
@@ -101,7 +100,7 @@
                                         href="#payment-rejected"
                                         role="tab"
                                         aria-controls="payment-rejected"
-                                        aria-selected="true">Rejected Payment</a>
+                                        aria-selected="true">Book Canceled & Payment Rejected</a>
                                 </li>
                             </ul>
                             <div class="tab-content tab-bordered"
@@ -163,7 +162,7 @@
                                                     </td>
                                                     <td>
                                                         {{-- <a class="btn btn-success btn-action mr-1" href="{{ route('payments.approve', $bookedTicket->payment->code) }}" title="Approve"><i class="fas fa-check"></i></a> --}}
-                                                        <a class="btn btn-danger btn-action mr-1" href="{{ route('payments.reject', $bookedTicket->payment->code) }}" title="Reject"><i class="fas fa-times"></i></a>
+                                                        <a onclick="return confirm('Apakah Anda yakin ingin membatalkan pemesanan {{ $bookedTicket->payment->code }}? ')" class="btn btn-danger btn-action mr-1" href="{{ route('ticket.cancel', $bookedTicket->payment->code) }}" title="Cancel Booking"><i class="fas fa-times"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -323,7 +322,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($bookedTickets->where('status', 'payment_rejected') as $bookedTicket)
+                                                @foreach($bookedTickets->whereIn('status', ['payment_rejected', 'booking_canceled']) as $bookedTicket)
                                                 <tr>
                                                     <td class="text-center">{{ $loop->iteration }}</td>
                                                     <td>
@@ -348,12 +347,22 @@
                                                         {{ $bookedTicket->quantity }}
                                                     </td>
                                                     <td>
+                                                        @if( ! empty($bookedTicket->payment->payment_proof) && Storage::exists($bookedTicket->payment->payment_proof))
                                                         <a target="_blank" href="{{ Storage::url($bookedTicket->payment->payment_proof) }}" class="btn btn-warning">
                                                             <i class="fa fa-download"></i>
                                                         </a>
+                                                        @else
+                                                        <a href="#!" class="btn btn-secondary disabled">
+                                                            <i class="fa fa-download"></i>
+                                                        </a>
+                                                        @endif
                                                     </td>
                                                     <td>
+                                                        @if($bookedTicket->status == "payment_rejected")
                                                         <div class="badge badge-danger">Payment Rejected</div>
+                                                        @elseif($bookedTicket->status == "booking_canceled")
+                                                        <div class="badge badge-dark">Booking Canceled</div>
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         -
