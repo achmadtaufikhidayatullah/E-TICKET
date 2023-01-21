@@ -360,6 +360,25 @@ class EventController extends Controller
         return view('backEnd.event.form', compact('batch', 'setting'));
     }
 
+    public function cancel($code)
+    {
+        $bookedTicket = BookedTicket::where('code', $code)->firstOrFail();
+        $bookedTicket->update([
+            'status' => 'booking_canceled'
+        ]);
+
+        $agent = new Agent();
+        if($agent->isDesktop()) {
+            return redirect()->route('ticket.index')
+                ->with('message', 'Berhasil membatalkan pemesanan tiket.')
+                ->with('status', 'success');
+        }
+
+        return redirect()->route('events.index', ['show' => 'myTicket'])
+                ->with('message', 'Berhasil membatalkan pemesanan tiket.')
+                ->with('status', 'success');
+    }
+
     public function ticket(EventBatch $batch)
     {
         $bookedTickets = BookedTicket::where('event_batch_id', $batch->id)->pluck('id');

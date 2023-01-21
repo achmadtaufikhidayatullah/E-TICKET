@@ -153,12 +153,11 @@
                                                                 type="button" 
                                                                 class="btn btn-warning btn-lg upload-payment btn-lg btn-block"><i class="fa fa-upload mr-1"></i> Bayar Tiket</button>
                                                             @endif
+                                                            <a onclick="return confirm('Apakah anda yakin untuk membatalkan tiket yang telah dipesan?')" href="{{ route('ticket.cancel', $bookedTicket->code) }}" class="btn btn-danger btn-lg btn-block"><i class="fa fa-times mr-1"></i> Cancel Book</a>
                                                             @elseif($bookedTicket->status == "validating_payment")
                                                             <a href="{{ $bookedTicket->batch->event->whatsappLink() }}" class="btn btn-success btn-lg btn-block"><i class="fa-brands fa-whatsapp mr-1"></i> Contact CS</a>
                                                             @elseif($bookedTicket->status == "payment_successful")
                                                             <a target="_blank" href="{{ route('payments.invoice', $bookedTicket->payment->code) }}" class="btn btn-warning btn-lg btn-block"><i class="fa fa-file-invoice mr-1"></i> Download Invoice</a>
-                                                            @else
-                                                            -
                                                             @endif
                                                         </div>
                                                     </div>

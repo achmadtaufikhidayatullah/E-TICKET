@@ -44,10 +44,11 @@ Route::get('/resend-form', [App\Http\Controllers\UserController::class, 'resendF
 Route::post('/resend-form', [App\Http\Controllers\UserController::class, 'resendEmailVerification'])->name('resend.emailVerification');
 
 
-// ==== events route ====
-Route::resource('events', EventController::class);
 
 Route::middleware('auth')->group(function() {
+    // ==== events route ====
+    Route::resource('events', EventController::class);
+
     Route::middleware('role:Super Admin,Admin')->group(function() {
         // Backend routes
         Route::get('/dashboard', function () {
@@ -81,6 +82,7 @@ Route::middleware('auth')->group(function() {
     });
 
     // Tickets Route
+    Route::get('/ticket/{code}/cancel', [App\Http\Controllers\EventController::class, 'cancel'])->name('ticket.cancel');
     Route::resource('ticket', TicketController::class);
     
     // ==== events buy route ====
