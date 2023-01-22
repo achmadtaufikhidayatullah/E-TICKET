@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
 </head>
 <body>
-   <div class="body-content">
+   <div class="body-content" style="min-height: 100vh;">
       {{-- Navbar --}}
       @include('frontEnd.layout.navbar') 
       {{-- End Navbar --}}

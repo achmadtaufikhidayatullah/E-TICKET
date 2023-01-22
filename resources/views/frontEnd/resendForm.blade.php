@@ -5,7 +5,7 @@
 <div class="container">
     <div class="card w-75 m-auto shadow p-4 card-100-mobile">
         <div class="text-center">
-            <h1>Reset Password</h3>
+            <h1>Re-send Verification Mail</h3>
         </div>
         <div class="card-body mt-3">
             <form action="{{ route('resend.emailVerification') }}" method="POST">
