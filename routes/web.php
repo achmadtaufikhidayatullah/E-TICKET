@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\KuponController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,9 +77,11 @@ Route::middleware('auth')->group(function() {
         Route::put('/event-batch/{batch}', [App\Http\Controllers\EventController::class, 'updateBatch'])->name('batch.update');
 
         Route::resource('users', UserController::class);
-
+        
         Route::get('/payment/{code}/approve', [App\Http\Controllers\PaymentController::class, 'approve'])->name('payments.approve');
         Route::get('/payment/{code}/reject', [App\Http\Controllers\PaymentController::class, 'reject'])->name('payments.reject');
+
+        Route::resource('coupons', KuponController::class);
     });
 
     // Tickets Route
@@ -88,6 +91,7 @@ Route::middleware('auth')->group(function() {
     // ==== events buy route ====
     Route::get('/event-form/{batch}', [App\Http\Controllers\EventController::class, 'eventForm'])->name('events.form');
     Route::post('/event/{batch}/purchase', [App\Http\Controllers\EventController::class, 'purchase'])->name('events.purchase');
+    Route::post('/coupons-check/{batch}', [App\Http\Controllers\EventController::class, 'cekKupon'])->name('events.cekKupon');
     
     // Payment Route
     Route::post('/payment/{code}/upload', [App\Http\Controllers\PaymentController::class, 'upload'])->name('payments.upload');

@@ -27,7 +27,7 @@
                     @csrf
                     <div class="card shadow-lg">
                         <div class="card-body">
-                           <div class="form-group">
+                            <div class="form-group">
                                 <label>Event Name</label>
                                 <select name="event_id" class="form-control form-control-lg">
                                     @foreach($events as $event)
@@ -63,7 +63,8 @@
                                 <label for="inputPassword">End Date</label>
                                 <input type="date" name="end_date"
                                     class="form-control @error('password') is-invalid @enderror" id="inputPassword"
-                                    placeholder="Password akun anda..." value="{{ $batch->end_date ?? old('password') }}">
+                                    placeholder="Password akun anda..."
+                                    value="{{ $batch->end_date ?? old('password') }}">
                                 <!-- <small id="passwordHelpBlock"
                                             class="form-text text-muted">
                                             Kosongkan isian ini jika tidak ingin mengubah password.
@@ -102,6 +103,29 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="kupon_status">Coupons Status</label>
+                                <select class="custom-select" name="kupon_status" id="kupon_status">
+                                    <option>Pilih Status Kupon</option>
+                                    <option value="Aktif" {{ ($batch->kupon_status == 'Aktif') ? 'selected' : '' ;}}>
+                                        Aktif</option>
+                                    <option value="Tidak Aktif"
+                                        {{ ($batch->kupon_status == 'Tidak Aktif') ? 'selected' : '' ;}}>Tidak Aktif
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" id="kupon_aktif">
+                                <label for="kupon_aktif">Kupon Aktif</label>
+                                <select class="custom-select" name="kupon_aktif">
+                                    <option {{ ($batch->kupon_aktif == null) ? 'selected' : '' ;}}>Pilih Kupon</option>
+                                    <option value="All Voucher Code" {{ ($batch->kupon_aktif == 'All Voucher Code') ? 'selected' : '' ;}}>All Voucher Code</option>
+                                    @foreach ($kupon as $kupon)
+                                    <option value="{{ $kupon->id }}" {{ ($batch->kupon_aktif == $kupon->id) ? 'selected' : '' ;}}>{{ $kupon->nama_kupon }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Description</label>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="13"
                                     style="height: 200px;" name="description">{{ $batch->description }}</textarea>
@@ -133,4 +157,20 @@
 <!-- JS Libraies -->
 
 <!-- Page Specific JS File -->
+<script>
+    $('#kupon_aktif').hide();
+    if ($('#kupon_status option:selected').val() == 'Aktif') {
+        $('#kupon_aktif').show();
+    }
+
+    $('#kupon_status').on('change', function(){
+      console.log(this.value);
+      if (this.value == 'Aktif') {
+         $('#kupon_aktif').show();
+      }else if (this.value == 'Tidak Aktif') {
+         $('#kupon_aktif').hide();
+      }
+   })
+
+</script>
 @endpush

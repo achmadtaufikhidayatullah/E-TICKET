@@ -8,12 +8,14 @@ use App\Models\EventBatch;
 use App\Models\Payment;
 use App\Models\Setting;
 use App\Models\Ticket;
+use App\Models\Kupon;
 use App\Models\UserBankAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Jenssegers\Agent\Agent;
+use Session;
 
 class EventController extends Controller
 {
@@ -111,10 +113,12 @@ class EventController extends Controller
             $soldTicket += $batch->quota();
         }
 
+        $kupon = Kupon::all();
+
         $earnings = Payment::whereIn('booked_ticket_id', $bookedTickets->where('status', 'payment_successful')->pluck('id'))
             ->where('status', 'payment_successful')->sum('grand_total');
 
-        return view('backEnd.event.show', compact('bookedTickets', 'soldTicket', 'earnings', 'event'));
+        return view('backEnd.event.show', compact('bookedTickets', 'soldTicket', 'earnings', 'event', 'kupon'));
     }
 
     /**
@@ -232,7 +236,7 @@ class EventController extends Controller
             'max_ticket' => 'required',
         ]);
 
-        $validate = array_merge($validate, ['status' => 'Aktif']);
+        $validate = array_merge($validate, ['status' => 'Aktif'] , ['kupon_status' => $request->kupon_status] , ['kupon_aktif' => $request->kupon_aktif]);
 
         $batch = EventBatch::create($validate);
 
@@ -246,10 +250,12 @@ class EventController extends Controller
         //   dd($batch);
         $statuses = ['Aktif', 'Tidak Aktif'];
         $events = Event::all();
+        $kupon = Kupon::all();
         return view('backEnd.batch.edit', [
             'statuses' => $statuses,
             'events' => $events,
             'batch' => $batch,
+            'kupon' => $kupon,
         ]);
     }
 
@@ -266,12 +272,39 @@ class EventController extends Controller
             'status' => 'required',
         ]);
         // dd($request->all());
+        $validate = array_merge($validate, ['kupon_status' => $request->kupon_status] , ['kupon_aktif' => $request->kupon_aktif]);
 
         $batch->update($validate);
 
         return redirect()->route('events.show', $batch->event->id)
             ->with('message', 'Berhasil mengubah data batch.')
             ->with('status', 'success');
+    }
+
+    public function cekKupon(Request $request , EventBatch $batch)
+    {
+         if ($batch->kupon->tipe_kupon == 'Ticket Code') {
+            $checkKuponTersedia = BookedTicket::where(['code' => $request->kupon_code ,'event_batch_id' => $batch->kupon->event_id, 'status' => 'payment_successful'])->first();
+
+            if (!$checkKuponTersedia) {
+               return redirect()->back()->with('message', 'Owh , your coupons is not found!')->with('status', 'error');
+            }
+
+            $checkKuponDigunakan = Payment::where('kode_kupon' , $request->kupon_code)->whereNotIn('status' , ['payment_rejected' , 'booking_canceled'])->first();
+            
+            if($checkKuponDigunakan){
+               return redirect()->back()->with('message', 'Owh , your coupons is already used!')->with('status', 'error');
+            }
+
+            Session::put('kupon_digunakan', 1);
+            Session::put('kupon_code', $request->kupon_code);
+            Session::put('max_code', $checkKuponTersedia->quantity);
+
+            return redirect()->back()->with('message', 'YEYYYY!!! , your coupen is actived.')->with('status', 'success');
+
+         }
+
+      //   return view('backEnd.event.form', compact('batch', 'setting'));
     }
 
     public function eventForm(EventBatch $batch)
@@ -287,9 +320,20 @@ class EventController extends Controller
                 ->with('message', 'Batch "' . $batch->name . '" sudah ditutup. Stay tune untuk batch selanjutnya!')
                 ->with('status', 'error');
         }
+
+        if (session()->get('kupon_digunakan') == 1) {
+            $kupon_digunakan = 1;
+            $kupon_code = session()->get('kupon_code');
+            $max_code = session()->get('max_code');
+        }else{
+            $kupon_digunakan = 0;
+            $kupon_code = null;
+            $max_code = 999;
+        }
+
         //   dd($batch);
         $setting = Setting::first();
-        return view('backEnd.event.form', compact('batch', 'setting'));
+        return view('backEnd.event.form', compact('batch', 'setting' , 'kupon_digunakan' , 'kupon_code' , 'max_code'));
     }
 
     public function purchase(Request $request, EventBatch $batch)
@@ -312,14 +356,26 @@ class EventController extends Controller
             $bookedTicket = BookedTicket::where('code', $code)->first();
         } while( ! empty($bookedTicket));
 
-        $totalPrice = $batch->price * $request->quantity;
+        $price = $batch->price;
+
+        if (session()->get('kupon_digunakan') == 1) {
+            $kupon_digunakan = 1;
+            $kupon_code = session()->get('kupon_code');
+            $max_code = session()->get('max_code');
+
+            $price = $batch->price - $batch->kupon->value;
+        }
+
+      //   dd($price);
+
+        $totalPrice = $price * $request->quantity;
         $tax = (Setting::first()->tax_percentage / 100) * $totalPrice;
 
         $bookedTicket = BookedTicket::create([
             'event_batch_id' => $batch->id,
             'code' => $code,
             'user_id' => auth()->user()->id,
-            'price_per_ticket' => $batch->price,
+            'price_per_ticket' => $price,
             'quantity' => $request->quantity,
             'tax' => $tax,
             'sub_total' => $totalPrice,
@@ -338,8 +394,15 @@ class EventController extends Controller
             // 'grand_total' => $bookedTicket->sub_total + $bookedTicket->tax + $uniquePaymentCode,
             'grand_total' => $bookedTicket->sub_total + $bookedTicket->tax,
             'payment_proof' => NULL,
+            'kode_kupon' => (session()->get('kupon_digunakan') == 1) ? $request->kode_kupon : NULL,
+            'jumlah_potongan' => (session()->get('kupon_digunakan') == 1) ? $batch->kupon->value * $request->quantity : NULL,
+            'harga_setelah_potongan' => $price,
             'status' => 'waiting_for_payment',
         ]);
+
+         Session::forget('kupon_digunakan');
+         Session::forget('kupon_code');
+         Session::forget('max_code');
 
         $agent = new Agent();
         if($agent->isDesktop()) {

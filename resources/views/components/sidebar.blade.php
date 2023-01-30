@@ -27,6 +27,10 @@
                 <a class="nav-link" href="{{ route('event.index.admin') }}"><i class="fas fa-star"></i> <span>Event List</span></a>
             </li>
 
+            <li class="{{ Request::is('*coupons*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('coupons.index') }}"><i class="fas fa-ticket"></i> <span>Coupons</span></a>
+            </li>
+
             <!-- <li class="{{ Request::is('*event-batch*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('batch.index') }}"><i class="fas fa-star"></i> <span>Event Batch</span></a>
             </li> -->
@@ -69,6 +73,10 @@
 
             <li class="{{ Request::is('*event*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('event.index.admin') }}"><i class="fas fa-star"></i> <span>Event List</span></a>
+            </li>
+
+            <li class="{{ Request::is('*kupon*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('coupons.index') }}"><i class="fas fa-ticket"></i> <span>Coupons</span></a>
             </li>
 
             <!-- <li class="{{ Request::is('*event-batch*') ? 'active' : '' }}">

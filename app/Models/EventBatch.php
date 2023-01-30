@@ -20,6 +20,8 @@ class EventBatch extends Model
         'end_date',
         'description',
         'price',
+        'kupon_status',
+        'kupon_aktif',
         'max_ticket',
         'status',
     ];
@@ -31,6 +33,10 @@ class EventBatch extends Model
     public function bookedTickets()
     {
         return $this->hasMany(BookedTicket::class, 'event_batch_id');
+    }
+
+    public function kupon() {
+        return $this->belongsTo(Kupon::class, 'kupon_aktif', 'id');
     }
 
     public function quota()

@@ -22,6 +22,9 @@ class Payment extends Model
         'unique_payment_code',
         'payment_proof',
         'status',
+        'kode_kupon',
+        'jumlah_potongan',
+        'harga_setelah_potongan',
     ];
 
     public function bookedTicket() {
