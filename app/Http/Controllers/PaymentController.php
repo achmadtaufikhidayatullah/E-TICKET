@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PaymentSuccess;
+use Jenssegers\Agent\Agent;
 
 class PaymentController extends Controller
 {
@@ -137,9 +138,16 @@ class PaymentController extends Controller
             ]);
         }
 
-        return redirect()->route('ticket.index')
-            ->with('message', 'Berhasil melakukan pembayaran. Silahkan tunggu validasi oleh admin.')
-            ->with('status', 'success');
+        $agent = new Agent();
+        if($agent->isDesktop()) {
+            return redirect()->route('ticket.index')
+                ->with('message', 'Berhasil melakukan pembayaran. Silahkan tunggu validasi oleh admin.')
+                ->with('status', 'success');
+        }
+
+        return redirect()->route('events.index', ['show' => 'myTicket'])
+                ->with('message', 'Berhasil melakukan pembayaran. Silahkan tunggu validasi oleh admin.')
+                ->with('status', 'success');
     }
 
     public function approve($code)
