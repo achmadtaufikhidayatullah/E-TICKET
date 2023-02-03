@@ -92,6 +92,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/event-form/{batch}', [App\Http\Controllers\EventController::class, 'eventForm'])->name('events.form');
     Route::post('/event/{batch}/purchase', [App\Http\Controllers\EventController::class, 'purchase'])->name('events.purchase');
     Route::post('/coupons-check/{batch}', [App\Http\Controllers\EventController::class, 'cekKupon'])->name('events.cekKupon');
+    Route::get('/coupons-remove', [App\Http\Controllers\EventController::class, 'removeKupon'])->name('remove.coupons');
     
     // Payment Route
     Route::post('/payment/{code}/upload', [App\Http\Controllers\PaymentController::class, 'upload'])->name('payments.upload');

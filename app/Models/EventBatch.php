@@ -23,6 +23,8 @@ class EventBatch extends Model
         'kupon_status',
         'kupon_aktif',
         'max_ticket',
+        'image',
+        'category',
         'status',
     ];
 

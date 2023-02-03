@@ -27,7 +27,12 @@ class EventController extends Controller
     public function index()
     {
         $agent = new Agent();
-        $eventsBatch = EventBatch::whereDate('start_date', '<=', Carbon::today()->format('Y-m-d'))
+        $eventsBatch = EventBatch::where('category' , 'Ticket')->whereDate('start_date', '<=', Carbon::today()->format('Y-m-d'))
+            ->whereDate('end_date', '>=', Carbon::today()->format('Y-m-d'))
+            ->where('status', 'Aktif')
+            ->get();
+
+        $merchandiseBatch = EventBatch::where('category' , 'Merchandise')->whereDate('start_date', '<=', Carbon::today()->format('Y-m-d'))
             ->whereDate('end_date', '>=', Carbon::today()->format('Y-m-d'))
             ->where('status', 'Aktif')
             ->get();
@@ -35,12 +40,12 @@ class EventController extends Controller
 
         // dd($eventsBatch->first()->quota());
         if($agent->isDesktop()) {
-            return view('backEnd.event.index', compact('eventsBatch'));
+            return view('backEnd.event.index', compact('eventsBatch' , 'merchandiseBatch'));
         } else {
             $setting = Setting::first();
             $ownerAccounts = UserBankAccount::ownerAccounts();
             $bookedTickets = BookedTicket::where('user_id', auth()->user()->id)->latest()->get();
-            return view('backEnd.event.mobile', compact('eventsBatch', 'bookedTickets', 'setting', 'ownerAccounts'));
+            return view('backEnd.event.mobile', compact('eventsBatch', 'merchandiseBatch' , 'bookedTickets', 'setting', 'ownerAccounts'));
         }
     }
 
@@ -227,16 +232,28 @@ class EventController extends Controller
     public function storeBatch(Request $request)
     {
         // dd($request->all());
+         $image = "";
+
         $validate = $request->validate([
             'event_id' => 'required',
             'name' => 'required',
+            'image' => 'file|mimes:jpg,bmp,png,jpeg',
             'start_date' => 'required',
             'end_date' => 'required',
             'price' => 'required',
             'max_ticket' => 'required',
         ]);
 
-        $validate = array_merge($validate, ['status' => 'Aktif'] , ['kupon_status' => $request->kupon_status] , ['kupon_aktif' => $request->kupon_aktif]);
+        if($request->hasFile('image')) {
+            $extension = $request->file('image')->extension();
+            $nameFileSpecialCharacter = str_replace('+', '', $request->name);
+            $nameFile = str_replace(' ', '-', $nameFileSpecialCharacter);
+            $image = $nameFile . '.' . $extension;
+
+            $path = Storage::putFileAs('public/batch', $request->file('image'), $image);
+        }
+
+        $validate = array_merge($validate, ['status' => 'Aktif'] , ['kupon_status' => $request->kupon_status] , ['kupon_aktif' => $request->kupon_aktif] , ['image' => $image], ['category' => $request->category]);
 
         $batch = EventBatch::create($validate);
 
@@ -262,6 +279,31 @@ class EventController extends Controller
     public function updateBatch(Request $request, EventBatch $batch)
     {
         // dd($request->all());
+        if ($request->image != null) {
+            $extension = $request->file('image')->extension();
+            $nameFileSpecialCharacter = str_replace('+', '', $request->name);
+            $nameFile = str_replace(' ', '-', $nameFileSpecialCharacter);
+            $image = $nameFile . '.' . $extension;
+
+            // Validasi file
+            $validate = $request->validate([
+                'image' => 'required|file|mimes:jpg,bmp,png,jpeg,pdf'
+            ]);
+
+            // Hapus file yang lama (jika ada)
+            if (!empty($event->image)) {
+                $delete = Storage::delete('public/batch/' . $batch->image);
+            }
+
+            // kemudian upload file yang baru
+            $path = Storage::putFileAs('public/batch', $request->file('image'), $image);
+
+            // Update image
+            $batch->update([
+                'image' => $image,
+            ]);
+        }
+
         $validate = $request->validate([
             'event_id' => 'required',
             'name' => 'required',
@@ -272,7 +314,7 @@ class EventController extends Controller
             'status' => 'required',
         ]);
         // dd($request->all());
-        $validate = array_merge($validate, ['kupon_status' => $request->kupon_status] , ['kupon_aktif' => $request->kupon_aktif]);
+        $validate = array_merge($validate, ['kupon_status' => $request->kupon_status] , ['kupon_aktif' => $request->kupon_aktif] , ['category' => $request->category]);
 
         $batch->update($validate);
 
@@ -303,6 +345,17 @@ class EventController extends Controller
             return redirect()->back()->with('message', 'YEYYYY!!! , your coupen is actived.')->with('status', 'success');
 
          }
+
+      //   return view('backEnd.event.form', compact('batch', 'setting'));
+    }
+
+    public function removeKupon()
+    {
+         Session::forget('kupon_digunakan');
+         Session::forget('kupon_code');
+         Session::forget('max_code');   
+
+         return redirect()->back()->with('message', 'Your coupon has been cancelled.')->with('status', 'success');
 
       //   return view('backEnd.event.form', compact('batch', 'setting'));
     }
@@ -458,7 +511,7 @@ class EventController extends Controller
 
     public function payment(EventBatch $batch)
     {
-        $bookedTickets = BookedTicket::where('event_batch_id', $batch->id)->latest()->get();
+        $bookedTickets = BookedTicket::where('event_batch_id', $batch->id)->orderby('updated_at' , 'DESC')->latest()->get();
         return view('backEnd.event.payment', compact('batch', 'bookedTickets'));
     }
 }

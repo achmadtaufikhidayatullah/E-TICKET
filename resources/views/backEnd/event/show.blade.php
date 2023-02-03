@@ -102,8 +102,8 @@
                                     <tr>
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td class="text-center">
-                                            <a href="{{ asset('storage/event/' . $event->image) }}">
-                                                <img src="{{ asset('storage/event/' . $event->image) }}" width="50px">
+                                            <a href="{{ asset('storage/batch/' . $batch->image) }}">
+                                                <img src="{{ asset('storage/batch/' . $batch->image) }}" width="50px">
                                             </a>
                                         </td>
                                         <td>
@@ -167,6 +167,27 @@
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
                             id="inputName" placeholder="Batch name..." value="{{ old('name') }}">
                         @error('name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Batch Category</label>
+                        <select class="custom-select" name="category" id="category">
+                            <option>Pilih Kategori Batch</option>
+                            <option value="Ticket">
+                                Ticket</option>
+                            <option value="Merchandise">
+                                Merchandise
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputNationalIdentityNumber">Batch Image</label>
+                        <input type="file" name="image" class="form-control @error('image') is-invalid @enderror"
+                            id="inputNationalIdentityNumber" value="{{ old('image') }}">
+                        @error('image')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
@@ -270,14 +291,15 @@
 <!-- JS Libraies -->
 
 <script>
-   $('#kupon_aktif').hide();
-   $('#kupon_status').on('change', function(){
-      console.log(this.value);
-      if (this.value == 'Aktif') {
-         $('#kupon_aktif').show();
-      }else if (this.value == 'Tidak Aktif') {
-         $('#kupon_aktif').hide();
-      }
-   })
+    $('#kupon_aktif').hide();
+    $('#kupon_status').on('change', function () {
+        console.log(this.value);
+        if (this.value == 'Aktif') {
+            $('#kupon_aktif').show();
+        } else if (this.value == 'Tidak Aktif') {
+            $('#kupon_aktif').hide();
+        }
+    })
+
 </script>
 @endpush

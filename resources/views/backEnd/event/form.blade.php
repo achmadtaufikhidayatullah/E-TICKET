@@ -30,14 +30,21 @@
                                     <label for="inputPhoneNumber">Enter your coupon code to get a discount</label>
                                     @endif
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control"
+                                        <input type="text" class="form-control {{ ($kupon_digunakan == 1) ? 'disabled' : '' }}"
                                             placeholder="{{ $batch->kupon->tipe_kupon == 'Ticket Code' ? 'Your Order Code' : 'Your Coupon Code' }}"
                                             aria-label="Recipient's username" aria-describedby="button-addon2"
-                                            name="kupon_code" value="{{ $kupon_code }}" id="kupon_code">
+                                            name="kupon_code" value="{{ $kupon_code }}" id="kupon_code"  {{ ($kupon_digunakan == 1) ? 'readonly' : '' }}>
+                                        @if ($kupon_digunakan == 1)
+                                       <div class="input-group-append">
+                                          <a class="btn btn-outline-warning" href="{{ route('remove.coupons') }}"
+                                             id="button-addon2">Remove Coupons</a>
+                                       </div>  
+                                        @else
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-warning" type="submit"
                                                 id="button-addon2">Check coupons</button>
                                         </div>
+                                        @endif
                                     </div>
                                 </form>
                             </div>
@@ -50,10 +57,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 col-sm-12 mt-2">
-                                @if($batch->event->image == NULL)
+                                @if($batch->image == NULL)
                                 <img class="img-fluid" src="{{ asset('FrontAssets/img/BG.jpg') }}">
                                 @else
-                                <img src="{{ asset('storage/event/' . $batch->event->image) }}" style="width:100%;">
+                                <img src="{{ asset('storage/batch/' . $batch->image) }}" style="width:100%;">
                                 @endif
                             </div>
                             <div class="col-md-6 col-sm-12 mt-2">

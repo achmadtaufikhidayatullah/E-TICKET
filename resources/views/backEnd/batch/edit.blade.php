@@ -48,6 +48,33 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="category">Batch Category</label>
+                                <select class="custom-select" name="category" id="category">
+                                    <option>Pilih Kategori Batch</option>
+                                    <option value="Ticket" {{ ($batch->category == 'Ticket') ? 'selected' : '' ;}}>
+                                        Ticket</option>
+                                    <option value="Merchandise"
+                                        {{ ($batch->category == 'Merchandise') ? 'selected' : '' ;}}>Merchandise
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputNationalIdentityNumber">Batch Image</label>
+                                <input type="file" name="image"
+                                    class="form-control @error('image') is-invalid @enderror"
+                                    id="inputNationalIdentityNumber" placeholder="No KTP Anda...">
+                                <small id="passwordHelpBlock" class="form-text text-muted">
+                                    Kosongkan isian ini jika tidak ingin mengubah Image.
+                                </small>
+                                @error('no_ktp')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="inputEmail">Start Date</label>
                                 <input type="date" name="start_date"
                                     class="form-control @error('email') is-invalid @enderror" id="inputEmail"
