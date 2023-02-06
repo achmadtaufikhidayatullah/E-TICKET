@@ -39,7 +39,7 @@
                                 <h5 class="bg-white px-4 py-2 shadow text-dark rounded-pill m-auto"
                                     style="width: fit-content;">Ticket</h5>
                                 <div class="row mt-4 mb-5">
-                                    @foreach ($eventsBatch as $event)
+                                    @forelse ($eventsBatch as $event)
                                     <div class="col-lg-6 col-md-12 col-sm-12">
                                         <a href="{{ $event->isFull() ? '#!' : route('events.form', $event->id) }}">
                                             <div class="card card-statistic-1 shadow-lg">
@@ -69,14 +69,21 @@
                                             </div>
                                         </a>
                                     </div>
-                                    @endforeach
+                                    @empty
+                                    <div class="col-lg-6 col-md-12 col-sm-12 text-center">
+                                        <p>
+                                            <span class="badge rounded-pill bg-danger text-white shadow">Ops! Nothing
+                                                item is ready yet,<br>Stay Tune :)</span>
+                                        </p>
+                                    </div>
+                                    @endforelse
                                 </div>
 
                                 {{-- merchandise --}}
                                 <h5 class="bg-white px-4 py-2 shadow text-dark rounded-pill m-auto"
                                     style="width: fit-content;">Merchandise</h5>
                                 <div class="row mt-4">
-                                    @foreach ($merchandiseBatch as $event)
+                                    @forelse ($merchandiseBatch as $event)
                                     <div class="col-lg-6 col-md-12 col-sm-12">
                                         <a href="{{ $event->isFull() ? '#!' : route('events.form', $event->id) }}">
                                             <div class="card card-statistic-1 shadow-lg">
@@ -106,7 +113,14 @@
                                             </div>
                                         </a>
                                     </div>
-                                    @endforeach
+                                    @empty
+                                    <div class="col-lg-6 col-md-12 col-sm-12 text-center">
+                                        <p>
+                                            <span class="badge rounded-pill bg-danger text-white shadow">Ops! Nothing
+                                                item is ready yet,<br>Stay Tune :)</span>
+                                        </p>
+                                    </div>
+                                    @endforelse
                                 </div>
                             </div>
                             <div class="tab-pane fade {{ request()->query('show') == 'myTicket' ? 'show active' : '' }}"

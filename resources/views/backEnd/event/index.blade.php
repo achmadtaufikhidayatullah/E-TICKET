@@ -16,7 +16,7 @@
         {{-- Ticket --}}
         <h5 class="bg-white px-4 py-2 shadow text-dark rounded-pill mb-4" style="width: fit-content;">Ticket</h5>
         <div class="row">
-            @foreach ($eventsBatch as $event)
+            @forelse ($eventsBatch as $event)
             <div class="col-lg-6 col-md-12 col-sm-12">
                 <a href="{{ $event->isFull() ? '#!' : route('events.form', $event->id) }}">
                     <div class="card card-statistic-1 shadow-lg">
@@ -42,13 +42,19 @@
                     </div>
                 </a>
             </div>
-            @endforeach
+            @empty
+            <div class="col-lg-6 col-md-12 col-sm-12">
+               <h3>
+                  <span class="badge rounded-pill bg-danger text-white shadow">Ops! Nothing item is ready yet, Stay Tune :)</span>
+               </h3>
+            </div>
+            @endforelse
         </div>
 
         {{-- merchandise --}}
         <h5 class="bg-white px-4 py-2 shadow text-dark rounded-pill mb-4 mt-5" style="width: fit-content;">Merchandise</h5>
         <div class="row">
-            @foreach ($merchandiseBatch as $event)
+            @forelse ($merchandiseBatch as $event)
             <div class="col-lg-6 col-md-12 col-sm-12">
                 <a href="{{ $event->isFull() ? '#!' : route('events.form', $event->id) }}">
                     <div class="card card-statistic-1 shadow-lg">
@@ -74,7 +80,13 @@
                     </div>
                 </a>
             </div>
-            @endforeach
+            @empty
+            <div class="col-lg-6 col-md-12 col-sm-12">
+               <h3>
+                  <span class="badge rounded-pill bg-danger text-white shadow">Ops! Nothing item is ready yet, Stay Tune :)</span>
+               </h3>
+            </div>
+            @endforelse
         </div>
     </section>
 </div>
