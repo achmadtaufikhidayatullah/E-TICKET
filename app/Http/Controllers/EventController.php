@@ -329,20 +329,20 @@ class EventController extends Controller
             $checkKuponTersedia = BookedTicket::where(['code' => $request->kupon_code ,'event_batch_id' => $batch->kupon->event_id, 'status' => 'payment_successful'])->first();
 
             if (!$checkKuponTersedia) {
-               return redirect()->back()->with('message', 'Owh , your coupons is not found!')->with('status', 'error');
+               return redirect()->back()->with('message', 'Oh, coupon code is not found!')->with('status', 'error');
             }
 
             $checkKuponDigunakan = Payment::where('kode_kupon' , $request->kupon_code)->whereNotIn('status' , ['payment_rejected' , 'booking_canceled'])->first();
             
             if($checkKuponDigunakan){
-               return redirect()->back()->with('message', 'Owh , your coupons is already used!')->with('status', 'error');
+               return redirect()->back()->with('message', 'Oh, your coupon code is already used!')->with('status', 'error');
             }
 
             Session::put('kupon_digunakan', 1);
             Session::put('kupon_code', $request->kupon_code);
             Session::put('max_code', $checkKuponTersedia->quantity);
 
-            return redirect()->back()->with('message', 'YEYYYY!!! , your coupen is actived.')->with('status', 'success');
+            return redirect()->back()->with('message', 'YEYYYY!!! your coupon is activated.')->with('status', 'success');
 
          }
 
