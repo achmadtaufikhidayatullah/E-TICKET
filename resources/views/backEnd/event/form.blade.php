@@ -24,7 +24,7 @@
                                     @csrf
                                     @if ($batch->kupon->tipe_kupon == 'Ticket Code')
                                     <label for="inputPhoneNumber">Enter your
-                                        <b>{{ $batch->kupon->eventBatch->name }}</b> order code to get a
+                                        <b>Early Bird or {{ $batch->kupon->eventBatch->name }}</b> order code to get a
                                         discount</label>
                                     @else
                                     <label for="inputPhoneNumber">Enter your coupon code to get a discount</label>

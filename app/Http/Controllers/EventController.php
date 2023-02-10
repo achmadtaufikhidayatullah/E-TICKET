@@ -326,7 +326,8 @@ class EventController extends Controller
     public function cekKupon(Request $request , EventBatch $batch)
     {
          if ($batch->kupon->tipe_kupon == 'Ticket Code') {
-            $checkKuponTersedia = BookedTicket::where(['code' => $request->kupon_code ,'event_batch_id' => $batch->kupon->event_id, 'status' => 'payment_successful'])->first();
+            // $checkKuponTersedia = BookedTicket::where(['code' => $request->kupon_code ,'event_batch_id' => $batch->kupon->event_id, 'status' => 'payment_successful'])->first();
+            $checkKuponTersedia = BookedTicket::whereIn('event_batch_id', [1,$batch->kupon->event_id])->where(['code' => $request->kupon_code , 'status' => 'payment_successful'])->first();
 
             if (!$checkKuponTersedia) {
                return redirect()->back()->with('message', 'Owh , your coupons is not found!')->with('status', 'error');
