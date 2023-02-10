@@ -45,7 +45,7 @@
             @empty
             <div class="col-lg-6 col-md-12 col-sm-12">
                <h3>
-                  <span class="badge rounded-pill bg-danger text-white shadow">Ops! Nothing item is ready yet, Stay Tune :)</span>
+                  <span class="badge rounded-pill bg-danger text-white shadow">Oops! No item is ready yet, stay tune! :)</span>
                </h3>
             </div>
             @endforelse
@@ -83,7 +83,7 @@
             @empty
             <div class="col-lg-6 col-md-12 col-sm-12">
                <h3>
-                  <span class="badge rounded-pill bg-danger text-white shadow">Ops! Nothing item is ready yet, Stay Tune :)</span>
+                  <span class="badge rounded-pill bg-danger text-white shadow">Oops! No item is ready yet, stay tune! :)</span>
                </h3>
             </div>
             @endforelse
