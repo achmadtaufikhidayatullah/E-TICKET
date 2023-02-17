@@ -82,6 +82,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/payment/{code}/reject', [App\Http\Controllers\PaymentController::class, 'reject'])->name('payments.reject');
 
         Route::resource('coupons', KuponController::class);
+   
     });
 
     // Tickets Route
@@ -97,6 +98,13 @@ Route::middleware('auth')->group(function() {
     // Payment Route
     Route::post('/payment/{code}/upload', [App\Http\Controllers\PaymentController::class, 'upload'])->name('payments.upload');
     Route::get('/payment/{code}/invoice', [App\Http\Controllers\PaymentController::class, 'invoice'])->name('payments.invoice');
+
+   // offline store
+   Route::get('/offline-store', [App\Http\Controllers\EventController::class, 'offlineStore'])->name('offline.index');
+   Route::get('/offline-store/{batch}', [App\Http\Controllers\EventController::class, 'offlineForm'])->name('offline.form');
+
+   //offline Order
+   Route::get('/offline-order', [App\Http\Controllers\TicketController::class, 'index'])->name('offline.order');
 });
 
 Auth::routes();

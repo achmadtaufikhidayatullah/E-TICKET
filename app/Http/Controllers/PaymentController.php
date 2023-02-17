@@ -139,15 +139,27 @@ class PaymentController extends Controller
         }
 
         $agent = new Agent();
-        if($agent->isDesktop()) {
+        if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Affiliator'){
+            if($agent->isDesktop()) {
+            return redirect()->route('offline.order')
+                ->with('message', 'Berhasil melakukan pembayaran. Silahkan tunggu validasi oleh admin.')
+                ->with('status', 'success');
+            }
+
+            return redirect()->route('events.index', ['show' => 'myTicket'])
+                     ->with('message', 'Berhasil melakukan pembayaran. Silahkan tunggu validasi oleh admin.')
+                     ->with('status', 'success');
+        }else{
+            if($agent->isDesktop()) {
             return redirect()->route('ticket.index')
                 ->with('message', 'Berhasil melakukan pembayaran. Silahkan tunggu validasi oleh admin.')
                 ->with('status', 'success');
-        }
+            }
 
-        return redirect()->route('events.index', ['show' => 'myTicket'])
-                ->with('message', 'Berhasil melakukan pembayaran. Silahkan tunggu validasi oleh admin.')
-                ->with('status', 'success');
+            return redirect()->route('events.index', ['show' => 'myTicket'])
+                     ->with('message', 'Berhasil melakukan pembayaran. Silahkan tunggu validasi oleh admin.')
+                     ->with('status', 'success');
+        }
     }
 
     public function approve($code)

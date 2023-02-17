@@ -31,6 +31,18 @@
                 <a class="nav-link" href="{{ route('coupons.index') }}"><i class="fas fa-ticket"></i> <span>Coupons</span></a>
             </li>
 
+            <li class="{{ Request::is('*offline-store*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('coupons.index') }}"><i class="fas fa-ticket"></i> <span>Offline Store</span></a>
+            </li>
+
+            <li class="{{ Request::is('*offline-store*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('offline.index') }}"><i class="fas fa-store"></i> <span>Offline Store</span></a>
+            </li>
+
+            <li class="{{ Request::is('*offline-order*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('offline.order') }}"><i class="fa-sharp fa-solid fa-cart-arrow-down"></i> <span>Offline Order List</span></a>
+            </li>
+
             <!-- <li class="{{ Request::is('*event-batch*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('batch.index') }}"><i class="fas fa-star"></i> <span>Event Batch</span></a>
             </li> -->
@@ -77,6 +89,14 @@
 
             <li class="{{ Request::is('*kupon*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('coupons.index') }}"><i class="fas fa-ticket"></i> <span>Coupons</span></a>
+            </li>
+
+            <li class="{{ Request::is('*offline-store*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('offline.index') }}"><i class="fas fa-store"></i> <span>Offline Store</span></a>
+            </li>
+
+            <li class="{{ Request::is('*offline-order*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('offline.order') }}"><i class="fa-sharp fa-solid fa-cart-arrow-down"></i> <span>Offline Order List</span></a>
             </li>
 
             <!-- <li class="{{ Request::is('*event-batch*') ? 'active' : '' }}">

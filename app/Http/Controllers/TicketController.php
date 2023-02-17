@@ -20,7 +20,12 @@ class TicketController extends Controller
         $setting = Setting::first();
         $ownerAccounts = UserBankAccount::ownerAccounts();
         $bookedTickets = BookedTicket::where('user_id', auth()->user()->id)->latest()->get();
-        return view('backEnd.tickets.index', compact('bookedTickets', 'setting', 'ownerAccounts'));
+
+        if(auth()->user()->role == 'Super Admin' || auth()->user()->role == 'Admin' || auth()->user()->role == 'Affiliator'){
+           return view('backEnd.offline.order', compact('bookedTickets', 'setting', 'ownerAccounts'));
+        }else{
+           return view('backEnd.tickets.index', compact('bookedTickets', 'setting', 'ownerAccounts'));
+        }
     }
 
     /**

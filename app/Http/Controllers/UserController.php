@@ -37,7 +37,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = ['Super Admin', 'Member'];
+        $roles = ['Super Admin', 'Admin' , 'Member', 'Affiliator'];
         return view('backEnd.users.create', ['roles' => $roles]);
     }
 
@@ -120,7 +120,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = ['Super Admin', 'Member'];
+        $roles = ['Super Admin', 'Admin' , 'Member' , 'Affiliator'];
         $statuses = ['Aktif', 'Tidak Aktif'];
         return view('backEnd.users.edit', [
             'roles' => $roles, 
