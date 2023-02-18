@@ -105,6 +105,7 @@ Route::middleware('auth')->group(function() {
 
    //offline Order
    Route::get('/offline-order', [App\Http\Controllers\TicketController::class, 'index'])->name('offline.order');
+   Route::get('/offline-order/{code}/invoice', [App\Http\Controllers\PaymentController::class, 'invoiceAdmin'])->name('offline.invoice');
 });
 
 Auth::routes();

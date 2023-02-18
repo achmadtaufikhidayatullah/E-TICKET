@@ -222,4 +222,10 @@ class PaymentController extends Controller
         $payment = Payment::whereCode($code)->firstOrFail();
         return view('backEnd.event.invoice', compact('payment'));
     }
+
+    public function invoiceAdmin($code)
+    {
+        $payment = Payment::whereCode($code)->firstOrFail();
+        return view('backEnd.offline.invoice', compact('payment'));
+    }
 }

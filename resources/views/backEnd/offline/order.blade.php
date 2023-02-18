@@ -37,7 +37,7 @@
                                     <p class="text-small font-weight-bold">
                                     Event : {{ $bookedTicket->batch->event->name }} - {{ $bookedTicket->batch->name }}
                                     <br>
-                                    Total : IDR {{ number_format($bookedTicket->sub_total + $bookedTicket->tax + $bookedTicket->unique_payment_code, 0, '', '.') }} / {{ $bookedTicket->quantity }} tickets (incl. tax)
+                                    Total : IDR {{ number_format($bookedTicket->sub_total + $bookedTicket->tax + $bookedTicket->unique_payment_code, 0, '', '.') }} / {{ $bookedTicket->quantity }} tickets (incl. Fee Admin)
                                     </p>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                                     <h4 class="text-dark">{{ $bookedTicket->code }}</h4>
                                     <div class="row">
                                        <div class="col-6">
-                                          <a href="{{ route('payments.invoice', $bookedTicket->payment->code) }}" class="btn btn-sm btn-primary w-100" target="_blank"><i class="fa-solid fa-file-invoice-dollar"></i> Invoice</a>
+                                          <a href="{{ route('offline.invoice', $bookedTicket->payment->code) }}" class="btn btn-sm btn-primary w-100" target="_blank"><i class="fa-solid fa-file-invoice-dollar"></i> Invoice</a>
                                        </div>
                                        <div class="col-6">
                                           <a href="https://api.whatsapp.com/send?phone={{ $bookedTicket->offline->phone }}" class="btn btn-sm btn-success w-100" tabindex="_blank"><i class="fa-brands fa-whatsapp"></i> Chat</a>
@@ -108,7 +108,7 @@
                                     @elseif($bookedTicket->status == "validating_payment")
                                     <a href="{{ $bookedTicket->batch->event->whatsappLink() }}" class="btn btn-success btn-lg btn-block"><i class="fa-brands fa-whatsapp mr-1"></i> Contact CS</a>
                                     @elseif($bookedTicket->status == "payment_successful")
-                                    <a target="_blank" href="{{ route('payments.invoice', $bookedTicket->payment->code) }}" class="btn btn-warning btn-lg btn-block"><i class="fa fa-file-invoice mr-1"></i> Download Invoice</a>
+                                    <a target="_blank" href="{{ route('offline.invoice', $bookedTicket->payment->code) }}" class="btn btn-warning btn-lg btn-block"><i class="fa fa-file-invoice mr-1"></i> Download Invoice</a>
                                     @endif
                                 </div>
                             </div>

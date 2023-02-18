@@ -145,7 +145,7 @@
                                             </li>
                                             <li class="list-group-item">
                                                 <div class="row">
-                                                    <div class="col-6">Tax <span id="tax-percentage"
+                                                    <div class="col-6">Fee Admin <span id="tax-percentage"
                                                             data-tax="{{ $setting->tax_percentage }}">({{ $setting->tax_percentage }}%)</span>
                                                     </div>
                                                     <div class="col-6 font-weight-bold" id="col-tax"></div>
