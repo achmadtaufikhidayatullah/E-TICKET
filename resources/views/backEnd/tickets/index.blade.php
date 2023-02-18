@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="card-body">
                                     <span class="text-dark">{{ $bookedTicket->batch->event->name }} - {{ $bookedTicket->batch->name }}</span>
-                                    <p class="text-small font-weight-bold">Total : IDR {{ number_format($bookedTicket->sub_total + $bookedTicket->tax + $bookedTicket->unique_payment_code, 0, '', '.') }} / {{ $bookedTicket->quantity }} tickets (incl. tax)</p>
+                                    <p class="text-small font-weight-bold">Total : IDR {{ number_format($bookedTicket->sub_total + $bookedTicket->tax + $bookedTicket->unique_payment_code, 0, '', '.') }} / {{ $bookedTicket->quantity }} tickets (incl. Fee Admin)</p>
                                 </div>
                             </div>
                         </div>

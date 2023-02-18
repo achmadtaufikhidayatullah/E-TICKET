@@ -144,7 +144,7 @@
                                                     <div class="invoice-detail-value">{{ number_format($payment->bookedTicket->sub_total, 0, '', '.') }}</div>
                                                 </div>
                                                 <div class="invoice-detail-item">
-                                                    <div class="invoice-detail-name">Tax (IDR)</div>
+                                                    <div class="invoice-detail-name">Fee Admin (IDR)</div>
                                                     <div class="invoice-detail-value">{{ number_format($payment->bookedTicket->tax, 0, '', '.') }}</div>
                                                 </div>
                                                 <hr class="mt-2 mb-2">
