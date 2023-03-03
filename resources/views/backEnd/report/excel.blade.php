@@ -39,11 +39,13 @@
             {{-- POTONGAN --}}
             @if ($data->payment->jumlah_potongan == null)
             <td> - </td>
+            <td style="text-align: right;" data-format="#,##0_-">{{ $data->price_per_ticket}}</td>
             @else
             <td style="text-align: right;" data-format="#,##0_-">{{ $data->payment->jumlah_potongan }}</td>
+            <td style="text-align: right;" data-format="#,##0_-">{{ $data->payment->harga_setelah_potongan}}</td>
             @endif
 
-            <td style="text-align: right;" data-format="#,##0_-">{{ $data->payment->harga_setelah_potongan}}</td>
+            {{-- <td style="text-align: right;" data-format="#,##0_-">{{ $data->payment->harga_setelah_potongan}}</td> --}}
             <td style="text-align: right;" data-format="#,##0_-">{{ $data->tax}}</td>
             <td style="text-align: right;" data-format="#,##0_-">{{ $data->payment->grand_total}}</td>
             <td>{{ $data->status }}</td>
