@@ -10,7 +10,7 @@
             <th>CODE</th>
             <th>VOUCHER</th>
             <th>POTONGAN</th>
-            <th>HARGA</th>
+            <th>HARGA PER TICKET</th>
             <th>TAX</th>
             <th>TOTAL</th>
             <th>STATUS</th>
