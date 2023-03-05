@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BookedTicket;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class BookedTicketController extends Controller
@@ -12,52 +13,12 @@ class BookedTicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Event $event)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\BookedTicket  $bookedTicket
-     * @return \Illuminate\Http\Response
-     */
-    public function show(BookedTicket $bookedTicket)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\BookedTicket  $bookedTicket
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(BookedTicket $bookedTicket)
-    {
-        //
+        $bookedTickets = BookedTicket::whereIn('event_batch_id', $event->batches->pluck('id'))
+            ->orderBy('updated_at' , 'DESC')
+            ->get();
+        return view('backEnd.bookedTicket.index', compact('event', 'bookedTickets'));
     }
 
     /**
@@ -67,19 +28,27 @@ class BookedTicketController extends Controller
      * @param  \App\Models\BookedTicket  $bookedTicket
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BookedTicket $bookedTicket)
+    public function redeem(Request $request, $bookedTicket)
     {
-        //
-    }
+        $bookedTicket = BookedTicket::where('code', $bookedTicket)->first();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\BookedTicket  $bookedTicket
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(BookedTicket $bookedTicket)
-    {
-        //
+        if(! in_array($request->status, ['redeemed', 'payment_successful']) 
+            && ! in_array($bookedTicket->status, ['redeemed', 'payment_successful'])) {
+            return redirect()->route('bookedTicket.index')
+                ->with('message', 'Invalid action.')
+                ->with('status', 'error');
+        }
+
+        foreach($bookedTicket->tickets as $ticket) {
+            $ticket->status = $request->status;
+            $ticket->save();
+        }
+
+        $bookedTicket->status = $request->status;
+        $bookedTicket->save();
+
+        return redirect()->route('bookedTicket.index', $bookedTicket->batch->event->id)
+            ->with('message', 'Status tiket berhasil diubah.')
+            ->with('status', 'success');
     }
 }

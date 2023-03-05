@@ -79,6 +79,10 @@
                                 class="btn btn-warning btn-lg">
                                 <i class="fa fa-plus mr-1"></i> Add New Batch
                             </button>
+                            <a href="{{ route('bookedTicket.index', $event->id) }}"
+                                class="btn btn-success btn-lg">
+                                <i class="fa fa-ticket mr-1"></i> Redeem Ticket
+                            </a>
                         </div>
                     </div>
                     <div class="card-body">

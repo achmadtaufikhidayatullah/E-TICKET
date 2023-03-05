@@ -82,7 +82,10 @@ Route::middleware('auth')->group(function() {
         Route::get('/payment/{code}/reject', [App\Http\Controllers\PaymentController::class, 'reject'])->name('payments.reject');
 
         Route::resource('coupons', KuponController::class);
-   
+
+        // Redeem
+        Route::get('/event-list/{event}/redeem', [App\Http\Controllers\BookedTicketController::class, 'index'])->name('bookedTicket.index');
+        Route::get('/redeem/{bookedTicket}', [App\Http\Controllers\BookedTicketController::class, 'redeem'])->name('bookedTicket.redeem');
     });
 
     // Tickets Route
