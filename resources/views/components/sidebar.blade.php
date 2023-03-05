@@ -99,6 +99,10 @@
                 <a class="nav-link" href="{{ route('offline.order') }}"><i class="fa-sharp fa-solid fa-cart-arrow-down"></i> <span>Offline Order List</span></a>
             </li>
 
+            <li class="{{ Request::is('*report*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('report.index') }}"><i class="fa-sharp fa-solid fa-file-excel"></i> <span>Report</span></a>
+            </li>
+
             <!-- <li class="{{ Request::is('*event-batch*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('batch.index') }}"><i class="fas fa-star"></i> <span>Event Batch</span></a>
             </li> -->

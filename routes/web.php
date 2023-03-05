@@ -4,6 +4,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KuponController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -86,6 +87,10 @@ Route::middleware('auth')->group(function() {
         // Redeem
         Route::get('/event-list/{event}/redeem', [App\Http\Controllers\BookedTicketController::class, 'index'])->name('bookedTicket.index');
         Route::get('/redeem/{bookedTicket}', [App\Http\Controllers\BookedTicketController::class, 'redeem'])->name('bookedTicket.redeem');
+        Route::resource('report', ReportController::class);
+
+        Route::get('/report-export/{batch}', [App\Http\Controllers\ReportController::class, 'export'])->name('report.export');
+   
     });
 
     // Tickets Route
