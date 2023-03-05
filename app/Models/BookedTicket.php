@@ -22,6 +22,8 @@ class BookedTicket extends Model
         'quantity',
         'tax',
         'status',
+        'redeemed_by',
+        'redeem_date',
     ];
 
     public function batch() 
@@ -47,5 +49,10 @@ class BookedTicket extends Model
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function redeemedBy()
+    {
+        return $this->hasOne(User::class, 'id', 'redeemed_by');
     }
 }

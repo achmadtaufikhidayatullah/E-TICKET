@@ -44,6 +44,8 @@ class BookedTicketController extends Controller
             $ticket->save();
         }
 
+        $bookedTicket->redeemed_by = $request->status == "redeemed" ? auth()->user()->id : NULL;
+        $bookedTicket->redeem_date = $request->status == "redeemed" ? now() : NULL;
         $bookedTicket->status = $request->status;
         $bookedTicket->save();
 

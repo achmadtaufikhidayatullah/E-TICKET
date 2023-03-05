@@ -29,19 +29,19 @@
                                 <div class="col-lg-4 col-md-4 col-sm-12 mt-2">
                                     <h6>Total Ticket</h6>
                                     <h4 class="text-dark">
-                                        <span></span>
+                                        <span>{{ $bookedTickets->whereIn('status', ['payment_successful', 'redeemed'])->sum('quantity') }}</span>
                                     </h4>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-12 mt-2">
                                     <h6>Waiting for Redeem</h6>
                                     <h4 class="text-dark">
-                                        <span></span>
+                                        <span>{{ $bookedTickets->where('status', 'payment_successful')->sum('quantity') }}</span>
                                     </h4>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-12 mt-2">
                                     <h6>Redeemed</h6>
                                     <h4 class="text-dark">
-                                        <span></span>
+                                        <span>{{ $bookedTickets->where('status', 'redeemed')->sum('quantity') }}</span>
                                     </h4>
                                 </div>
                             </div>
@@ -147,6 +147,8 @@
                                                     <th>No. HP</th>
                                                     <th>Tickets</th>
                                                     <th>Status</th>
+                                                    <th>Redeemed By</th>
+                                                    <th>Redeem Date</th>
                                                     <th width="10%">Action</th>
                                                 </tr>
                                             </thead>
@@ -177,6 +179,12 @@
                                                     </td>
                                                     <td>
                                                         <div class="badge badge-success">Redeemed</div>
+                                                    </td>
+                                                    <td>
+                                                        {{ $bookedTicket?->redeemedBy?->name ?? '-' }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $bookedTicket?->redeem_date ?? '-' }}
                                                     </td>
                                                     <td>
                                                         <a onclick="return confirm('Are you sure want to cancel this ticket redeem: {{ $bookedTicket->code }} ?')" class="btn btn-danger btn-action mr-1" href="{{ route('bookedTicket.redeem', ['bookedTicket' => $bookedTicket->code, 'status' => 'payment_successful']) }}" title="Cancel Redeem"><i class="fas fa-times"></i></a>
